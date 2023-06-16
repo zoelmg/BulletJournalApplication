@@ -11,4 +11,13 @@ public interface BujoPage {
   List<String> getQuotes();
 
   List<String> getNotes();
+
+  void setWeek(List<Day> week);
+
+  void setWeekName(String weekName);
+
+  void setQuotes(List<String> quotes);
+
+  void setNotes(List<String> notes);
+
 }

@@ -19,4 +19,13 @@ public class JsonUtil {
       throw new IllegalArgumentException("Given record cannot be serialized");
     }
   }
+
+  public static Object deSerializeRecord(String jsonNode, Class c) throws IllegalArgumentException {
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      return mapper.convertValue(jsonNode, c );
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Given record cannot be serialized");
+    }
+  }
 }

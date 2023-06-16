@@ -54,4 +54,41 @@ public class BujoPageImp implements BujoPage {
   public List<String> getQuotes() {
     return this.quotes;
   }
+
+  public void setWeek(List<Day> week) {
+    this.week = week;
+  }
+
+  public void setWeekName(String weekName) {
+    this.weekName = weekName;
+  }
+
+  public void setQuotes(List<String> quotes) {
+    this.quotes = quotes;
+  }
+
+  public void setNotes(List<String> notes) {
+    this.notes = notes;
+  }
+
+  public boolean hasTaskCapacity(DayOfWeek day) {
+    Day wantedDay = this.week.get(0);
+    for (Day d : this.week) {
+      if (d.getDayOfWeek() == day) {
+        wantedDay = d;
+      }
+    }
+    return wantedDay.getMaxTasks() > wantedDay.getTasks().size();
+  }
+
+  public boolean hasEventCapacity(DayOfWeek day) {
+    Day wantedDay = this.week.get(0);
+    for (Day d : this.week) {
+      if (d.getDayOfWeek() == day) {
+        wantedDay = d;
+      }
+    }
+    return wantedDay.getMaxEvents() > wantedDay.getEvents().size();
+  }
+
 }

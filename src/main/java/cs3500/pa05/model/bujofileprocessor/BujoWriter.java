@@ -15,4 +15,5 @@ public interface BujoWriter {
    * @param bujoPage the bujo page containing all information that will be stored in .bujo file
    */
   void writeBujoFile(BujoPage bujoPage);
+
 }

@@ -10,8 +10,7 @@ public interface BujoReader {
   /**
    * Reads, process, and extract a .bujo file into a BujoPage
    *
-   * @param location the file path of the .bujo file
    * @return the information within the file as a BujoBoard
    */
-  BujoPage readBujoFile(Path location);
+  BujoPage readBujoFile();
 }

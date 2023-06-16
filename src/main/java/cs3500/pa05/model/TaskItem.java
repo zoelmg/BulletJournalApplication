@@ -6,6 +6,10 @@ public class TaskItem extends AbstractItem implements ITaskItem {
     super(name, description);
     this.isCompleted = false;
   }
+  public TaskItem(String name, String description, Boolean isCompleted) {
+    super(name, description);
+    this.isCompleted = false;
+  }
 
 
   @Override
