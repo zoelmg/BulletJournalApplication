@@ -63,9 +63,12 @@ public class BujoWriterImp implements BujoWriter{
         eventJson.add(new EventJson(e.getName(), e.getDescription(),
             e.getStartTime(), e.getDuration()));
       }
+
       List<TaskItem> tasks = d.getTasks();
       List<TaskJson> taskJson = new ArrayList<>();
-      DayJson nextDay = new DayJson(d.getDayOfWeek(), eventJson, taskJson);
+      DayJson nextDay = new DayJson(d.getDayOfWeek(), eventJson, taskJson, d.getMaxEvents(),
+          d.getMaxTasks());
+
       dayJsonList.add(nextDay);
     }
 

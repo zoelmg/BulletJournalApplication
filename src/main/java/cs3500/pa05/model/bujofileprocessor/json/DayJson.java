@@ -6,5 +6,7 @@ import java.util.List;
 
 public record DayJson(@JsonProperty("week-day") DayOfWeek weekday,
                       @JsonProperty("events") List<EventJson> events,
-                      @JsonProperty("tasks") List<TaskJson> tasks) {
+                      @JsonProperty("tasks") List<TaskJson> tasks,
+                      @JsonProperty("max-events") int maxEvents,
+                      @JsonProperty("max-tasks") int maxTasks) {
 }

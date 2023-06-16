@@ -20,14 +20,14 @@
       <children>
          <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" spacing="5.0">
             <children>
-               <ToolBar fx:id="menubar" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: lavender;">
+               <ToolBar fx:id="menubar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: lavender;">
                  <items>
                      <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="100.0" text="Menu Bar : ">
                         <font>
                            <Font name="Baskerville" size="18.0" />
                         </font>
                      </Label>
-                     <GridPane>
+                     <GridPane fx:id="buttonGP" prefWidth="400.0">
                        <columnConstraints>
                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -38,22 +38,22 @@
                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        </rowConstraints>
                         <children>
-                         <Button fx:id="openButton" mnemonicParsing="false" style="-fx-border-color: white; -fx-border-width: 2; -fx-background-color: lavender;" text="Open">
+                         <Button fx:id="openButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="70.0" style="-fx-border-color: white; -fx-border-width: 2; -fx-background-color: lavender;" text="Open">
                               <font>
                                  <Font name="Baskerville" size="15.0" />
                               </font>
                            </Button>
-                           <Button fx:id="saveButton" mnemonicParsing="false" style="-fx-border-color: white; -fx-border-width: 2; -fx-background-color: lavender;" text="Save" GridPane.columnIndex="1">
+                           <Button fx:id="saveButton" mnemonicParsing="false" prefWidth="70.0" style="-fx-border-color: white; -fx-border-width: 2; -fx-background-color: lavender;" text="Save" GridPane.columnIndex="1">
                               <font>
                                  <Font name="Baskerville" size="15.0" />
                               </font>
                            </Button>
-                           <Button mnemonicParsing="false" style="-fx-border-color: white; -fx-border-width: 2; -fx-background-color: lavender;" text="Button" GridPane.columnIndex="2">
+                           <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-border-color: white; -fx-border-width: 2; -fx-background-color: lavender;" text="Button" GridPane.columnIndex="2">
                               <font>
                                  <Font name="Baskerville" size="15.0" />
                               </font>
                            </Button>
-                           <MenuButton fx:id="addButton" mnemonicParsing="false" style="-fx-background-color: lavender; -fx-border-color: white; -fx-border-width: 2;" text="Add a ..." GridPane.columnIndex="3">
+                           <MenuButton fx:id="addButton" mnemonicParsing="false" style="-fx-background-color: lavender; -fx-border-color: white; -fx-border-width: 2;" text="Add a ..." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                              <items>
                                <MenuItem fx:id="eventButton" mnemonicParsing="false" text="Event" />
                                <MenuItem fx:id="taskButton" mnemonicParsing="false" text="Task" />
@@ -74,7 +74,7 @@
                      <Font name="Baskerville" size="18.0" />
                   </font>
                </Label>
-               <HBox fx:id="weekHBox" prefHeight="500.0" prefWidth="200.0">
+               <HBox fx:id="weekHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0">
                   <children>
                      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="100.0">
                         <children>
@@ -94,7 +94,7 @@
                            </Label>
                         </children>
                      </VBox>
-                     <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="100.0">
+                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="100.0">
                         <children>
                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: lavender;" text="Wednesday">
                               <font>
@@ -130,7 +130,7 @@
                            </Label>
                         </children>
                      </VBox>
-                     <VBox prefHeight="400.0" prefWidth="100.0" style="-fx-border-insets: 5;">
+                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="100.0" style="-fx-border-insets: 5;">
                         <children>
                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: lavender;" text="Sunday">
                               <font>
@@ -140,7 +140,7 @@
                         </children>
                      </VBox>
                      <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="1.0" style="-fx-border-style: solid; -fx-border-color: white;" />
-                     <VBox prefHeight="400.0" prefWidth="100.0">
+                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="100.0">
                         <children>
                            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: lavender;" text="Task Queue">
                               <font>
