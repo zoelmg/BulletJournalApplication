@@ -48,4 +48,26 @@ public class Day {
     this.events.remove(event);
   }
 
+  /**
+   * @return the day of week
+   */
+  public DayOfWeek getDayOfWeek() {
+    return dayOfWeek;
+  }
+
+  /**
+   * @return the list of events for this day
+   */
+  public List<EventItem> getEvents() {
+    return events;
+  }
+
+  /**
+   *
+   * @return the list of tasks for this day
+   */
+  public List<TaskItem> getTasks() {
+    return tasks;
+  }
+
 }

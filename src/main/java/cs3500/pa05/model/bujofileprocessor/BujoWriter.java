@@ -13,7 +13,6 @@ public interface BujoWriter {
    * write the bujo page info onto the .bujo file
    *
    * @param bujoPage the bujo page containing all information that will be stored in .bujo file
-   * @param location the location of the .bujo file
    */
-  void writeBujoFile(BujoPage bujoPage, Path location);
+  void writeBujoFile(BujoPage bujoPage);
 }
