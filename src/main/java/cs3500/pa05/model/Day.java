@@ -9,15 +9,11 @@ public class Day {
   private DayOfWeek dayOfWeek;
   private List<EventItem> events;
   private List<TaskItem> tasks;
-  private int maxEvents;
-  private int maxTasks;
 
   public Day(DayOfWeek dayOfWeek) {
     this.dayOfWeek = dayOfWeek;
     this.events = new ArrayList<>();
     this.tasks = new ArrayList<>();
-    this.maxEvents = 0;
-    this.maxTasks = 1;
   }
 
   /**
@@ -71,18 +67,5 @@ public class Day {
     return tasks;
   }
 
-  public int getMaxEvents() { return this.maxEvents; }
-
-  public int getMaxTasks() {
-    return maxTasks;
-  }
-
-  public void setMaxEvents(int n) {
-    this.maxEvents = n;
-  }
-
-  public void setMaxTasks(int n) {
-    this.maxTasks = n;
-  }
 
 }

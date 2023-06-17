@@ -39,4 +39,5 @@ public class EventView extends VBox {
     this.getChildren().addAll(eventRelated);
 
   }
+
 }

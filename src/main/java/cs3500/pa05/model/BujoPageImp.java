@@ -12,6 +12,8 @@ public class BujoPageImp implements BujoPage {
   private String weekName;
   private List<String> quotes;
   private List<String> notes;
+  private int maxEvents;
+  private int maxTasks;
 
   /**
    * Instantiate a default BujoPageImp with default week and week name
@@ -28,6 +30,8 @@ public class BujoPageImp implements BujoPage {
     this.week.add(new Day(DayOfWeek.SATURDAY));
     this.week.add(new Day(DayOfWeek.SUNDAY));
     this.weekName = "Week Default Name";
+    this.maxEvents = 2;
+    this.maxTasks = 2;
   }
 
   /**
@@ -78,7 +82,7 @@ public class BujoPageImp implements BujoPage {
         wantedDay = d;
       }
     }
-    return wantedDay.getMaxTasks() > wantedDay.getTasks().size();
+    return this.maxTasks > wantedDay.getTasks().size();
   }
 
   public boolean hasEventCapacity(DayOfWeek day) {
@@ -88,7 +92,22 @@ public class BujoPageImp implements BujoPage {
         wantedDay = d;
       }
     }
-    return wantedDay.getMaxEvents() > wantedDay.getEvents().size();
+    return this.maxEvents > wantedDay.getEvents().size();
+  }
+
+
+  public int getMaxEvents() { return this.maxEvents; }
+
+  public int getMaxTasks() {
+    return maxTasks;
+  }
+
+  public void setMaxEvents(int n) {
+    this.maxEvents = n;
+  }
+
+  public void setMaxTasks(int n) {
+    this.maxTasks = n;
   }
 
 }

@@ -20,4 +20,12 @@ public interface BujoPage {
 
   void setNotes(List<String> notes);
 
+  int getMaxEvents();
+
+  int getMaxTasks();
+
+  void setMaxEvents(int n);
+
+  void setMaxTasks(int n);
+
 }

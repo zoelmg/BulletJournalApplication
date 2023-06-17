@@ -66,8 +66,11 @@ public class BujoWriterImp implements BujoWriter{
 
       List<TaskItem> tasks = d.getTasks();
       List<TaskJson> taskJson = new ArrayList<>();
-      DayJson nextDay = new DayJson(d.getDayOfWeek(), eventJson, taskJson, d.getMaxEvents(),
-          d.getMaxTasks());
+      for (TaskItem t : tasks) {
+        taskJson.add(new TaskJson(t.getName(), t.getDescription(), t.getIsComplete()));
+      }
+
+      DayJson nextDay = new DayJson(d.getDayOfWeek(), eventJson, taskJson);
 
       dayJsonList.add(nextDay);
     }
@@ -75,11 +78,10 @@ public class BujoWriterImp implements BujoWriter{
     ArrayList<String> quotes = new ArrayList<>();
     quotes.add("hi");
     QuoteBoxJson quoteBoxJson = new QuoteBoxJson(quotes);
-    //QuoteBoxJson quoteBoxJson = new QuoteBoxJson(bujoPage.getQuotes());
     NoteBoxJson noteBoxJson = new NoteBoxJson(bujoPage.getNotes());
 
     BujoPageJson bujoPageJson = new BujoPageJson(dayJsonList, bujoPage.getWeekName(),
-        quoteBoxJson, noteBoxJson);
+        quoteBoxJson, noteBoxJson, bujoPage.getMaxEvents(), bujoPage.getMaxTasks());
 
 
     JsonNode result = JsonUtil.serializeRecord(bujoPageJson);
