@@ -214,7 +214,8 @@ public class BujoControllerImp implements BujoController {
 
   private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent){
     KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
-    if(keycomb.match(keyEvent)){
+    KeyCombination keycomb2 = new KeyCodeCombination(eventKey, KeyCombination.SHORTCUT_DOWN);
+    if(keycomb.match(keyEvent) || keycomb2.match(keyEvent)){
       switch (eventKey){
         case E:  handleCreateEvent();
         break;
@@ -223,6 +224,10 @@ public class BujoControllerImp implements BujoController {
         case S: handleSave();
         break;
         case O: handleOpen();
+        break;
+        case DIGIT1: handleCreateNote();
+        break;
+        case DIGIT2: handleCreateQuote();
         break;
       }
     }
