@@ -46,8 +46,6 @@ public class BujoReaderImp implements BujoReader{
       ArrayList<Day> days = new ArrayList<Day>();
       for(DayJson dayJson: bujoPageJson.week()){
         Day day = new Day(dayJson.weekday());
-        day.setMaxEvents(dayJson.maxEvents());
-        day.setMaxTasks(day.getMaxTasks());
 
         for(EventJson eventJson: dayJson.events()){
           EventItem newEvent = new EventItem(eventJson.name(),
@@ -66,6 +64,9 @@ public class BujoReaderImp implements BujoReader{
       result.setQuotes(bujoPageJson.quotebox().quotes());
       result.setWeekName(bujoPageJson.weekName());
       result.setNotes(bujoPageJson.notebox().notes());
+      result.setMaxEvents(bujoPageJson.MaxEvents());
+      result.setMaxTasks(bujoPageJson.MaxTasks());
+
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

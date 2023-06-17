@@ -22,11 +22,14 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javafx.application.Application;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -39,6 +42,10 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -70,6 +77,8 @@ public class BujoControllerImp implements BujoController {
 
   private Path bujoPath;
 
+  @FXML
+  private Scene mainScene;
 
   public BujoControllerImp(BujoPage bujoPage) {
     this.bujoPage = bujoPage;
@@ -121,6 +130,21 @@ public class BujoControllerImp implements BujoController {
  }
 
 
+  private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent){
+    KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
+    if(keycomb.match(keyEvent)){
+      switch (eventKey){
+        case E:  handleCreateEvent();
+        break;
+        case T: handleCreateTask();
+        break;
+        case S: handleSave();
+        break;
+        case O: handleOpen();
+        break;
+      }
+    }
+  }
 
   private void handleSave() {
     BujoWriterImp writer = new BujoWriterImp(new FileAppendable(bujoPath.toFile()));
