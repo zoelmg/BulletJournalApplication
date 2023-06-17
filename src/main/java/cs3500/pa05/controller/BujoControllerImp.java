@@ -37,6 +37,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Label;
@@ -46,6 +47,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -75,6 +77,9 @@ public class BujoControllerImp implements BujoController {
 
   @FXML
   private HBox quotesAndNotes;
+
+  @FXML
+  private VBox taskQueue;
 
   private Path bujoPath;
 
@@ -121,15 +126,91 @@ public class BujoControllerImp implements BujoController {
     eventItem.setOnAction(event -> handleCreateEvent());
 
     mainScene.setOnKeyPressed(ke ->  handleKeyCombs(
-        Arrays.asList(KeyCode.E, KeyCode.T,KeyCode.S, KeyCode.O), ke));
+        Arrays.asList(KeyCode.E, KeyCode.T,KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2), ke));
+
  }
+
+ private void handleCreateQuote() {
+   Dialog<TaskItem> dialog = new Dialog<>();
+   dialog.setTitle("Create New Quote");
+   ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+   dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
+
+   GridPane grid = new GridPane();
+   grid.setHgap(10);
+   grid.setVgap(10);
+   grid.setPadding(new Insets(20, 150, 10, 10));
+
+   TextField quoteText = new TextField();
+   quoteText.setPromptText("Write quote here ");
+
+
+   grid.add(new Label("Quote: "), 0, 0);
+   grid.add(quoteText, 1, 0);
+
+   dialog.getDialogPane().setContent(grid);
+
+   dialog.setResultConverter(dialogButton -> {
+         if (dialogButton == configWeekButtonType) {
+           dialogQuoteHelper(quoteText);
+           updatePage();
+         }
+         return null;
+       }
+   );
+
+   dialog.showAndWait();
+ }
+
+ private void dialogQuoteHelper(TextField quoteText) {
+    List<String> newQuotes = bujoPage.getQuotes();
+    newQuotes.add(quoteText.getText());
+    bujoPage.setQuotes(newQuotes);
+
+ }
+
+ private void handleCreateNote() {
+   Dialog<TaskItem> dialog = new Dialog<>();
+   dialog.setTitle("Create New Note");
+   ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+   dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
+
+   GridPane grid = new GridPane();
+   grid.setHgap(10);
+   grid.setVgap(10);
+   grid.setPadding(new Insets(20, 150, 10, 10));
+
+   TextField noteText = new TextField();
+   noteText.setPromptText("Write note here ");
+
+   grid.add(new Label("Note: "), 0, 0);
+   grid.add(noteText, 1, 0);
+
+   dialog.getDialogPane().setContent(grid);
+
+   dialog.setResultConverter(dialogButton -> {
+         if (dialogButton == configWeekButtonType) {
+           dialogNoteHelper(noteText);
+           updatePage();
+         }
+         return null;
+       }
+   );
+   dialog.showAndWait();
+ }
+
+  private void dialogNoteHelper(TextField noteText) {
+    List<String> newNotes = bujoPage.getNotes();
+    newNotes.add(noteText.getText());
+    bujoPage.setNotes(newNotes);
+  }
+
 
  private void handleKeyCombs(List<KeyCode> eventkeys, KeyEvent keyevent){
     for(KeyCode keyCode: eventkeys){
       handleKeyComb(keyCode, keyevent);
     }
  }
-
 
   private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent){
     KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
@@ -327,6 +408,7 @@ public class BujoControllerImp implements BujoController {
       l.setPrefWidth(400);
       l.setPrefHeight(100);
       infoHolder.getChildren().add(l);
+
     }
 
 
@@ -359,17 +441,18 @@ public class BujoControllerImp implements BujoController {
     noteVBox.getChildren().removeAll(noteVBox.getChildren());
     noteVBox.getChildren().add(noteLabel);
 
-    for (String s : quotes) {
-      TextField newQuote = new TextField(s);
-      newQuote.setFont(Font.font("Baskerville", 10));
-      newQuote.setPrefSize(400, 30);
-      quoteVBox.getChildren().add(newQuote);
-    }
-    for (String s : notes) {
-      TextField newNote = new TextField(s);
-      newNote.setFont(Font.font("Baskerville", 10));
+    addString(quotes, quoteVBox);
+    addString(notes, noteVBox);
+
+  }
+
+  private void addString(List<String> toBeAdded, VBox box) {
+    for (String s : toBeAdded) {
+      Label newNote = new Label(" * " + s);
+      newNote.setStyle("-fx-background-color: lavender");
+      newNote.setFont(Font.font("Baskerville", 15));
       newNote.setPrefSize(400, 30);
-      noteVBox.getChildren().add(newNote);
+      box.getChildren().add(newNote);
     }
   }
 

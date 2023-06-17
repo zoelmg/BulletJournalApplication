@@ -46,7 +46,9 @@ javafx {
 }
 
 dependencies {
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.1'
+    // Jackson
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
+
     // JavaFX
     implementation('org.controlsfx:controlsfx:11.1.2')
 
