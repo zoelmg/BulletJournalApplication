@@ -125,6 +125,9 @@ public class BujoControllerImp implements BujoController {
     taskItem.setOnAction(event -> handleCreateTask());
     eventItem.setOnAction(event -> handleCreateEvent());
 
+    quoteItem.setOnAction(event -> handleCreateQuote());
+    noteItem.setOnAction(event -> handleCreateNote());
+
     mainScene.setOnKeyPressed(ke ->  handleKeyCombs(
         Arrays.asList(KeyCode.E, KeyCode.T,KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2), ke));
 
@@ -328,6 +331,8 @@ public class BujoControllerImp implements BujoController {
       allDayVBoxes.add((VBox) n);
     }
 
+    taskQueue.getChildren().removeAll(taskQueue.getChildren());
+
     //updates each day's tasks and events
     for (int i = 0; i < 7; i += 1) {
       Day currentDay = days.get(i);
@@ -337,6 +342,7 @@ public class BujoControllerImp implements BujoController {
       currentBox.getChildren().add(dayName);
 
       updateTaskAndEvents(currentDay, currentBox);
+      updateTaskQueue(currentDay);
     }
 
     //update quotes and notes
@@ -344,6 +350,7 @@ public class BujoControllerImp implements BujoController {
     updateQuotesAndNotes();
 
     //update the task queue, call on the function that will fill in task queue
+
   }
 
   private void updateTaskAndEvents(Day currentDay, VBox currentBox) {
@@ -359,6 +366,13 @@ public class BujoControllerImp implements BujoController {
       TaskView taskView = new TaskView(task.getName(), task.getDescription(), task.getIsComplete());
       taskView.setOnMouseClicked(mouseEvent -> handleTaskClicked(task, currentDay));
       currentBox.getChildren().add(taskView);
+    }
+  }
+
+  private void updateTaskQueue(Day currentDay) {
+    for (TaskItem task : currentDay.getTasks()) {
+      TaskView taskView = new TaskView(task.getName(), task.getDescription(), task.getIsComplete());
+      this.taskQueue.getChildren().add(taskView);
     }
   }
 
