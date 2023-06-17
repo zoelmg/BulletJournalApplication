@@ -43,6 +43,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -53,7 +54,7 @@ public class BujoControllerImp implements BujoController {
   private BujoPage bujoPage;
 
   @FXML
-  private HBox weekHbox;
+  private HBox weekHBox;
 
   @FXML
   private ToolBar menubar;
@@ -72,7 +73,7 @@ public class BujoControllerImp implements BujoController {
 
   public BujoControllerImp(BujoPage bujoPage) {
     this.bujoPage = bujoPage;
-    this.bujoPath = Path.of("src/main/resources/defaultBujo.bujo");
+    this.bujoPath = Path.of("src/main/resources/" + bujoPage.getWeekName() + ".bujo");
   }
 
 
@@ -93,6 +94,10 @@ public class BujoControllerImp implements BujoController {
     Button openButton = (Button) buttons.get(0);
     openButton.setOnAction(event -> handleOpen());
 
+    //set nameWeekButton on action
+    Button configWeekButton = (Button) buttons.get(2);
+    configWeekButton.setOnAction(event -> handleConfigWeek());
+
     //set addEventMenuItem on action
     MenuButton addMenuButton = (MenuButton) buttons.get(3);
     List<MenuItem> allitems = addMenuButton.getItems();
@@ -103,9 +108,18 @@ public class BujoControllerImp implements BujoController {
     MenuItem weekItem = allitems.get(4);
 
     taskItem.setOnAction(event -> handleCreateTask());
+    eventItem.setOnAction(event -> handleCreateEvent());
 
+    mainScene.setOnKeyPressed(ke ->  handleKeyCombs(
+        Arrays.asList(KeyCode.E, KeyCode.T,KeyCode.S, KeyCode.O), ke));
+ }
 
-  }
+ private void handleKeyCombs(List<KeyCode> eventkeys, KeyEvent keyevent){
+    for(KeyCode keyCode: eventkeys){
+      handleKeyComb(keyCode, keyevent);
+    }
+ }
+
 
 
   private void handleSave() {
@@ -119,7 +133,6 @@ public class BujoControllerImp implements BujoController {
 
     fileChooser.setInitialDirectory(new File("/Users/primaryuser/Code/CS3500/Lecture "
         + "Notes/pa05-blessedbujobeasts/src/main/resources"));
-
 
     Stage stage = new Stage();
     File selectedFile = fileChooser.showOpenDialog(stage);
@@ -137,10 +150,66 @@ public class BujoControllerImp implements BujoController {
     updatePage();
   }
 
+  private void handleConfigWeek() {
+    Dialog<TaskItem> dialog = new Dialog<>();
+    dialog.setTitle("Name This Week");
+    dialog.setHeaderText("Give this week a custom Name");
+    ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
+
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(20, 150, 10, 10));
+
+    TextField weekName = new TextField();
+    weekName.setPromptText("Week Name");
+
+    List<Integer> max = Arrays.asList(1, 2, 3, 4, 5);
+    ChoiceBox<Integer> maxEvents = new ChoiceBox<>();
+    maxEvents.getItems().addAll(max);
+    ChoiceBox<Integer> maxTasks = new ChoiceBox<>();
+    maxTasks.getItems().addAll(max);
+
+
+    grid.add(new Label("Week Name:"), 0, 0);
+    grid.add(weekName, 1, 0);
+    grid.add(new Label("Max Tasks:"), 0, 1);
+    grid.add(maxTasks, 1, 1);
+    grid.add(new Label("Max Events:"), 0, 2);
+    grid.add(maxEvents, 1, 2);
+
+    dialog.getDialogPane().setContent(grid);
+
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == configWeekButtonType) {
+            dialogConfigWeekHelper(weekName, maxEvents, maxTasks);
+            updatePage();
+          }
+          return null;
+        }
+    );
+
+    dialog.showAndWait();
+  }
+
+  private void dialogConfigWeekHelper(TextField weekName, ChoiceBox<Integer> maxEvents,
+                                    ChoiceBox<Integer> maxTasks) {
+    if (!weekName.getText().isEmpty()) {
+      this.bujoPage.setWeekName(weekName.getText());
+    }
+    if (maxEvents.getValue() != null) {
+      this.bujoPage.setMaxEvents(maxEvents.getValue());
+    }
+    if (maxTasks.getValue() != null) {
+      this.bujoPage.setMaxTasks(maxTasks.getValue());
+    }
+  }
+
   private void updatePage() {
     weeknameLabel.setText(bujoPage.getWeekName());
     List<Day> days = bujoPage.getBujoWeek();
-    List<Node> allboxes = this.weekHbox.getChildren();
+    List<Node> allboxes = this.weekHBox.getChildren();
     List<VBox> allDayVBoxes = new ArrayList<>();
 
     for (Node n : allboxes) {
@@ -151,19 +220,11 @@ public class BujoControllerImp implements BujoController {
     for (int i = 0; i < 7; i += 1) {
       Day currentDay = days.get(i);
       VBox currentBox = allDayVBoxes.get(i);
-      for (EventItem event : currentDay.getEvents()) {
-        //get all event related info from event
-        EventView eventView = new EventView(event.getName(), event.getDescription(),
-            event.getStartTime(), event.getDuration());
-        currentBox.getChildren().add(eventView);
-      }
+      Label dayName = (Label) currentBox.getChildren().get(0);
+      currentBox.getChildren().removeAll(currentBox.getChildren());
+      currentBox.getChildren().add(dayName);
 
-      for (TaskItem item : currentDay.getTasks()) {
-        TaskView taskView = new TaskView(item.getName(), item.getDescription(), item.getIsComplete());
-        currentBox.getChildren().add(taskView);
-        System.out.println("task should be added to javafx");
-      }
-
+      updateTaskAndEvents(currentDay, currentBox);
     }
 
     //update quotes and notes
@@ -191,12 +252,124 @@ public class BujoControllerImp implements BujoController {
     //update the task queue, call on the function that will fill in task queue
   }
 
+  private void updateTaskAndEvents(Day currentDay, VBox currentBox) {
+    for (EventItem event : currentDay.getEvents()) {
+      //get all event related info from event
+      EventView eventView = new EventView(event.getName(), event.getDescription(),
+          event.getStartTime(), event.getDuration());
+      eventView.setOnMouseClicked(mouseEvent -> handleEventClicked(event, currentDay));
+      currentBox.getChildren().add(eventView);
+    }
+
+    for (TaskItem task : currentDay.getTasks()) {
+      TaskView taskView = new TaskView(task.getName(), task.getDescription(), task.getIsComplete());
+      taskView.setOnMouseClicked(mouseEvent -> handleTaskClicked(task, currentDay));
+      currentBox.getChildren().add(taskView);
+    }
+  }
+
+  private void handleEventClicked(EventItem event, Day currentDay) {
+    Dialog<EventItem> dialog = new Dialog<>();
+    ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
+    List<Label> allLabels = new ArrayList<>();
+
+    allLabels.add(new Label("Event: " + event.getName()));
+    allLabels.add(new Label("Description : " + event.getDescription()));
+    allLabels.add(new Label("Start Time: " + event.getStartTime()));
+    allLabels.add(new Label("Duration: " + event.getDuration()));
+    dialog.setTitle(event.getName());
+    VBox infoHolder = new VBox();
+    infoHolder.setPrefSize(600, 400);
+    for (Label l : allLabels) {
+      l.setFont(Font.font("Baskerville", 20));
+      l.setPrefWidth(400);
+      l.setPrefHeight(100);
+      infoHolder.getChildren().add(l);
+    }
+    dialog.getDialogPane().setContent(infoHolder);
+
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == deleteButtonType) {
+            currentDay.removeItem(event);
+            updatePage();
+          }
+          return null;
+        }
+    );
+
+    dialog.showAndWait();
+    dialog.close();
+  }
+
+  private void handleTaskClicked(TaskItem task, Day currentDay) {
+    Dialog<EventItem> dialog = new Dialog<>();
+    ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
+    List<Label> allLabels = new ArrayList<>();
+
+    allLabels.add(new Label("Task: " + task.getName()));
+    allLabels.add(new Label("Description: " + task.getDescription()));
+    allLabels.add(new Label("Completion Status: " + task.getIsComplete()));
+    dialog.setTitle(task.getName());
+    VBox infoHolder = new VBox();
+    infoHolder.setPrefSize(600, 400);
+    for (Label l : allLabels) {
+      l.setFont(Font.font("Baskerville", 20));
+      l.setPrefWidth(400);
+      l.setPrefHeight(100);
+      infoHolder.getChildren().add(l);
+    }
+
+
+    dialog.getDialogPane().setContent(infoHolder);
+
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == deleteButtonType) {
+            currentDay.removeItem(task);
+            updatePage();
+          }
+          return null;
+        }
+    );
+
+    dialog.showAndWait();
+    dialog.close();
+  }
+
+  private void updateQuotesAndNotes() {
+    List<String> quotes = this.bujoPage.getQuotes();
+    List<String> notes = this.bujoPage.getNotes();
+    List<Node> quotesAndNotes = this.quotesAndNotes.getChildren();
+    VBox quoteVBox = (VBox) quotesAndNotes.get(0);
+    Label quoteLabel = (Label) quoteVBox.getChildren().get(0);
+    quoteVBox.getChildren().removeAll(quoteVBox.getChildren());
+    quoteVBox.getChildren().add(quoteLabel);
+
+    VBox noteVBox = (VBox) quotesAndNotes.get(2);
+    Label noteLabel = (Label) noteVBox.getChildren().get(0);
+    noteVBox.getChildren().removeAll(noteVBox.getChildren());
+    noteVBox.getChildren().add(noteLabel);
+
+    for (String s : quotes) {
+      TextField newQuote = new TextField(s);
+      newQuote.setFont(Font.font("Baskerville", 10));
+      newQuote.setPrefSize(400, 30);
+      quoteVBox.getChildren().add(newQuote);
+    }
+    for (String s : notes) {
+      TextField newNote = new TextField(s);
+      newNote.setFont(Font.font("Baskerville", 10));
+      newNote.setPrefSize(400, 30);
+      noteVBox.getChildren().add(newNote);
+    }
+  }
+
   private void handleCreateTask() {
     Dialog<TaskItem> dialog = new Dialog<>();
 
     dialog.setTitle("Create New Task");
     dialog.setHeaderText("Enter Task Info");
-
     ButtonType createTaskButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(createTaskButtonType, ButtonType.CANCEL);
 
@@ -207,7 +380,6 @@ public class BujoControllerImp implements BujoController {
 
     TextField taskName = new TextField();
     taskName.setPromptText("Task Name");
-
     TextField taskDescription = new TextField();
     taskDescription.setPromptText("Task Description");
 
@@ -216,58 +388,56 @@ public class BujoControllerImp implements BujoController {
         "Friday", "Saturday", "Sunday");
     dayOfWeek.getItems().addAll(days);
 
-
     grid.add(new Label("Task Name:"), 0, 0);
     grid.add(taskName, 1, 0);
     grid.add(new Label("Description:"), 0, 1);
     grid.add(taskDescription, 1, 1);
     grid.add(new Label("Day of Week:"), 0, 2);
     grid.add(dayOfWeek, 1, 2);
-
     dialog.getDialogPane().setContent(grid);
 
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == createTaskButtonType) {
-
-            if (taskName.getText().isEmpty() || taskDescription.getText().isEmpty()
-            || dayOfWeek.getValue() == null) {
-              Alert notCompleted = new Alert(Alert.AlertType.ERROR);
-              notCompleted.setContentText("Enter All Fields");
-              notCompleted.show();
-            } else {
-              DayOfWeek desiredDay = getDay(dayOfWeek.getValue());
-
-              Day day = bujoPage.getBujoWeek().stream().filter(d -> d.getDayOfWeek().equals(desiredDay))
-                  .toList().get(0);
-
-              if (day.getTasks().size() < day.getMaxTasks()) {
-                //add new task to the day
-                day.addItem(new TaskItem(taskName.getText(), taskDescription.getText()));
-                updatePage();
-              } else {
-                Alert atCapacity = new Alert(Alert.AlertType.ERROR);
-                atCapacity.setContentText("Already Reached Max Tasks for the chosen Day");
-                atCapacity.show();
-              }
-            }
+            taskDialogHelper(taskName, taskDescription, dayOfWeek);
           }
           return null;
         }
     );
 
-
-    Stage stage = new Stage();
     dialog.showAndWait();
-    dialog.close();
-
-    //fetch data entered in dialog
-
-    //throw warning if user enters invalid day
   }
 
   private void handleCreateEvent() {
 
   }
+
+  private void eventDialogHelper(TextField eventName, TextField eventDes, TextField eventSt,
+                                 TextField eventDur, ChoiceBox<String> dayOfWeek) {
+    if (eventName.getText().isEmpty() || eventSt.getText().isEmpty()
+        || eventDur.getText().isEmpty() || dayOfWeek.getValue() == null) {
+      Alert notCompleted = new Alert(Alert.AlertType.ERROR);
+      notCompleted.setContentText("Enter All Fields");
+      notCompleted.show();
+
+    } else {
+      DayOfWeek desiredDay = getDay(dayOfWeek.getValue());
+      Day day = bujoPage.getBujoWeek().stream().filter(d -> d.getDayOfWeek().equals(desiredDay))
+          .toList().get(0);
+
+      if (day.getEvents().size() < bujoPage.getMaxEvents()) {
+        //add new task to the day
+        day.addItem(new EventItem(eventName.getText(),
+            !eventDes.getText().isEmpty() ? eventDes.getText() : "Not Entered",
+            eventSt.getText(), eventDur.getText()));
+        updatePage();
+      } else {
+        Alert atCapacity = new Alert(Alert.AlertType.ERROR);
+        atCapacity.setContentText("Already Reached Max Event for the chosen Day");
+        atCapacity.show();
+      }
+    }
+  }
+
 
   private DayOfWeek getDay(String dayString) {
     return switch (dayString) {

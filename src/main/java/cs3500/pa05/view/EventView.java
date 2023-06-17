@@ -16,10 +16,10 @@ public class EventView extends VBox {
 
   public EventView(String eventName, String description,
                    String startTime, String duration) {
-    Label eventNameLabel = new Label(eventName);
-    Label descriptionLabel = new Label(description);
-    Label startTimeLabel = new Label(startTime);
-    Label durationLabel = new Label(duration);
+    this.eventNameLabel = new Label("* Event Name: " + eventName);
+    this.descriptionLabel = new Label(" Description: " + description);
+    this.startTimeLabel = new Label(" Start Time: " + startTime);
+    this.durationLabel = new Label(" Duration: " + duration);
 
    this.setStyle("-fx-border-style: solid; -fx-background-color: lavender");
    this.setWidth(90);
@@ -37,5 +37,6 @@ public class EventView extends VBox {
     }
 
     this.getChildren().addAll(eventRelated);
+
   }
 }

@@ -83,7 +83,6 @@ public class BujoWriterImp implements BujoWriter{
 
 
     JsonNode result = JsonUtil.serializeRecord(bujoPageJson);
-    //JsonNode result = JsonUtil.serializeRecord(bujoPageJson);
     return result;
   }
 }

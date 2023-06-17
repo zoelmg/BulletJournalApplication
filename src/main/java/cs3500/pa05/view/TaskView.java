@@ -14,9 +14,9 @@ public class TaskView extends VBox {
   private Label completeLabel;
 
   public TaskView(String taskName, String description, boolean complete) {
-    Label taskNameLabel = new Label(taskName);
-    Label descriptionLabel = new Label(description);
-    Label completeLabel = new Label(String.valueOf(complete));
+    this.taskNameLabel = new Label(" - Task: " + taskName);
+    this.descriptionLabel = new Label(" - Description: " + description);
+    this.completeLabel = new Label(" Completion Status: " + complete);
 
     this.setStyle("-fx-border-style: solid; -fx-background-color: lavender");
     this.setWidth(90);
