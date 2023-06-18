@@ -7,6 +7,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
+/**
+ * EventView represents a JavaFx component that will display an Event with name, description, start time
+ * and duration details as given by the user into the View.
+ */
 public class EventView extends VBox {
 
   private Label eventNameLabel;
@@ -14,6 +18,12 @@ public class EventView extends VBox {
   private Label startTimeLabel;
   private Label durationLabel;
 
+  /**
+   * @param eventName   is name for event given by user
+   * @param description is description of event given by user
+   * @param startTime   is start time of event given by user
+   * @param duration    is duration of event given by user
+   */
   public EventView(String eventName, String description,
                    String startTime, String duration) {
     this.eventNameLabel = new Label("* Event Name: " + eventName);
@@ -37,7 +47,6 @@ public class EventView extends VBox {
     }
 
     this.getChildren().addAll(eventRelated);
-
   }
 
 }

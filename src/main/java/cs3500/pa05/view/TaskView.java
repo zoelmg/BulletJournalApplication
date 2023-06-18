@@ -10,12 +10,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
+/**
+ * TaskView represents a JavaFx component that will display a Task with name, description,
+ * and is complete details as given by the user into the View.
+ */
 public class TaskView extends VBox {
 
   private Label taskNameLabel;
   private Label descriptionLabel;
   private Label completeLabel;
 
+  /**
+   * @param taskName    is name for task as given by user
+   * @param description is description for task as given by user
+   * @param complete    is boolean value for task completeness as given by user
+   */
   public TaskView(String taskName, String description, boolean complete) {
     this.taskNameLabel = new Label(" - Task: " + taskName);
     this.descriptionLabel = new Label(" - Description: " + description);

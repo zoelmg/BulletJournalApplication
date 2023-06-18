@@ -771,11 +771,17 @@ public class BujoControllerImp implements BujoController {
     try {
       Desktop.getDesktop().browse(new URI(link));
     } catch (Exception e) {
-
+      //should not throw expection, since given link's validity is already checked
     }
   }
 
 
+  /**
+   * Displays given TaskItem in Mini Viewer format
+   *
+   * @param task       is TaskItem that has been clicked on
+   * @param currentDay is Day in which given Task belongs
+   */
   private void handleTaskClicked(TaskItem task, Day currentDay) {
     Dialog<EventItem> dialog = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
@@ -792,7 +798,6 @@ public class BujoControllerImp implements BujoController {
       l.setFont(Font.font("Baskerville", 20));
       l.setPrefSize(600, 100);
       infoHolder.getChildren().add(l);
-
     }
 
     for (String link : task.getValidLinks()) {
@@ -815,25 +820,13 @@ public class BujoControllerImp implements BujoController {
     dialog.close();
   }
 
-  private void updateQuotesAndNotes() {
-    List<String> quotes = this.bujoPage.getQuotes();
-    List<String> notes = this.bujoPage.getNotes();
-    List<Node> quotesAndNotes = this.quotesAndNotes.getChildren();
-    VBox quoteVBox = (VBox) quotesAndNotes.get(0);
-    Label quoteLabel = (Label) quoteVBox.getChildren().get(0);
-    quoteVBox.getChildren().removeAll(quoteVBox.getChildren());
-    quoteVBox.getChildren().add(quoteLabel);
 
-    VBox noteVBox = (VBox) quotesAndNotes.get(2);
-    Label noteLabel = (Label) noteVBox.getChildren().get(0);
-    noteVBox.getChildren().removeAll(noteVBox.getChildren());
-    noteVBox.getChildren().add(noteLabel);
-
-    addString(quotes, quoteVBox);
-    addString(notes, noteVBox);
-
-  }
-
+  /**
+   * Adds each String in given list as a Label to the given VBox
+   *
+   * @param toBeAdded is a list of strings to be added to GUI.
+   * @param box       is VBox where given stringsmust be placed.
+   */
   private void addString(List<String> toBeAdded, VBox box) {
     for (String s : toBeAdded) {
       Label newNote = new Label(" * " + s);
@@ -844,147 +837,11 @@ public class BujoControllerImp implements BujoController {
     }
   }
 
-  private void handleCreateTask() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Task");
-    dialog.setHeaderText("Enter Task Info");
-    ButtonType createTaskButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createTaskButtonType, ButtonType.CANCEL);
 
-    GridPane grid = new GridPane();
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(20, 150, 10, 10));
-
-    TextField taskName = new TextField();
-    taskName.setPromptText("Task Name");
-    TextField taskDescription = new TextField();
-    taskDescription.setPromptText("Task Description");
-
-    ChoiceBox<String> dayOfWeek = new ChoiceBox<>();
-    List<String> days = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday",
-        "Friday", "Saturday", "Sunday");
-    dayOfWeek.getItems().addAll(days);
-
-    grid.add(new Label("Task Name:"), 0, 0);
-    grid.add(taskName, 1, 0);
-    grid.add(new Label("Description:"), 0, 1);
-    grid.add(taskDescription, 1, 1);
-    grid.add(new Label("Day of Week:"), 0, 2);
-    grid.add(dayOfWeek, 1, 2);
-    dialog.getDialogPane().setContent(grid);
-
-    dialog.setResultConverter(dialogButton -> {
-          if (dialogButton == createTaskButtonType) {
-            taskDialogHelper(taskName, taskDescription, dayOfWeek);
-          }
-          return null;
-        }
-    );
-
-    dialog.showAndWait();
-  }
-
-  private void taskDialogHelper(TextField taskName, TextField taskDescription,
-                                ChoiceBox<String> dayOfWeek) {
-    if (taskName.getText().isEmpty() || dayOfWeek.getValue() == null) {
-      Alert notCompleted = new Alert(Alert.AlertType.ERROR);
-      notCompleted.setContentText("Enter All Fields");
-      notCompleted.show();
-
-    } else {
-      DayOfWeek desiredDay = getDay(dayOfWeek.getValue());
-
-      Day day = bujoPage.getBujoWeek().stream().filter(d -> d.getDayOfWeek().equals(desiredDay))
-          .toList().get(0);
-
-      if (day.getTasks().size() < bujoPage.getMaxTasks()) {
-        day.addItem(new TaskItem(taskName.getText(),
-            !taskDescription.getText().isEmpty() ? taskDescription.getText() : "Not entered"));
-        updatePage();
-      } else {
-        Alert atCapacity = new Alert(Alert.AlertType.ERROR);
-        atCapacity.setContentText("Already Reached Max Tasks for the chosen Day");
-        atCapacity.show();
-      }
-    }
-  }
-
-  private void handleCreateEvent() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Event");
-    dialog.setHeaderText("Enter Event Info");
-    ButtonType createEventButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createEventButtonType, ButtonType.CANCEL);
-
-    GridPane grid = new GridPane();
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(20, 150, 10, 10));
-    TextField eventName = new TextField(), eventDes = new TextField(),
-        eventSt = new TextField(), eventDur = new TextField();
-
-    eventName.setPromptText("Event Name");
-    eventDes.setPromptText("Event Description");
-    eventSt.setPromptText("Event StartTime");
-    eventDur.setPromptText("Event Duration");
-
-    ChoiceBox<String> dayOfWeek = new ChoiceBox<>();
-    List<String> days = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday",
-        "Friday", "Saturday", "Sunday");
-    dayOfWeek.getItems().addAll(days);
-
-    grid.add(new Label("Event Name:"), 0, 0);
-    grid.add(eventName, 1, 0);
-    grid.add(new Label("Description:"), 0, 1);
-    grid.add(eventDes, 1, 1);
-    grid.add(new Label("Start Time:"), 0, 2);
-    grid.add(eventSt, 1, 2);
-    grid.add(new Label("Duration:"), 0, 3);
-    grid.add(eventDur, 1, 3);
-    grid.add(new Label("Day of Week:"), 0, 4);
-    grid.add(dayOfWeek, 1, 4);
-    dialog.getDialogPane().setContent(grid);
-
-    dialog.setResultConverter(dialogButton -> {
-          if (dialogButton == createEventButtonType) {
-            eventDialogHelper(eventName, eventDes, eventSt, eventDur, dayOfWeek);
-          }
-          return null;
-        }
-    );
-
-    dialog.showAndWait();
-  }
-
-  private void eventDialogHelper(TextField eventName, TextField eventDes, TextField eventSt,
-                                 TextField eventDur, ChoiceBox<String> dayOfWeek) {
-    if (eventName.getText().isEmpty() || eventSt.getText().isEmpty()
-        || eventDur.getText().isEmpty() || dayOfWeek.getValue() == null) {
-      Alert notCompleted = new Alert(Alert.AlertType.ERROR);
-      notCompleted.setContentText("Enter All Fields");
-      notCompleted.show();
-
-    } else {
-      DayOfWeek desiredDay = getDay(dayOfWeek.getValue());
-      Day day = bujoPage.getBujoWeek().stream().filter(d -> d.getDayOfWeek().equals(desiredDay))
-          .toList().get(0);
-
-      if (day.getEvents().size() < bujoPage.getMaxEvents()) {
-        //add new task to the day
-        day.addItem(new EventItem(eventName.getText(),
-            !eventDes.getText().isEmpty() ? eventDes.getText() : "Not Entered",
-            eventSt.getText(), eventDur.getText()));
-        updatePage();
-      } else {
-        Alert atCapacity = new Alert(Alert.AlertType.ERROR);
-        atCapacity.setContentText("Already Reached Max Event for the chosen Day");
-        atCapacity.show();
-      }
-    }
-  }
-
-
+  /**
+   * @param dayString is a string containing a name of a week day
+   * @return the DayOfWeek enum equivalent of given String day
+   */
   private DayOfWeek getDay(String dayString) {
     return switch (dayString) {
       case "Monday" -> DayOfWeek.MONDAY;

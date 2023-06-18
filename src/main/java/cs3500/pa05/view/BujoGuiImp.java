@@ -6,9 +6,16 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
-public class BujoGuiImp implements BujoGuiView{
+/**
+ * Represents the GUI provided to User with JavaFx and SceneBuilder
+ */
+public class BujoGuiImp implements BujoGuiView {
+
   private FXMLLoader loader;
 
+  /**
+   * @param controller is BujoController object that will be used to coordinate this program using this view
+   */
   public BujoGuiImp(BujoController controller) {
     // look up and store the layout
     this.loader = new FXMLLoader();
@@ -16,6 +23,10 @@ public class BujoGuiImp implements BujoGuiView{
     this.loader.setLocation(getClass().getClassLoader().getResource("BujoMockup.fxml"));
   }
 
+  /**
+   * @return a Scene with all elements of the GUI for this program.
+   * @throws IllegalStateException when unable to load this BujoGuiImp's FXMLLoader
+   */
   @Override
   public Scene load() throws IllegalStateException {
     try {
