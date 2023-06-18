@@ -37,4 +37,7 @@ public class EventItem extends AbstractItem implements IEventItem {
   public String getDuration() {
     return this.duration;
   }
+
+
+
 }

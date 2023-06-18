@@ -11,9 +11,10 @@ public class TaskItem extends AbstractItem implements ITaskItem {
     this.isCompleted = false;
   }
 
-
   @Override
   public boolean getIsComplete() {
     return this.isCompleted;
   }
+
+
 }

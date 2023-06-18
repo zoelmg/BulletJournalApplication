@@ -14,9 +14,12 @@ import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
 import cs3500.pa05.view.EventView;
 import cs3500.pa05.view.TaskView;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -463,6 +466,13 @@ public class BujoControllerImp implements BujoController {
       l.setPrefSize(600, 100);
       infoHolder.getChildren().add(l);
     }
+
+    for (String link : event.getValidLinks()) {
+      Hyperlink newLink = new Hyperlink(link);
+      newLink.setOnAction(linkPressed -> handleLinkPressed(link));
+      infoHolder.getChildren().add(newLink);
+    }
+
     dialog.getDialogPane().setContent(infoHolder);
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
@@ -475,6 +485,15 @@ public class BujoControllerImp implements BujoController {
     dialog.showAndWait();
     dialog.close();
   }
+
+  private void handleLinkPressed(String link) {
+    try {
+      Desktop.getDesktop().browse(new URI(link));
+    } catch (Exception e) {
+
+    }
+  }
+
 
   private void handleTaskClicked(TaskItem task, Day currentDay) {
     Dialog<EventItem> dialog = new Dialog<>();
@@ -495,9 +514,13 @@ public class BujoControllerImp implements BujoController {
 
     }
 
+    for (String link : task.getValidLinks()) {
+      Hyperlink newLink = new Hyperlink(link);
+      newLink.setOnAction(linkPressed -> handleLinkPressed(link));
+      infoHolder.getChildren().add(newLink);
+    }
 
     dialog.getDialogPane().setContent(infoHolder);
-
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
             currentDay.removeItem(task);

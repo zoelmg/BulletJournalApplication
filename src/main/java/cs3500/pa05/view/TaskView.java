@@ -1,8 +1,11 @@
 package cs3500.pa05.view;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import javafx.scene.Node;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
@@ -34,4 +37,6 @@ public class TaskView extends VBox {
 
     this.getChildren().addAll(eventRelated);
   }
+
+
 }
