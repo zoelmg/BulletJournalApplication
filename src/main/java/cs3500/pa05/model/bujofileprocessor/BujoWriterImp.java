@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * An implementation of BujoWriter which writes in a .bujo file with given BujoPage
  */
-public class BujoWriterImp implements BujoWriter{
+public class BujoWriterImp implements BujoWriter {
 
   private final Appendable appendable;
 

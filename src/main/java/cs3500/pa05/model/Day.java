@@ -59,7 +59,6 @@ public class Day {
   }
 
   /**
-   *
    * @return the list of tasks for this day
    */
   public List<TaskItem> getTasks() {

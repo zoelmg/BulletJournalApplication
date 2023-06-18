@@ -9,7 +9,10 @@ import cs3500.pa05.view.BujoGuiView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class MainStage extends Application  {
+/**
+ * The Main Stage of the BujoPage
+ */
+public class MainStage extends Application {
 
   private BujoController controller;
   private BujoPage bujopage;

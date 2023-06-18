@@ -10,11 +10,11 @@ public class BujoGuiImp implements BujoGuiView{
   private FXMLLoader loader;
 
   public BujoGuiImp(BujoController controller) {
-  // look up and store the layout
+    // look up and store the layout
     this.loader = new FXMLLoader();
     this.loader.setController(controller);
     this.loader.setLocation(getClass().getClassLoader().getResource("BujoMockup.fxml"));
-}
+  }
 
   @Override
   public Scene load() throws IllegalStateException {

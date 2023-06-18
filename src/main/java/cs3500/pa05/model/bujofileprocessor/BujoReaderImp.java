@@ -9,21 +9,17 @@ import cs3500.pa05.model.TaskItem;
 import cs3500.pa05.model.bujofileprocessor.json.BujoPageJson;
 import cs3500.pa05.model.bujofileprocessor.json.DayJson;
 import cs3500.pa05.model.bujofileprocessor.json.EventJson;
-import cs3500.pa05.model.bujofileprocessor.json.JsonUtil;
 import cs3500.pa05.model.bujofileprocessor.json.TaskJson;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import javafx.scene.control.Button;
 import com.fasterxml.jackson.core.JsonParser;
 
 /**
  * An implementation of BujoReader which reads and process a .bujo file
  */
-public class BujoReaderImp implements BujoReader{
+public class BujoReaderImp implements BujoReader {
   private final Readable readable;
   private final ObjectMapper mapper;
 
@@ -31,6 +27,7 @@ public class BujoReaderImp implements BujoReader{
     this.readable = Objects.requireNonNull(readable);
     this.mapper = new ObjectMapper();
   }
+
   /**
    * Reads, process, and extract a .bujo file into a BujoPage
    *
@@ -44,20 +41,21 @@ public class BujoReaderImp implements BujoReader{
       parser = this.mapper.getFactory().createParser(this.read());
       BujoPageJson bujoPageJson = parser.readValueAs(BujoPageJson.class);
       ArrayList<Day> days = new ArrayList<>();
-      for(DayJson dayJson: bujoPageJson.week()){
+      for (DayJson dayJson : bujoPageJson.week()) {
         Day day = new Day(dayJson.weekday());
 
-        for(EventJson eventJson: dayJson.events()){
+        for (EventJson eventJson : dayJson.events()) {
           EventItem newEvent = new EventItem(eventJson.name(),
               eventJson.description(), eventJson.startTime(), eventJson.duration());
           day.addItem(newEvent);
         }
-        for(TaskJson taskJson: dayJson.tasks()){
-          TaskItem newTask = new TaskItem(taskJson.name(), taskJson.description(), taskJson.isCompleted());
+        for (TaskJson taskJson : dayJson.tasks()) {
+          TaskItem newTask =
+              new TaskItem(taskJson.name(), taskJson.description(), taskJson.isCompleted());
           day.addItem(newTask);
         }
 
-       days.add(day);
+        days.add(day);
       }
 
       result.setWeek(days);
@@ -78,6 +76,7 @@ public class BujoReaderImp implements BujoReader{
 
   /**
    * read sr files
+   *
    * @return the contents of the file
    */
   public String read() {

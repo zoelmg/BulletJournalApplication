@@ -4,6 +4,9 @@ import static javafx.application.Application.launch;
 
 import cs3500.pa05.controller.BujoControllerImp;
 
+/**
+ * The entry point of this Module
+ */
 public class Driver {
 
   /**

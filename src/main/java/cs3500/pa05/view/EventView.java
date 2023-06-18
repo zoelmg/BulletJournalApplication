@@ -21,9 +21,9 @@ public class EventView extends VBox {
     this.startTimeLabel = new Label(" Start Time: " + startTime);
     this.durationLabel = new Label(" Duration: " + duration);
 
-   this.setStyle("-fx-border-style: solid; -fx-background-color: lavender");
-   this.setWidth(90);
-   this.setHeight(200);
+    this.setStyle("-fx-border-style: solid; -fx-background-color: lavender");
+    this.setWidth(90);
+    this.setHeight(200);
 
     List<Label> eventRelated = new ArrayList<>();
     eventRelated.add(eventNameLabel);

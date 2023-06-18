@@ -39,5 +39,4 @@ public class EventItem extends AbstractItem implements IEventItem {
   }
 
 
-
 }

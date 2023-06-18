@@ -7,6 +7,7 @@ import java.nio.file.Path;
  * Represents an interface that can read, process, and extract .bujo files
  */
 public interface BujoReader {
+
   /**
    * Reads, process, and extract a .bujo file into a BujoPage
    *

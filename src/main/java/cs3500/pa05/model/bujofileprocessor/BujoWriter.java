@@ -1,7 +1,6 @@
 package cs3500.pa05.model.bujofileprocessor;
 
 import cs3500.pa05.model.BujoPage;
-import java.nio.file.Path;
 
 /**
  * Represents an interface that can process, extract, and write into .bujo files

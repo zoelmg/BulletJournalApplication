@@ -29,10 +29,10 @@ public abstract class AbstractItem implements Item {
     String descriptionText = this.description + " ";
     int count = 1;
 
-    while (descriptionText.contains("http") ) {
+    while (descriptionText.contains("http")) {
       String possibleLink = "";
       String subtext = descriptionText.substring(descriptionText.indexOf("http"));
-      while (count + 1 < subtext.length() + 1){
+      while (count + 1 < subtext.length() + 1) {
         possibleLink = subtext.substring(0, count);
         String nextPossibleLink = subtext.substring(0, count + 1);
         if (isValidLink(possibleLink) && ((count == subtext.length() - 1) ||
