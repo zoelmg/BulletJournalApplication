@@ -20,7 +20,6 @@ public class Day {
    * @param task is TaskItem object to be added to this day
    */
   public void addItem(TaskItem task) {
-    System.out.println(task.getName());
     this.tasks.add(task);
   }
 

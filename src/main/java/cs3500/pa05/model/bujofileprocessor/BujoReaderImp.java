@@ -43,7 +43,7 @@ public class BujoReaderImp implements BujoReader{
     try {
       parser = this.mapper.getFactory().createParser(this.read());
       BujoPageJson bujoPageJson = parser.readValueAs(BujoPageJson.class);
-      ArrayList<Day> days = new ArrayList<Day>();
+      ArrayList<Day> days = new ArrayList<>();
       for(DayJson dayJson: bujoPageJson.week()){
         Day day = new Day(dayJson.weekday());
 
@@ -64,8 +64,8 @@ public class BujoReaderImp implements BujoReader{
       result.setQuotes(bujoPageJson.quotebox().quotes());
       result.setWeekName(bujoPageJson.weekName());
       result.setNotes(bujoPageJson.notebox().notes());
-      result.setMaxEvents(bujoPageJson.MaxEvents());
-      result.setMaxTasks(bujoPageJson.MaxTasks());
+      result.setMaxEvents(bujoPageJson.maxEvents());
+      result.setMaxTasks(bujoPageJson.maxTasks());
 
     } catch (IOException e) {
       throw new RuntimeException(e);
