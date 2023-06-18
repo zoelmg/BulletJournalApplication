@@ -29,6 +29,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -128,117 +129,118 @@ public class BujoControllerImp implements BujoController {
     noteItem.setOnAction(event -> handleCreateNote());
     newWeek.setOnAction(event -> handleNewWeek());
 
-    mainScene.setOnKeyPressed(ke ->  handleKeyCombs(
-        Arrays.asList(KeyCode.E, KeyCode.T,KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2), ke));
- }
+    mainScene.setOnKeyPressed(ke -> handleKeyCombs(
+        Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2),
+        ke));
+  }
 
- private void handleNewWeek() {
+  private void handleNewWeek() {
     Dialog<BujoPage> dialog = new Dialog<>();
     dialog.setTitle("Create a New Week");
-   ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-   dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
 
 
-   GridPane grid = new GridPane();
-   grid.setHgap(10);
-   grid.setVgap(10);
-   grid.setPadding(new Insets(20, 150, 10, 10));
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(20, 150, 10, 10));
 
-   TextField weekName = new TextField();
-   weekName.setPromptText("Enter Desired Week Name");
-
-
-   grid.add(new Label("Week Name: "), 0, 0);
-   grid.add(weekName, 1, 0);
-   dialog.getDialogPane().setContent(grid);
-
-   dialog.setResultConverter(dialogButton -> {
-         if (dialogButton == createQuoteButtonType) {
-           newWeekHelper(weekName);
-         }
-         return null;
-       }
-   );
-   dialog.showAndWait();
- }
-
- private void newWeekHelper(TextField weekName) {
-   handleSave();
-   String newWeekName = weekName.getText();
-   this.bujoPage = new BujoPageImp();
-   this.bujoPage.setWeekName(newWeekName);
-   this.bujoPath = Path.of("src/main/resources/" + bujoPage.getWeekName() + ".bujo");
-   updatePage();
- }
-
- private void handleCreateQuote() {
-   Dialog<TaskItem> dialog = new Dialog<>();
-   dialog.setTitle("Create New Quote");
-   ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-   dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
-
-   GridPane grid = new GridPane();
-   grid.setHgap(10);
-   grid.setVgap(10);
-   grid.setPadding(new Insets(20, 150, 10, 10));
-
-   TextField quoteText = new TextField();
-   quoteText.setPromptText("Write quote here ");
+    TextField weekName = new TextField();
+    weekName.setPromptText("Enter Desired Week Name");
 
 
-   grid.add(new Label("Quote: "), 0, 0);
-   grid.add(quoteText, 1, 0);
+    grid.add(new Label("Week Name: "), 0, 0);
+    grid.add(weekName, 1, 0);
+    dialog.getDialogPane().setContent(grid);
 
-   dialog.getDialogPane().setContent(grid);
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == createQuoteButtonType) {
+            newWeekHelper(weekName);
+          }
+          return null;
+        }
+    );
+    dialog.showAndWait();
+  }
 
-   dialog.setResultConverter(dialogButton -> {
-         if (dialogButton == createQuoteButtonType) {
-           dialogQuoteHelper(quoteText);
-           updatePage();
-         }
-         return null;
-       }
-   );
+  private void newWeekHelper(TextField weekName) {
+    handleSave();
+    String newWeekName = weekName.getText();
+    this.bujoPage = new BujoPageImp();
+    this.bujoPage.setWeekName(newWeekName);
+    this.bujoPath = Path.of("src/main/resources/" + bujoPage.getWeekName() + ".bujo");
+    updatePage();
+  }
 
-   dialog.showAndWait();
- }
+  private void handleCreateQuote() {
+    Dialog<TaskItem> dialog = new Dialog<>();
+    dialog.setTitle("Create New Quote");
+    ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
 
- private void dialogQuoteHelper(TextField quoteText) {
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(20, 150, 10, 10));
+
+    TextField quoteText = new TextField();
+    quoteText.setPromptText("Write quote here ");
+
+
+    grid.add(new Label("Quote: "), 0, 0);
+    grid.add(quoteText, 1, 0);
+
+    dialog.getDialogPane().setContent(grid);
+
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == createQuoteButtonType) {
+            dialogQuoteHelper(quoteText);
+            updatePage();
+          }
+          return null;
+        }
+    );
+
+    dialog.showAndWait();
+  }
+
+  private void dialogQuoteHelper(TextField quoteText) {
     List<String> newQuotes = bujoPage.getQuotes();
     newQuotes.add(quoteText.getText());
     bujoPage.setQuotes(newQuotes);
 
- }
+  }
 
- private void handleCreateNote() {
-   Dialog<TaskItem> dialog = new Dialog<>();
-   dialog.setTitle("Create New Note");
-   ButtonType createNoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-   dialog.getDialogPane().getButtonTypes().addAll(createNoteButtonType, ButtonType.CANCEL);
+  private void handleCreateNote() {
+    Dialog<TaskItem> dialog = new Dialog<>();
+    dialog.setTitle("Create New Note");
+    ButtonType createNoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(createNoteButtonType, ButtonType.CANCEL);
 
-   GridPane grid = new GridPane();
-   grid.setHgap(10);
-   grid.setVgap(10);
-   grid.setPadding(new Insets(20, 150, 10, 10));
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(20, 150, 10, 10));
 
-   TextField noteText = new TextField();
-   noteText.setPromptText("Write note here ");
+    TextField noteText = new TextField();
+    noteText.setPromptText("Write note here ");
 
-   grid.add(new Label("Note: "), 0, 0);
-   grid.add(noteText, 1, 0);
+    grid.add(new Label("Note: "), 0, 0);
+    grid.add(noteText, 1, 0);
 
-   dialog.getDialogPane().setContent(grid);
+    dialog.getDialogPane().setContent(grid);
 
-   dialog.setResultConverter(dialogButton -> {
-         if (dialogButton == createNoteButtonType) {
-           dialogNoteHelper(noteText);
-           updatePage();
-         }
-         return null;
-       }
-   );
-   dialog.showAndWait();
- }
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == createNoteButtonType) {
+            dialogNoteHelper(noteText);
+            updatePage();
+          }
+          return null;
+        }
+    );
+    dialog.showAndWait();
+  }
 
   private void dialogNoteHelper(TextField noteText) {
     List<String> newNotes = bujoPage.getNotes();
@@ -247,16 +249,16 @@ public class BujoControllerImp implements BujoController {
   }
 
 
- private void handleKeyCombs(List<KeyCode> eventkeys, KeyEvent keyevent){
-    for(KeyCode keyCode: eventkeys){
+  private void handleKeyCombs(List<KeyCode> eventkeys, KeyEvent keyevent) {
+    for (KeyCode keyCode : eventkeys) {
       handleKeyComb(keyCode, keyevent);
     }
- }
+  }
 
-  private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent){
+  private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent) {
     KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
     KeyCombination keycomb2 = new KeyCodeCombination(eventKey, KeyCombination.SHORTCUT_DOWN);
-    if(keycomb.match(keyEvent) || keycomb2.match(keyEvent)){
+    if (keycomb.match(keyEvent) || keycomb2.match(keyEvent)) {
       switch (eventKey) {
         case E -> handleCreateEvent();
         case T -> handleCreateTask();
@@ -348,7 +350,7 @@ public class BujoControllerImp implements BujoController {
   }
 
   private void dialogConfigWeekHelper(TextField weekName, ChoiceBox<Integer> maxEvents,
-                                    ChoiceBox<Integer> maxTasks, ChoiceBox<String> weekStart) {
+                                      ChoiceBox<Integer> maxTasks, ChoiceBox<String> weekStart) {
     if (!weekName.getText().isEmpty()) {
       this.bujoPage.setWeekName(weekName.getText());
     }
@@ -359,8 +361,8 @@ public class BujoControllerImp implements BujoController {
       this.bujoPage.setMaxTasks(maxTasks.getValue());
     }
     if (weekStart.getValue() != null) {
-    handleChangeWeekStart(weekStart.getValue());
-  }
+      handleChangeWeekStart(weekStart.getValue());
+    }
   }
 
   private void handleChangeWeekStart(String weekStartDay) {
@@ -447,23 +449,21 @@ public class BujoControllerImp implements BujoController {
     Dialog<EventItem> dialog = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
-    List<Label> allLabels = new ArrayList<>();
-
-    allLabels.add(new Label("Event: " + event.getName()));
-    allLabels.add(new Label("Description : " + event.getDescription()));
-    allLabels.add(new Label("Start Time: " + event.getStartTime()));
-    allLabels.add(new Label("Duration: " + event.getDuration()));
-    dialog.setTitle(event.getName());
+    List<Label> allLabels = Arrays.asList(new Label("Event: " + event.getName()),
+        new Label("Description : " + event.getDescription()),
+        new Label("Start Time: " + event.getStartTime()),
+        new Label("Duration: " + event.getDuration()),
+        new Label("Links in Description: " + event.getDuration()));
+    
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);
     for (Label l : allLabels) {
+      l.setWrapText(true);
       l.setFont(Font.font("Baskerville", 20));
-      l.setPrefWidth(400);
-      l.setPrefHeight(100);
+      l.setPrefSize(600, 100);
       infoHolder.getChildren().add(l);
     }
     dialog.getDialogPane().setContent(infoHolder);
-
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
             currentDay.removeItem(event);
@@ -472,7 +472,6 @@ public class BujoControllerImp implements BujoController {
           return null;
         }
     );
-
     dialog.showAndWait();
     dialog.close();
   }
@@ -481,18 +480,17 @@ public class BujoControllerImp implements BujoController {
     Dialog<EventItem> dialog = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
-    List<Label> allLabels = new ArrayList<>();
-
-    allLabels.add(new Label("Task: " + task.getName()));
-    allLabels.add(new Label("Description: " + task.getDescription()));
-    allLabels.add(new Label("Completion Status: " + task.getIsComplete()));
+    List<Label> allLabels = Arrays.asList(new Label("Task: " + task.getName()),
+        new Label("Description: " + task.getDescription()),
+        new Label("Completion Status: " + task.getIsComplete()),
+        new Label("Links in Description: "));
+    
     dialog.setTitle(task.getName());
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);
     for (Label l : allLabels) {
       l.setFont(Font.font("Baskerville", 20));
-      l.setPrefWidth(400);
-      l.setPrefHeight(100);
+      l.setPrefSize(600, 100);
       infoHolder.getChildren().add(l);
 
     }
@@ -695,6 +693,5 @@ public class BujoControllerImp implements BujoController {
       default -> null;
     };
   }
-
 
 }
