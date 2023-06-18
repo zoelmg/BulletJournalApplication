@@ -124,13 +124,12 @@ public class BujoControllerImp implements BujoController {
 
     taskItem.setOnAction(event -> handleCreateTask());
     eventItem.setOnAction(event -> handleCreateEvent());
-
     quoteItem.setOnAction(event -> handleCreateQuote());
     noteItem.setOnAction(event -> handleCreateNote());
+    newWeek.setOnAction(event -> handleNewWeek());
 
     mainScene.setOnKeyPressed(ke ->  handleKeyCombs(
         Arrays.asList(KeyCode.E, KeyCode.T,KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2), ke));
-
  }
 
  private void handleNewWeek() {
