@@ -1,5 +1,8 @@
 package cs3500.pa05.model;
 
+/**
+ * An item that represents a task
+ */
 public class TaskItem extends AbstractItem implements ITaskItem {
   private boolean isCompleted;
 
@@ -14,9 +17,12 @@ public class TaskItem extends AbstractItem implements ITaskItem {
   }
 
   @Override
+  /**
+   * get if the task is complete
+   * @return if the task is complete
+   */
   public boolean getIsComplete() {
     return this.isCompleted;
   }
-
 
 }

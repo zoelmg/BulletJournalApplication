@@ -48,6 +48,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+/**
+ * Represent the controller for a BujoPage
+ */
 public class BujoControllerImp implements BujoController {
 
   /**
@@ -730,7 +733,7 @@ public class BujoControllerImp implements BujoController {
         new Label("Start Time: " + event.getStartTime()),
         new Label("Duration: " + event.getDuration()),
         new Label("Links in Description: " + event.getDuration()));
-    
+
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);
     for (Label l : allLabels) {
@@ -781,7 +784,7 @@ public class BujoControllerImp implements BujoController {
         new Label("Description: " + task.getDescription()),
         new Label("Completion Status: " + task.getIsComplete()),
         new Label("Links in Description: "));
-    
+
     dialog.setTitle(task.getName());
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);

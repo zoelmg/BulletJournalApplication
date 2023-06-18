@@ -6,6 +6,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * An item that represents an event
+ */
 public class EventItem extends AbstractItem implements IEventItem {
 
   private String startTime;

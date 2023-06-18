@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The abstaction of an item on the bujo page
+ */
 public abstract class AbstractItem implements Item {
   protected final String name;
   protected final String description;
@@ -14,16 +17,28 @@ public abstract class AbstractItem implements Item {
   }
 
   @Override
+  /**
+   * get the name of the item
+   * @return the name of the item
+   */
   public String getName() {
     return this.name;
   }
 
   @Override
+  /**
+   * get the description of the item
+   * @return the description of the item
+   */
   public String getDescription() {
     return this.description;
   }
 
   @Override
+  /**
+   * get the valid links in the item
+   * @return the valid links in the item
+   */
   public List<String> getValidLinks() {
     List<String> links = new ArrayList<>();
     String descriptionText = this.description + " ";
@@ -46,8 +61,6 @@ public abstract class AbstractItem implements Item {
       descriptionText = subtext.substring(count);
       count = 1;
     }
-
-
     return links;
   }
 

@@ -5,6 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * An appendable that appends to a file
+ */
 public class FileAppendable implements Appendable {
   File file;
 
