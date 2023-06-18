@@ -3,7 +3,7 @@ package cs3500.pa05.model;
 /**
  * An Item that represents an event
  */
-public interface IEventItem extends Item {
+public interface IntEventItem extends Item {
 
   /**
    * get the start time of the event

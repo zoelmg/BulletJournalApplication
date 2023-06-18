@@ -1,15 +1,9 @@
 package cs3500.pa05.model;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.List;
-import java.util.ArrayList;
-
 /**
  * An item that represents an event
  */
-public class EventItem extends AbstractItem implements IEventItem {
+public class EventItem extends AbstractItem implements IntEventItem {
 
   private String startTime;
   private String duration;

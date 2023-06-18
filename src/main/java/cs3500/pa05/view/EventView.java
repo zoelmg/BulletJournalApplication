@@ -2,14 +2,13 @@ package cs3500.pa05.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 /**
- * EventView represents a JavaFx component that will display an Event with name, description, start time
- * and duration details as given by the user into the View.
+ * EventView represents a JavaFx component that will display an Event with name,
+ * description, start time and duration details as given by the user into the View.
  */
 public class EventView extends VBox {
 

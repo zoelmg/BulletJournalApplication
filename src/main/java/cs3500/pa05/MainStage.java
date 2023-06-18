@@ -18,6 +18,9 @@ public class MainStage extends Application {
   private BujoPage bujopage;
   private BujoGuiView view;
 
+  /**
+   * Initializing a Main Stage with a view, controller, and model
+   */
   public MainStage() {
     this.bujopage = new BujoPageImp();
     this.controller = new BujoControllerImp(this.bujopage);

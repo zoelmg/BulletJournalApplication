@@ -3,7 +3,7 @@ package cs3500.pa05.model;
 /**
  * An interface that represents a task
  */
-public interface ITaskItem extends Item {
+public interface IntTaskItem extends Item {
   /**
    * get if the task is complete
    *

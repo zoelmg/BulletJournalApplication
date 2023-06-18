@@ -14,7 +14,8 @@ public class BujoGuiImp implements BujoGuiView {
   private FXMLLoader loader;
 
   /**
-   * @param controller is BujoController object that will be used to coordinate this program using this view
+   * @param controller is BujoController object that will be used to coordinate this
+   *                   program using this view
    */
   public BujoGuiImp(BujoController controller) {
     // look up and store the layout

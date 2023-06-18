@@ -4,10 +4,8 @@ import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.model.Day;
 import cs3500.pa05.model.EventItem;
 import cs3500.pa05.model.TaskItem;
-import cs3500.pa05.model.bujofileprocessor.BujoReader;
 import cs3500.pa05.model.bujofileprocessor.BujoReaderImp;
 import cs3500.pa05.model.bujofileprocessor.BujoWriterImp;
-import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.DayOfWeek;
@@ -15,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class test {
+public class Test {
   BujoWriterImp bujoWriterImp;
   BujoWriterImp bujoWriterImp2;
   Appendable output;
@@ -30,7 +28,7 @@ public class test {
 
 
   @BeforeEach
-  void setup(){
+  void setup() {
     output = new StringWriter();
     output2 = new StringWriter();
     bujoWriterImp = new BujoWriterImp(output);
@@ -46,15 +44,17 @@ public class test {
     bujoPageImp2.setWeekName("friesDay");
     bujoPageImp2.setNotes(Arrays.asList("blah", "blah2"));
     bujoPageImp2.setQuotes(Arrays.asList("blah", "blah2"));
-    input = new StringReader("{\\\"Week\\\":[{\\\"week-day\\\":\\\"FRIDAY\\\",\\\"\" +\n" +
-        "        \"events\\\":[{\\\"name\\\":\\\"blah1\\\",\\\"description\\\":\\\"blah2\\\",\\\"start-time\\\":\\\"bl\" +\n" +
-        "        \"ah3\\\",\\\"duration\\\":\\\"blah4\\\"}],\\\"tasks\\\":[]}],\\\"Week-Nam\" +\n" +
-        "        \"e\\\":\\\"friesDay\\\",\\\"quotebox\\\":{\\\"quotes\\\":[\\\"hi\\\"]},\\\"notebox\\\"\" +\n" +
-        "        \":{\\\"notes\\\":[\\\"blah\\\",\\\"blah2\\\"]}}");
+    input = new StringReader("{\\\"Week\\\":[{\\\"week-day\\\":\\\"FRIDAY\\\",\\\"\" +\n"
+        + "        \"events\\\":[{\\\"name\\\":\\\"blah1\\\",\\\"description\\\":\\\"blah2\\\""
+        + ",\\\"start-time\\\":\\\"bl\" +\n"
+        + "        \"ah3\\\",\\\"duration\\\":\\\"blah4\\\"}],\\\"tasks\\\":[]}],\\\"Week-Nam\" +\n"
+        + "        \"e\\\":\\\"friesDay\\\",\\\"quotebox\\\":{\\\"quotes\\\":[\\\"hi\\\"]},\\\"no"
+        + "tebox\\\"\" +\n"
+        + "        \":{\\\"notes\\\":[\\\"blah\\\",\\\"blah2\\\"]}}");
     bujoReaderImp = new BujoReaderImp(input);
   }
 
-  @Test
+  @org.junit.jupiter.api.Test
   void testWriteBujoFile(){
 //    bujoWriterImp.writeBujoFile(bujoPageImp);
 //    assertEquals(output.toString(), "{\"Week\":[{\"week-d" +

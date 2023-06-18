@@ -3,7 +3,7 @@ package cs3500.pa05.model;
 /**
  * An item that represents a task
  */
-public class TaskItem extends AbstractItem implements ITaskItem {
+public class TaskItem extends AbstractItem implements IntTaskItem {
   private boolean isCompleted;
 
   public TaskItem(String name, String description) {
@@ -16,11 +16,12 @@ public class TaskItem extends AbstractItem implements ITaskItem {
     this.isCompleted = false;
   }
 
-  @Override
   /**
    * get if the task is complete
+   *
    * @return if the task is complete
    */
+  @Override
   public boolean getIsComplete() {
     return this.isCompleted;
   }

@@ -1,5 +1,6 @@
 package cs3500.pa05.model.bujofileprocessor;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import com.fasterxml.jackson.core.JsonParser;
 
 /**
  * An implementation of BujoReader which reads and process a .bujo file

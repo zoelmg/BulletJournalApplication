@@ -16,11 +16,11 @@ public abstract class AbstractItem implements Item {
     this.description = description;
   }
 
-  @Override
   /**
    * get the name of the item
    * @return the name of the item
    */
+  @Override
   public String getName() {
     return this.name;
   }
@@ -34,11 +34,12 @@ public abstract class AbstractItem implements Item {
     return this.description;
   }
 
-  @Override
   /**
    * get the valid links in the item
+   *
    * @return the valid links in the item
    */
+  @Override
   public List<String> getValidLinks() {
     List<String> links = new ArrayList<>();
     String descriptionText = this.description + " ";
@@ -50,8 +51,8 @@ public abstract class AbstractItem implements Item {
       while (count + 1 < subtext.length() + 1) {
         possibleLink = subtext.substring(0, count);
         String nextPossibleLink = subtext.substring(0, count + 1);
-        if (isValidLink(possibleLink) && ((count == subtext.length() - 1) ||
-            (subtext.substring(count, count + 1).equals(" ")))) {
+        if (isValidLink(possibleLink) && ((count == subtext.length() - 1)
+            || (subtext.substring(count, count + 1).equals(" ")))) {
           links.add(possibleLink);
           break;
         }
