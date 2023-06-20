@@ -1,13 +1,15 @@
-package cs3500.pa05;
+package cs3500.pa05.model;
 
-import cs3500.pa05.model.EventItem;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test the methods of EventItem
+ * Test methods related to Abstract Item
  */
-public class EventItemTest {
+class AbstractItemTest {
+
   EventItem eventItem;
 
   @BeforeEach

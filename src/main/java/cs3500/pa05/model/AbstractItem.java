@@ -11,6 +11,10 @@ public abstract class AbstractItem implements Item {
   protected final String name;
   protected final String description;
 
+  /**
+   * @param name the name of this abstract item
+   * @param description the description of the item
+   */
   public AbstractItem(String name, String description) {
     this.name = name;
     this.description = description;
