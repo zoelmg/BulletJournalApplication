@@ -51,7 +51,7 @@ class TestLabel {
   /**
    * @param robot - Will be injected by the test runner.
    */
-  @Test
+  //@Test
   void when_button_is_clicked_text_changes(FxRobot robot) {
 //    // when:
 //    robot.clickOn(".button");

@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -30,11 +32,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -42,11 +44,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.geometry.Insets;
+
 
 /**
  * Represent the controller for a BujoPage
@@ -146,10 +147,10 @@ public class BujoControllerImp implements BujoController {
     weeknameLabel.setText(bujoPage.getWeekName());
     List<Day> days = bujoPage.getBujoWeek();
     List<Node> allboxes = this.weekHBox.getChildren();
-    List<VBox> allDayVBoxes = new ArrayList<>();
+    List<VBox> allDayVboxes = new ArrayList<>();
 
     for (Node n : allboxes) {
-      allDayVBoxes.add((VBox) n);
+      allDayVboxes.add((VBox) n);
     }
 
     taskQueue.getChildren().removeAll(taskQueue.getChildren());
@@ -157,7 +158,7 @@ public class BujoControllerImp implements BujoController {
     //updates each day's tasks and events
     for (int i = 0; i < 7; i += 1) {
       Day currentDay = days.get(i);
-      VBox currentBox = allDayVBoxes.get(i);
+      VBox currentBox = allDayVboxes.get(i);
       Label dayName = (Label) currentBox.getChildren().get(0);
       currentBox.getChildren().removeAll(currentBox.getChildren());
       currentBox.getChildren().add(dayName);
@@ -212,18 +213,18 @@ public class BujoControllerImp implements BujoController {
     List<String> quotes = this.bujoPage.getQuotes();
     List<String> notes = this.bujoPage.getNotes();
     List<Node> quotesAndNotes = this.quotesAndNotes.getChildren();
-    VBox quoteVBox = (VBox) quotesAndNotes.get(0);
-    Label quoteLabel = (Label) quoteVBox.getChildren().get(0);
-    quoteVBox.getChildren().removeAll(quoteVBox.getChildren());
-    quoteVBox.getChildren().add(quoteLabel);
+    VBox quoteVbox = (VBox) quotesAndNotes.get(0);
+    Label quoteLabel = (Label) quoteVbox.getChildren().get(0);
+    quoteVbox.getChildren().removeAll(quoteVbox.getChildren());
+    quoteVbox.getChildren().add(quoteLabel);
 
-    VBox noteVBox = (VBox) quotesAndNotes.get(2);
-    Label noteLabel = (Label) noteVBox.getChildren().get(0);
-    noteVBox.getChildren().removeAll(noteVBox.getChildren());
-    noteVBox.getChildren().add(noteLabel);
+    VBox noteVbox = (VBox) quotesAndNotes.get(2);
+    Label noteLabel = (Label) noteVbox.getChildren().get(0);
+    noteVbox.getChildren().removeAll(noteVbox.getChildren());
+    noteVbox.getChildren().add(noteLabel);
 
-    addString(quotes, quoteVBox);
-    addString(notes, noteVBox);
+    addString(quotes, quoteVbox);
+    addString(notes, noteVbox);
   }
 
   /**
@@ -269,8 +270,8 @@ public class BujoControllerImp implements BujoController {
   private void handleConfigWeek() {
     Dialog<TaskItem> dialog = new Dialog<>();
     dialog.setTitle("Config This Week");
-    dialog.setHeaderText("Give this week a custom name, max amount of tasks and max " +
-        "amount of events for every day, or change what day of the week starts with ");
+    dialog.setHeaderText("Give this week a custom name, max amount of tasks and max "
+        + "amount of events for every day, or change what day of the week starts with ");
 
     ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
@@ -683,6 +684,7 @@ public class BujoControllerImp implements BujoController {
         case O -> handleOpen();
         case DIGIT1 -> handleCreateNote();
         case DIGIT2 -> handleCreateQuote();
+        default -> { }
       }
     }
   }

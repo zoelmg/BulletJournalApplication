@@ -13,6 +13,11 @@ public class Day {
   private List<EventItem> events;
   private List<TaskItem> tasks;
 
+  /**
+   * Initializing a default day
+   *
+   * @param dayOfWeek the week day that this day is
+   */
   public Day(DayOfWeek dayOfWeek) {
     this.dayOfWeek = dayOfWeek;
     this.events = new ArrayList<>();

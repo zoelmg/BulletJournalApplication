@@ -9,7 +9,6 @@ import cs3500.pa05.model.bujofileprocessor.json.BujoPageJson;
 import cs3500.pa05.model.bujofileprocessor.json.DayJson;
 import cs3500.pa05.model.bujofileprocessor.json.EventJson;
 import cs3500.pa05.model.bujofileprocessor.json.JsonUtil;
-
 import cs3500.pa05.model.bujofileprocessor.json.NoteBoxJson;
 import cs3500.pa05.model.bujofileprocessor.json.QuoteBoxJson;
 import cs3500.pa05.model.bujofileprocessor.json.TaskJson;

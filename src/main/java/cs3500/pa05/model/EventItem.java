@@ -8,6 +8,14 @@ public class EventItem extends AbstractItem implements IntEventItem {
   private String startTime;
   private String duration;
 
+  /**
+   * An Event Item containing details of an event
+   *
+   * @param name the name of the event
+   * @param description the description of the event
+   * @param startTime the start time of the event
+   * @param duration the duration of the event
+   */
   public EventItem(String name, String description, String startTime, String duration) {
     super(name, description);
     this.startTime = startTime;

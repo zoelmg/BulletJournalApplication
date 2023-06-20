@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Test {
   BujoWriterImp bujoWriterImp;
@@ -55,7 +54,7 @@ public class Test {
   }
 
   @org.junit.jupiter.api.Test
-  void testWriteBujoFile(){
+  void testWriteBujoFile() {
 //    bujoWriterImp.writeBujoFile(bujoPageImp);
 //    assertEquals(output.toString(), "{\"Week\":[{\"week-d" +
 //        "ay\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"TU" +
@@ -75,7 +74,5 @@ public class Test {
 //
 //    assertEquals(bujoReaderImp.readBujoFile(), bujoPageImp2);
   }
-
-
 
 }

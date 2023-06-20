@@ -16,8 +16,10 @@ public abstract class AbstractItem implements Item {
     this.description = description;
   }
 
+
   /**
    * get the name of the item
+   *
    * @return the name of the item
    */
   @Override
@@ -25,11 +27,13 @@ public abstract class AbstractItem implements Item {
     return this.name;
   }
 
-  @Override
+
   /**
    * get the description of the item
+   *
    * @return the description of the item
    */
+  @Override
   public String getDescription() {
     return this.description;
   }
