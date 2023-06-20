@@ -280,32 +280,15 @@ public class BujoControllerImp implements BujoController {
     ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
 
-    GridPane grid = new GridPane();
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(20, 150, 10, 10));
-
-    TextField weekName = new TextField();
-    weekName.setPromptText("Week Name");
-
-    List<Integer> max = Arrays.asList(1, 2, 3, 4, 5);
-    List<String> days = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday",
-        "Friday", "Saturday", "Sunday");
-    ChoiceBox<Integer> maxEvents = new ChoiceBox<>();
-    maxEvents.getItems().addAll(max);
-    ChoiceBox<Integer> maxTasks = new ChoiceBox<>();
-    maxTasks.getItems().addAll(max);
-    ChoiceBox<String> weekStart = new ChoiceBox<>();
-    weekStart.getItems().addAll(days);
-
-
-    configWeekGrid(grid, weekName, maxEvents, maxTasks, weekStart);
+    GridPane grid = makeConfigWeekGridPane();
 
     dialog.getDialogPane().setContent(grid);
 
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == configWeekButtonType) {
-            dialogConfigWeekHelper(weekName, maxEvents, maxTasks, weekStart);
+            dialogConfigWeekHelper((TextField) grid.getChildren().get(1),
+                (ChoiceBox<Integer>) grid.getChildren().get(5), (ChoiceBox<Integer>) grid.getChildren().get(3),
+                (ChoiceBox<String>) grid.getChildren().get(7));
             updatePage();
           }
           return null;
@@ -345,6 +328,8 @@ public class BujoControllerImp implements BujoController {
     grid.add(maxEvents, 1, 2);
     grid.add(new Label("Week Starts With:"), 0, 3);
     grid.add(weekStart, 1, 3);
+
+    return grid;
   }
 
 
@@ -385,6 +370,22 @@ public class BujoControllerImp implements BujoController {
     ButtonType createTaskButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(createTaskButtonType, ButtonType.CANCEL);
 
+    GridPane grid = makeCreateTaskGridPane();
+    dialog.getDialogPane().setContent(grid);
+
+    dialog.setResultConverter(dialogButton -> {
+          if (dialogButton == createTaskButtonType) {
+            taskDialogHelper((TextField) grid.getChildren().get(1),
+                (TextField) grid.getChildren().get(3), (ChoiceBox<String>) grid.getChildren().get(5));
+          }
+          return null;
+        }
+    );
+
+    dialog.showAndWait();
+  }
+
+  private GridPane makeCreateTaskGridPane() {
     GridPane grid = new GridPane();
     grid.setHgap(10);
     grid.setVgap(10);
@@ -406,17 +407,8 @@ public class BujoControllerImp implements BujoController {
     grid.add(taskDescription, 1, 1);
     grid.add(new Label("Day of Week:"), 0, 2);
     grid.add(dayOfWeek, 1, 2);
-    dialog.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
-          if (dialogButton == createTaskButtonType) {
-            taskDialogHelper(taskName, taskDescription, dayOfWeek);
-          }
-          return null;
-        }
-    );
-
-    dialog.showAndWait();
+    return grid;
   }
 
   /**
@@ -469,13 +461,47 @@ public class BujoControllerImp implements BujoController {
 
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == createEventButtonType) {
-            eventDialogHelper(eventName, eventDes, eventSt, eventDur, dayOfWeek);
+            eventDialogHelper((TextField) grid.getChildren().get(1), (TextField) grid.getChildren().get(3),
+                (TextField) grid.getChildren().get(5), (TextField) grid.getChildren().get(7),
+                (ChoiceBox<String>) grid.getChildren().get(9));
           }
           return null;
         }
     );
 
     dialog.showAndWait();
+  }
+
+  private GridPane makeCreateEventGridPane() {
+    TextField eventName = new TextField(), eventDes = new TextField(),
+        eventSt = new TextField(), eventDur = new TextField();
+    eventName.setPromptText("Event Name");
+    eventDes.setPromptText("Event Description");
+    eventSt.setPromptText("Event Start Time");
+    eventDur.setPromptText("Event Duration");
+
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(20, 150, 10, 10));
+
+    ChoiceBox<String> dayOfWeek = new ChoiceBox<>();
+    List<String> days = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday");
+    dayOfWeek.getItems().addAll(days);
+
+    grid.add(new Label("Event Name:"), 0, 0);
+    grid.add(eventName, 1, 0);
+    grid.add(new Label("Description:"), 0, 1);
+    grid.add(eventDes, 1, 1);
+    grid.add(new Label("Start Time:"), 0, 2);
+    grid.add(eventSt, 1, 2);
+    grid.add(new Label("Duration:"), 0, 3);
+    grid.add(eventDur, 1, 3);
+    grid.add(new Label("Day of Week:"), 0, 4);
+    grid.add(dayOfWeek, 1, 4);
+
+    return grid;
   }
 
   /**
