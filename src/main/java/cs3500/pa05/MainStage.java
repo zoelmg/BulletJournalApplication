@@ -2,10 +2,14 @@ package cs3500.pa05;
 
 import cs3500.pa05.controller.BujoController;
 import cs3500.pa05.controller.BujoControllerImp;
+import cs3500.pa05.controller.SplashScreenController;
+import cs3500.pa05.controller.SplashScreenControllerImp;
 import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
+import cs3500.pa05.view.SplashScreenImp;
+import cs3500.pa05.view.SplashScreenView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,6 +22,9 @@ public class MainStage extends Application {
   private BujoPage bujopage;
   private BujoGuiView view;
 
+  private SplashScreenController splashScreenController;
+  private SplashScreenView splashScreenView;
+
   /**
    * Initializing a Main Stage with a view, controller, and model
    */
@@ -25,6 +32,8 @@ public class MainStage extends Application {
     this.bujopage = new BujoPageImp();
     this.controller = new BujoControllerImp(this.bujopage);
     this.view = new BujoGuiImp(this.controller);
+    this.splashScreenController = new SplashScreenControllerImp();
+    this.splashScreenView = new SplashScreenImp(splashScreenController);
   }
 
   /**
@@ -43,6 +52,7 @@ public class MainStage extends Application {
 
       // render the stage
       stage.show();
+
     } catch (IllegalStateException exc) {
       System.err.println("Unable to load GUI.");
     }
