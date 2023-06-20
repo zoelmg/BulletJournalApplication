@@ -42,7 +42,7 @@ class TestLabel {
    */
 
   void should_contain_button_with_text(FxRobot robot) {
-//    Assertions.assertThat(button).hasText("click me!");
+    // Assertions.assertThat(button).hasText("click me!");
     // or (lookup by css id):
     Assertions.assertThat(robot.lookup("#myButton").queryAs(Button.class)).hasText("click me!");
 

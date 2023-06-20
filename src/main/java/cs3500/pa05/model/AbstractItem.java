@@ -8,7 +8,13 @@ import java.util.List;
  * The abstaction of an item on the bujo page
  */
 public abstract class AbstractItem implements Item {
+  /**
+   * The name of the abstracted item
+   */
   protected final String name;
+  /**
+   * the description of the abstracted item
+   */
   protected final String description;
 
   /**

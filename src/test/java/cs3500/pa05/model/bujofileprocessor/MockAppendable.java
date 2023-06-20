@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Mock Appendable to test BujoWriterImp
  */
-public class MockAppendable implements Appendable{
+public class MockAppendable implements Appendable {
   /**
    * throws an error always
    *

@@ -59,14 +59,14 @@ class BujoWriterImpTest {
   @Test
   void testDefaultWriteBujoFile() {
     bujoWriterImp.writeBujoFile(bujoPageImp);
-    assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"w" +
-            "eek-day\":\"TUESDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"WEDNESDAY\",\"ev" +
-            "ents\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":[]},{\"w" +
-            "eek-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATURDAY\",\"ev" +
-            "ents\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[],\"tasks\":[]}],\"W" +
-            "eek-Name\":\"Week Name\",\"quotebox\":{\"quotes\":[]},\"notebox\":{\"notes\":[]}" +
-            ",\"maxEvents\":2,\"maxTasks\":2}"
-        , output.toString());
+    assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"w"
+            + "eek-day\":\"TUESDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"WEDNESDAY\",\"ev"
+            + "ents\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":[]},{\"w"
+            + "eek-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATURDAY\",\"ev"
+            + "ents\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[],\"tasks\":[]}],\"W"
+            + "eek-Name\":\"Week Name\",\"quotebox\":{\"quotes\":[]},\"notebox\":{\"notes\":[]}"
+            + ",\"maxEvents\":2,\"maxTasks\":2}",
+        output.toString());
   }
 
   /**
@@ -75,15 +75,15 @@ class BujoWriterImpTest {
   @Test
   void testWriteChangedBujoFile() {
   bujoWriterImpChanged.writeBujoFile(bujoPageImpChanged);
-  assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"we" +
-          "ek-day\":\"TUESDAY\",\"events\":[{\"name\":\"ex Event\",\"description\":\"ex des" +
-          "cription\",\"start-time\":\"3pm\",\"duration\":\"2hour\"}],\"tasks\":[]},{\"week" +
-          "-day\":\"WEDNESDAY\",\"events\":[],\"tasks\":[{\"name\":\"ex Item\",\"descripti" +
-          "on\":\"ex description\",\"completed\":false}]},{\"week-day\":\"THURSDAY\",\"event" +
-          "s\":[],\"tasks\":[]},{\"week-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-" +
-          "day\":\"SATURDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[" +
-          "],\"tasks\":[]}],\"Week-Name\":\"test if week name changed\",\"quotebox\":{\"quote" +
-          "s\":[]},\"notebox\":{\"notes\":[]},\"maxEvents\":3,\"maxTasks\":4}",
+  assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"we"
+          + "ek-day\":\"TUESDAY\",\"events\":[{\"name\":\"ex Event\",\"description\":\"ex des"
+          + "cription\",\"start-time\":\"3pm\",\"duration\":\"2hour\"}],\"tasks\":[]},{\"week"
+          + "-day\":\"WEDNESDAY\",\"events\":[],\"tasks\":[{\"name\":\"ex Item\",\"descripti"
+          + "on\":\"ex description\",\"completed\":false}]},{\"week-day\":\"THURSDAY\",\"event"
+          + "s\":[],\"tasks\":[]},{\"week-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-"
+          + "day\":\"SATURDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":["
+          + "],\"tasks\":[]}],\"Week-Name\":\"test if week name changed\",\"quotebox\":{\"quote"
+          + "s\":[]},\"notebox\":{\"notes\":[]},\"maxEvents\":3,\"maxTasks\":4}",
       outputChanged.toString());
   }
 

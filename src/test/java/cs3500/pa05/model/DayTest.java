@@ -1,9 +1,8 @@
 package cs3500.pa05.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,8 +42,8 @@ class DayTest {
   @Test
   void testAddItemEvent() {
     //before adding an event
-    event1 = new EventItem("event name 1", "event description 1", "start time 1"
-        , "duration 1");
+    event1 = new EventItem("event name 1", "event description 1",
+        "start time 1", "duration 1");
     assertEquals(day1.getEvents().size(), 0);
 
     //after adding an event
@@ -73,8 +72,8 @@ class DayTest {
   @Test
   void testRemoveItemEvent() {
     //before removing an event
-    event1 = new EventItem("event name 1", "event description 1", "start time 1"
-        , "duration 1");
+    event1 = new EventItem("event name 1", "event description 1",
+        "start time 1", "duration 1");
     day1.addItem(event1);
     assertEquals(day1.getEvents().size(), 1);
 

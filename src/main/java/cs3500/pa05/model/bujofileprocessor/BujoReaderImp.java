@@ -23,6 +23,11 @@ public class BujoReaderImp implements BujoReader {
   private final Readable readable;
   private final ObjectMapper mapper;
 
+  /**
+   * Initialize a BujoReader
+   *
+   * @param readable the Readable that will be reading the bujo file
+   */
   public BujoReaderImp(Readable readable) {
     this.readable = Objects.requireNonNull(readable);
     this.mapper = new ObjectMapper();

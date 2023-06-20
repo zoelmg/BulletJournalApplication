@@ -6,6 +6,10 @@ package cs3500.pa05.model;
 public class TaskItem extends AbstractItem implements IntTaskItem {
   private boolean isCompleted;
 
+  /**
+   * @param name The name of the task
+   * @param description the description of the task
+   */
   public TaskItem(String name, String description) {
     super(name, description);
     this.isCompleted = false;

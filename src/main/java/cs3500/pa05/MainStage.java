@@ -36,7 +36,7 @@ public class MainStage extends Application {
   public void start(Stage stage) {
 
     try {
-      stage.setTitle("Exam Study");
+      stage.setTitle("Bujo App");
       // load and place the view's scene onto the stage
       stage.setScene(view.load());
       controller.run();

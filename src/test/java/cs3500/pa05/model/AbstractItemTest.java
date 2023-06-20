@@ -1,6 +1,6 @@
 package cs3500.pa05.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,11 +34,15 @@ class AbstractItemTest {
     assertEquals(2, eventItem.getValidLinks().size());
   }
 
+  /**
+   * Test that nothing will be added to valid link if there are no valid links in the description
+   */
   @Test
   void testValidLinks2() {
-    EventItem eventItem2 = new EventItem("name", "", "start time", "duration");
-   List<String> expected = eventItem2.getValidLinks();
-   assertEquals(expected.size(), 0);
+    EventItem eventItem2 = new EventItem("name", "",
+        "start time", "duration");
+    List<String> expected = eventItem2.getValidLinks();
+    assertEquals(expected.size(), 0);
   }
 
 }

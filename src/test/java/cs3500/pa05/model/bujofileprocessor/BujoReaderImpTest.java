@@ -29,16 +29,20 @@ class BujoReaderImpTest {
         + "\"ex description\",\"start-time\":\"3pm\",\"duration\":\"2hour\"}],\"tasks\":[{\"name\":\"ex Item"
         + "\",\"description\":"
         + "\"ex description\",\"completed\":false}]},{\"week-day\":\"WEDNESDAY\","
-        + "\"events\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"FRIDAY\""
-        + ",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATURDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\""
-        + "SUNDAY\",\"events\":[],\"tasks\":[]}],\"Week-Name\":\"test2\",\"quotebox\":{\"quotes\":[\"hi\"]},\"notebox"
+        + "\"events\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":["
+        + "]},{\"week-day\":\"FRIDAY\""
+        + ",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATURDAY\",\"events\":[],\"tasks\":["
+        + "]},{\"week-day\":\""
+        + "SUNDAY\",\"events\":[],\"tasks\":[]}],\"Week-Name\":\"test2\",\"quotebox\":{\"quot"
+        + "es\":[\"hi\"]},\"notebox"
         + "\":{\"notes\":[\"hi\"]},\"maxEvents\":4,\"maxTasks\":2}";
     readable1 = new StringReader(string1);
     reader1 = new BujoReaderImp(readable1);
   }
 
   /**
-   * Tests that the BujoReaderImp can rad a .bujo format file and produce the correct BujoPage object
+   * Tests that the BujoReaderImp can rad a .bujo format file and
+   * produce the correct BujoPage object
    */
   @Test
   void testReadBujoFile() {
