@@ -13,6 +13,9 @@ class AbstractItemTest {
 
   EventItem eventItem;
 
+  /**
+   * Set up a valid EventItem
+   */
   @BeforeEach
   void setup() {
     eventItem = new EventItem("blah",
@@ -20,6 +23,10 @@ class AbstractItemTest {
             + "https://yahoo.com", "blah", "blah");
   }
 
+  /**
+   * Test an event item that has a description containing two valid links
+   * and getValidLinks is correctly returning them in a list
+   */
   @Test
   void testGetValidLinks() {
     assertEquals("https://www.google.com", eventItem.getValidLinks().get(0));

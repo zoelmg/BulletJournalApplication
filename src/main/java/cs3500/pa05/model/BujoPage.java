@@ -92,5 +92,4 @@ public interface BujoPage {
    */
   void setMaxTasks(int n);
 
-
 }

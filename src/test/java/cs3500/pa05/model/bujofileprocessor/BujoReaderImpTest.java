@@ -20,7 +20,7 @@ class BujoReaderImpTest {
   Readable readable1;
 
   /**
-   * Sets up the Readable and BujoReaderImp objects before each test. 
+   * Sets up the Readable and BujoReaderImp objects before each test.
    */
   @BeforeEach
   void setup() {

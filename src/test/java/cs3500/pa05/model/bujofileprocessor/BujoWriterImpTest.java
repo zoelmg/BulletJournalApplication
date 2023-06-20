@@ -21,9 +21,11 @@ import org.junit.jupiter.api.Test;
 class BujoWriterImpTest {
 
   BujoWriterImp bujoWriterImp;
-  BujoWriterImp bujoWriterImp2;
+  BujoWriterImp bujoWriterImpChanged;
+  BujoWriterImp invalidWriter;
+  Appendable invalidAppendable;
   Appendable output;
-  Appendable output2;
+  Appendable outputChanged;
   BujoPageImp bujoPageImp;
   BujoPageImp bujoPageImpChanged;
 
@@ -34,14 +36,21 @@ class BujoWriterImpTest {
   @BeforeEach
   void setup() {
     output = new StringWriter();
-    output2 = new StringWriter();
+    outputChanged = new StringWriter();
+    invalidAppendable = new MockAppendable();
+    invalidWriter = new BujoWriterImp(invalidAppendable);
     bujoWriterImp = new BujoWriterImp(output);
-    bujoWriterImp2 = new BujoWriterImp(output2);
+    bujoWriterImpChanged = new BujoWriterImp(outputChanged);
     bujoPageImp = new BujoPageImp();
     bujoPageImpChanged = new BujoPageImp();
     bujoPageImpChanged.setWeekName("test if week name changed");
     bujoPageImpChanged.setMaxTasks(4);
     bujoPageImpChanged.setMaxEvents(3);
+    EventItem exEvent = new EventItem("ex Event", "ex description",
+        "3pm", "2hour");
+    TaskItem exItem = new TaskItem("ex Item", "ex description");
+    bujoPageImpChanged.getBujoWeek().get(1).addItem(exEvent);
+    bujoPageImpChanged.getBujoWeek().get(2).addItem(exItem);
   }
 
   /**
@@ -49,29 +58,38 @@ class BujoWriterImpTest {
    */
   @Test
   void testDefaultWriteBujoFile() {
-    bujoWriterImp2.writeBujoFile(bujoPageImp);
-    assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]" +
-        "},{\"week-day\":\"TUESDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"WEDNESDA" +
-        "Y\",\"events\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"task" +
-        "s\":[]},{\"week-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATUR" +
-        "DAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[],\"tasks\":[" +
-        "]}],\"Week-Name\":\"Week Name\",\"quotebox\":{\"quotes\":[\"hi\"]},\"notebox\":{\"not" +
-        "es\":[]},\"maxEvents\":2,\"maxTasks\":2}", output2.toString());
+    bujoWriterImp.writeBujoFile(bujoPageImp);
+    assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"w" +
+            "eek-day\":\"TUESDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"WEDNESDAY\",\"ev" +
+            "ents\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":[]},{\"w" +
+            "eek-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATURDAY\",\"ev" +
+            "ents\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[],\"tasks\":[]}],\"W" +
+            "eek-Name\":\"Week Name\",\"quotebox\":{\"quotes\":[]},\"notebox\":{\"notes\":[]}" +
+            ",\"maxEvents\":2,\"maxTasks\":2}"
+        , output.toString());
   }
+
   /**
    * Test that a changed bujo page is being serialized and written correctly in Json
    */
   @Test
   void testWriteChangedBujoFile() {
-  bujoWriterImp.writeBujoFile(bujoPageImpChanged);
-  assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"week" +
-          "-day\":\"TUESDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"WEDNESDAY\",\"events" +
-          "\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":[]},{\"week-" +
-          "day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SATURDAY\",\"events\":" +
-          "[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[],\"tasks\":[]}],\"Week-Nam" +
-          "e\":\"test if week name changed\",\"quotebox\":{\"quotes\":[\"hi\"]},\"notebox\":{\"n" +
-          "otes\":[]},\"maxEvents\":3,\"maxTasks\":4}",
-      output.toString());
+  bujoWriterImpChanged.writeBujoFile(bujoPageImpChanged);
+  assertEquals("{\"Week\":[{\"week-day\":\"MONDAY\",\"events\":[],\"tasks\":[]},{\"we" +
+          "ek-day\":\"TUESDAY\",\"events\":[{\"name\":\"ex Event\",\"description\":\"ex des" +
+          "cription\",\"start-time\":\"3pm\",\"duration\":\"2hour\"}],\"tasks\":[]},{\"week" +
+          "-day\":\"WEDNESDAY\",\"events\":[],\"tasks\":[{\"name\":\"ex Item\",\"descripti" +
+          "on\":\"ex description\",\"completed\":false}]},{\"week-day\":\"THURSDAY\",\"event" +
+          "s\":[],\"tasks\":[]},{\"week-day\":\"FRIDAY\",\"events\":[],\"tasks\":[]},{\"week-" +
+          "day\":\"SATURDAY\",\"events\":[],\"tasks\":[]},{\"week-day\":\"SUNDAY\",\"events\":[" +
+          "],\"tasks\":[]}],\"Week-Name\":\"test if week name changed\",\"quotebox\":{\"quote" +
+          "s\":[]},\"notebox\":{\"notes\":[]},\"maxEvents\":3,\"maxTasks\":4}",
+      outputChanged.toString());
+  }
+
+  @Test
+  void testInvalidAppendable() {
+    assertThrows(IllegalArgumentException.class, () -> invalidWriter.writeBujoFile(bujoPageImp));
   }
 
 }

@@ -23,6 +23,11 @@ public class BujoWriterImp implements BujoWriter {
 
   private final Appendable appendable;
 
+  /**
+   * Initialize a BujoWriter
+   *
+   * @param appendable the appendable that will be used to write to the file
+   */
   public BujoWriterImp(Appendable appendable) {
     this.appendable = appendable;
   }
@@ -41,13 +46,13 @@ public class BujoWriterImp implements BujoWriter {
     try {
       appendable.append(result); // this may fail, hence the try-catch
     } catch (IOException e) {
-      System.err.println("An error occurred when writing the sr file messages");
+      System.err.println("An error occurred when writing the bujo file");
       throw new IllegalArgumentException(e.getMessage());
     }
   }
 
   /**
-   * Turn a ujoPage into a BujoPageJson
+   * Turn a BujoPage into a BujoPageJson
    *
    * @param bujoPage the BujoPage to be serialized into a JsonNode
    * @return a serialized BujoJson
@@ -74,16 +79,12 @@ public class BujoWriterImp implements BujoWriter {
       dayJsonList.add(nextDay);
     }
 
-    ArrayList<String> quotes = new ArrayList<>();
-    quotes.add("hi");
-    QuoteBoxJson quoteBoxJson = new QuoteBoxJson(quotes);
+    QuoteBoxJson quoteBoxJson = new QuoteBoxJson(bujoPage.getQuotes());
     NoteBoxJson noteBoxJson = new NoteBoxJson(bujoPage.getNotes());
 
     BujoPageJson bujoPageJson = new BujoPageJson(dayJsonList, bujoPage.getWeekName(),
         quoteBoxJson, noteBoxJson, bujoPage.getMaxEvents(), bujoPage.getMaxTasks());
 
-
-    JsonNode result = JsonUtil.serializeRecord(bujoPageJson);
-    return result;
+    return JsonUtil.serializeRecord(bujoPageJson);
   }
 }
