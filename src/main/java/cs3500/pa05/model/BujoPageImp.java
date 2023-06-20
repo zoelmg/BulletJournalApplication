@@ -29,7 +29,7 @@ public class BujoPageImp implements BujoPage {
     this.week.add(new Day(DayOfWeek.FRIDAY));
     this.week.add(new Day(DayOfWeek.SATURDAY));
     this.week.add(new Day(DayOfWeek.SUNDAY));
-    this.weekName = "Week Default Name";
+    this.weekName = "Week Name";
     this.maxEvents = 2;
     this.maxTasks = 2;
   }
