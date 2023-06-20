@@ -38,7 +38,7 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-class TestLabel {
+class TestCreateTask {
 
   private BujoControllerImp controller;
   private BujoPage bujopage;
@@ -95,11 +95,11 @@ class TestLabel {
 
 
 
-  @Test
-  void testHandelCreateEvent(FxRobot robot){
-    robot.press(KeyCode.SHORTCUT, KeyCode.E);
-    assertEquals(this.controller.getDialogCreateEvent().getTitle(), "Create New Event");
-    Dialog<TaskItem> dialog = this.controller.getDialogCreateEvent();
+@Test
+  void testHandelCreateTask(FxRobot robot){
+    robot.press(KeyCode.SHORTCUT, KeyCode.T);
+    assertEquals(this.controller.getDialogCreateTask().getTitle(), "Create New Task");
+    Dialog<TaskItem> dialog = this.controller.getDialogCreateTask();
 
     GridPane gridPane = (GridPane) dialog.getDialogPane().getChildren().get(3);
     robot.moveTo(gridPane.getChildren().get(1));
@@ -108,13 +108,7 @@ class TestLabel {
     robot.moveTo(gridPane.getChildren().get(3));
     robot.clickOn();
     robot.write("goodbye");
-    robot.moveTo(gridPane.getChildren().get(5));
-    robot.clickOn();
-    robot.write("food");
-    robot.moveTo(gridPane.getChildren().get(7));
-    robot.clickOn();
-    robot.write("bed");
-    ChoiceBox<String> choiceBox = (ChoiceBox<String>) gridPane.getChildren().get(9);
+    ChoiceBox<String> choiceBox = (ChoiceBox<String>) gridPane.getChildren().get(5);
     robot.moveTo(choiceBox);
     robot.clickOn();
 
@@ -145,7 +139,7 @@ class TestLabel {
 
   }
 
-//  @Test
+  //  @Test
 //  void notHelper(FxRobot robot){
 //    testHandelCreateEvent(robot);
 //    VBox vBox = (VBox) this.controller.getWeekHBox().getChildren().get(0);

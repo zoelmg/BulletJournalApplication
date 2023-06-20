@@ -21,6 +21,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -59,8 +60,19 @@ public class BujoControllerImp implements BujoController {
    */
   private BujoPage bujoPage;
 
+  public BujoPage getBujoPage() {
+    return bujoPage;
+  }
+
   @FXML
   private HBox weekHBox;
+
+
+  private int eventCreationCount = 0;
+
+  public int getEventCreationCount() {
+    return eventCreationCount;
+  }
 
   @FXML
   private ToolBar menubar;
@@ -82,6 +94,10 @@ public class BujoControllerImp implements BujoController {
   @FXML
   private Scene mainScene;
 
+  public Scene getMainScene() {
+    return mainScene;
+  }
+
   /**
    * Initialize a BujoController that has all the functionality available on a BujoPage
    *
@@ -90,6 +106,11 @@ public class BujoControllerImp implements BujoController {
   public BujoControllerImp(BujoPage bujoPage) {
     this.bujoPage = bujoPage;
     this.bujoPath = Path.of("src/main/resources/" + bujoPage.getWeekName() + ".bujo");
+  }
+
+  public BujoControllerImp(BujoPage bujoPage, String file) {
+    this(bujoPage);
+    handleOpen(file);
   }
 
 
@@ -135,14 +156,22 @@ public class BujoControllerImp implements BujoController {
     newWeek.setOnAction(event -> handleNewWeek());
 
     mainScene.setOnKeyPressed(ke -> handleKeyCombs(
-        Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2),
+        Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2,
+            KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7),
         ke));
+
+    updatePage();
+  }
+
+
+  public HBox getWeekHBox() {
+    return weekHBox;
   }
 
   /**
    * Updating the Bujo Page and its data whenever it is called
    */
-  private void updatePage() {
+  public void updatePage() {
     System.out.println("update page started");
     weeknameLabel.setText(bujoPage.getWeekName());
     List<Day> days = bujoPage.getBujoWeek();
@@ -177,6 +206,7 @@ public class BujoControllerImp implements BujoController {
    * @param currentBox the vbox that shows the currentDay
    */
   private void updateTaskAndEvents(Day currentDay, VBox currentBox) {
+    System.out.println("update events started");
     for (EventItem event : currentDay.getEvents()) {
       //get all event related info from event
       EventView eventView = new EventView(event.getName(), event.getDescription(),
@@ -243,8 +273,7 @@ public class BujoControllerImp implements BujoController {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open A Bujo File");
 
-    fileChooser.setInitialDirectory(new File("/Users/primaryuser/Code/CS3500/Lecture "
-        + "Notes/pa05-blessedbujobeasts/src/main/resources"));
+    fileChooser.setInitialDirectory(new File("src/main/resources/"));
 
     Stage stage = new Stage();
     File selectedFile = fileChooser.showOpenDialog(stage);
@@ -262,19 +291,43 @@ public class BujoControllerImp implements BujoController {
     updatePage();
   }
 
+  /**
+   * Handles opening the filechooser and letting the user choose
+   * which .bujo file they would like to see
+   */
+  private void handleOpen(String file) {
+
+      this.bujoPath = Path.of(file);
+    //reset this.bujoPath to equal the path of file user has given in.
+    try {
+      BujoReader reader = new BujoReaderImp(new FileReader(bujoPath.toFile()));
+      this.bujoPage = reader.readBujoFile();
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Unable to read given file");
+    }
+
+  }
+
+
+  Dialog<TaskItem> dialogConfigWeek;
+
+  public Dialog<TaskItem> getDialogConfigWeek() {
+    return dialogConfigWeek;
+  }
 
   /**
    * Handle configuring a week's properties, such as a week's name, max tasks and events,
    * and which day the week should start on
    */
   private void handleConfigWeek() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Config This Week");
-    dialog.setHeaderText("Give this week a custom name, max amount of tasks and max "
+
+    this.dialogConfigWeek = new Dialog<>();
+    dialogConfigWeek.setTitle("Config This Week");
+    dialogConfigWeek.setHeaderText("Give this week a custom name, max amount of tasks and max "
         + "amount of events for every day, or change what day of the week starts with ");
 
     ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
+    dialogConfigWeek.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -304,9 +357,9 @@ public class BujoControllerImp implements BujoController {
     grid.add(new Label("Week Starts With:"), 0, 3);
     grid.add(weekStart, 1, 3);
 
-    dialog.getDialogPane().setContent(grid);
+    dialogConfigWeek.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    dialogConfigWeek.setResultConverter(dialogButton -> {
           if (dialogButton == configWeekButtonType) {
             dialogConfigWeekHelper(weekName, maxEvents, maxTasks, weekStart);
             updatePage();
@@ -315,7 +368,7 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
+    dialogConfigWeek.showAndWait();
   }
 
 
@@ -340,7 +393,14 @@ public class BujoControllerImp implements BujoController {
     }
     if (weekStart.getValue() != null) {
       handleChangeWeekStart(weekStart.getValue());
+      System.out.println(weekStart.getValue());
     }
+  }
+
+  Dialog<TaskItem> dialogCreateTask;
+
+  public Dialog<TaskItem> getDialogCreateTask() {
+    return dialogCreateTask;
   }
 
   /**
@@ -350,11 +410,11 @@ public class BujoControllerImp implements BujoController {
    * Then creates a new event based on user input and displays it on GUI.
    */
   private void handleCreateTask() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Task");
-    dialog.setHeaderText("Enter Task Info");
+    dialogCreateTask = new Dialog<>();
+    dialogCreateTask.setTitle("Create New Task");
+    dialogCreateTask.setHeaderText("Enter Task Info");
     ButtonType createTaskButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createTaskButtonType, ButtonType.CANCEL);
+    dialogCreateTask.getDialogPane().getButtonTypes().addAll(createTaskButtonType, ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -377,9 +437,9 @@ public class BujoControllerImp implements BujoController {
     grid.add(taskDescription, 1, 1);
     grid.add(new Label("Day of Week:"), 0, 2);
     grid.add(dayOfWeek, 1, 2);
-    dialog.getDialogPane().setContent(grid);
+    dialogCreateTask.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    dialogCreateTask.setResultConverter(dialogButton -> {
           if (dialogButton == createTaskButtonType) {
             taskDialogHelper(taskName, taskDescription, dayOfWeek);
           }
@@ -387,7 +447,15 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
+    dialogCreateTask.showAndWait();
+  }
+
+  private void createDefaultTask(){
+    TextField textField = new TextField();
+    textField.setText("_");
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+    choiceBox.setValue("Monday");
+    taskDialogHelper(textField,textField,choiceBox);
   }
 
   /**
@@ -421,6 +489,22 @@ public class BujoControllerImp implements BujoController {
       }
     }
   }
+  Dialog<TaskItem> dialogCreateEvent;
+
+  public Dialog<TaskItem> getDialogCreateEvent() {
+    return dialogCreateEvent;
+  }
+
+  private int eventsCreated = 0;
+
+  public int getEventsCreated() {
+    return eventsCreated;
+  }
+
+  private void addEventsCreated(){
+    eventsCreated += 1;
+  }
+
 
   /**
    * Handles next steps to create a new Event when user presses new event button.
@@ -429,11 +513,11 @@ public class BujoControllerImp implements BujoController {
    * Then creates a new event based on user input and displays it on GUI.
    */
   private void handleCreateEvent() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Event");
-    dialog.setHeaderText("Enter Event Info");
+    this.dialogCreateEvent = new Dialog<>();
+    dialogCreateEvent.setTitle("Create New Event");
+    dialogCreateEvent.setHeaderText("Enter Event Info");
     ButtonType createEventButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createEventButtonType, ButtonType.CANCEL);
+    dialogCreateEvent.getDialogPane().getButtonTypes().addAll(createEventButtonType, ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -461,17 +545,29 @@ public class BujoControllerImp implements BujoController {
     grid.add(eventDur, 1, 3);
     grid.add(new Label("Day of Week:"), 0, 4);
     grid.add(dayOfWeek, 1, 4);
-    dialog.getDialogPane().setContent(grid);
+    dialogCreateEvent.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    dialogCreateEvent.setResultConverter(dialogButton -> {
+      System.out.println("there");
           if (dialogButton == createEventButtonType) {
             eventDialogHelper(eventName, eventDes, eventSt, eventDur, dayOfWeek);
           }
           return null;
         }
     );
+    ButtonBar buttonBar = (ButtonBar)this.dialogCreateEvent.getDialogPane().getChildren().get(2);
+    Button button = (Button) buttonBar.getButtons().get(0);
+    button.setOnAction(event -> System.out.println("brh"));
 
-    dialog.showAndWait();
+    dialogCreateEvent.showAndWait();
+  }
+
+  private void createDefaultEvent(){
+    TextField textField = new TextField();
+    textField.setText("_");
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+    choiceBox.setValue("Monday");
+    eventDialogHelper(textField,textField,textField,textField,choiceBox);
   }
 
   /**
@@ -485,6 +581,9 @@ public class BujoControllerImp implements BujoController {
    */
   private void eventDialogHelper(TextField eventName, TextField eventDes, TextField eventSt,
                                  TextField eventDur, ChoiceBox<String> dayOfWeek) {
+    System.out.println("event helper");
+
+
     if (eventName.getText().isEmpty() || eventSt.getText().isEmpty()
         || eventDur.getText().isEmpty() || dayOfWeek.getValue() == null) {
       Alert notCompleted = new Alert(Alert.AlertType.ERROR);
@@ -501,6 +600,9 @@ public class BujoControllerImp implements BujoController {
         day.addItem(new EventItem(eventName.getText(),
             !eventDes.getText().isEmpty() ? eventDes.getText() : "Not Entered",
             eventSt.getText(), eventDur.getText()));
+        System.out.println(day.getDayOfWeek());
+        System.out.println("event helper222");
+        addEventsCreated();
         updatePage();
       } else {
         Alert atCapacity = new Alert(Alert.AlertType.ERROR);
@@ -510,16 +612,21 @@ public class BujoControllerImp implements BujoController {
     }
   }
 
+  Dialog<TaskItem> dialogCreateQuote;
+
+  public Dialog<TaskItem> getDialogCreateQuote() {
+    return dialogCreateQuote;
+  }
 
   /**
    * Handle when the User wants to create a New Quote for this BujoPage
    * Creates a Dialog and process responses given
    */
   private void handleCreateQuote() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Quote");
+    this.dialogCreateQuote = new Dialog<>();
+    dialogCreateQuote.setTitle("Create New Quote");
     ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    dialogCreateQuote.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -533,9 +640,9 @@ public class BujoControllerImp implements BujoController {
     grid.add(new Label("Quote: "), 0, 0);
     grid.add(quoteText, 1, 0);
 
-    dialog.getDialogPane().setContent(grid);
+    dialogCreateQuote.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    dialogCreateQuote.setResultConverter(dialogButton -> {
           if (dialogButton == createQuoteButtonType) {
             dialogQuoteHelper(quoteText);
             updatePage();
@@ -544,7 +651,7 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
+    dialogCreateQuote.showAndWait();
   }
 
   /**
@@ -559,15 +666,21 @@ public class BujoControllerImp implements BujoController {
 
   }
 
+  Dialog<TaskItem> dialogCreateNote;
+
+  public Dialog<TaskItem> getDialogCreateNote() {
+    return dialogCreateNote;
+  }
+
   /**
    * Handle when the User wants to create a New Note for this BujoPage
    * Creates a Dialog and process responses given
    */
   private void handleCreateNote() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Note");
+    this.dialogCreateNote = new Dialog<>();
+    dialogCreateNote.setTitle("Create New Note");
     ButtonType createNoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createNoteButtonType, ButtonType.CANCEL);
+    dialogCreateNote.getDialogPane().getButtonTypes().addAll(createNoteButtonType, ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -580,9 +693,9 @@ public class BujoControllerImp implements BujoController {
     grid.add(new Label("Note: "), 0, 0);
     grid.add(noteText, 1, 0);
 
-    dialog.getDialogPane().setContent(grid);
+    dialogCreateNote.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    dialogCreateNote.setResultConverter(dialogButton -> {
           if (dialogButton == createNoteButtonType) {
             dialogNoteHelper(noteText);
             updatePage();
@@ -590,7 +703,7 @@ public class BujoControllerImp implements BujoController {
           return null;
         }
     );
-    dialog.showAndWait();
+    dialogCreateNote.showAndWait();
   }
 
 
@@ -605,15 +718,21 @@ public class BujoControllerImp implements BujoController {
     bujoPage.setNotes(newNotes);
   }
 
+  Dialog<BujoPage> dialogNewWeek;
+
+  public Dialog<BujoPage> getDialogNewWeek() {
+    return dialogNewWeek;
+  }
+
   /**
    * Handle when the User wants to create a New Week of Bujo Page
    * Creates a Dialog and process responses given
    */
   private void handleNewWeek() {
-    Dialog<BujoPage> dialog = new Dialog<>();
-    dialog.setTitle("Create a New Week");
+    this.dialogNewWeek = new Dialog<>();
+    dialogNewWeek.setTitle("Create a New Week");
     ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    dialogNewWeek.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
 
 
     GridPane grid = new GridPane();
@@ -627,16 +746,16 @@ public class BujoControllerImp implements BujoController {
 
     grid.add(new Label("Week Name: "), 0, 0);
     grid.add(weekName, 1, 0);
-    dialog.getDialogPane().setContent(grid);
+    dialogNewWeek.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    dialogNewWeek.setResultConverter(dialogButton -> {
           if (dialogButton == createQuoteButtonType) {
             newWeekHelper(weekName);
           }
           return null;
         }
     );
-    dialog.showAndWait();
+    dialogNewWeek.showAndWait();
   }
 
   /**
@@ -684,6 +803,11 @@ public class BujoControllerImp implements BujoController {
         case O -> handleOpen();
         case DIGIT1 -> handleCreateNote();
         case DIGIT2 -> handleCreateQuote();
+        case DIGIT3 -> handleConfigWeek();
+        case DIGIT4 -> handleNewWeek();
+        case DIGIT5 -> handleChangeWeekStart("Tuesday");
+        case DIGIT6 -> createDefaultEvent();
+        case DIGIT7 -> createDefaultTask();
         default -> { }
       }
     }
@@ -719,6 +843,11 @@ public class BujoControllerImp implements BujoController {
     }
   }
 
+  private Dialog<EventItem> dialogEventClicked;
+
+  public Dialog<EventItem> getDialog() {
+    return dialogEventClicked;
+  }
 
   /**
    * Handle when an Event view is clicked
@@ -727,9 +856,9 @@ public class BujoControllerImp implements BujoController {
    * @param currentDay the day of the week that the event belongs to
    */
   private void handleEventClicked(EventItem event, Day currentDay) {
-    Dialog<EventItem> dialog = new Dialog<>();
+    this.dialogEventClicked = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
+    dialogEventClicked.getDialogPane().getButtonTypes().addAll(deleteButtonType);
     List<Label> allLabels = Arrays.asList(new Label("Event: " + event.getName()),
         new Label("Description : " + event.getDescription()),
         new Label("Start Time: " + event.getStartTime()),
@@ -751,8 +880,8 @@ public class BujoControllerImp implements BujoController {
       infoHolder.getChildren().add(newLink);
     }
 
-    dialog.getDialogPane().setContent(infoHolder);
-    dialog.setResultConverter(dialogButton -> {
+    dialogEventClicked.getDialogPane().setContent(infoHolder);
+    dialogEventClicked.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
             currentDay.removeItem(event);
             updatePage();
@@ -760,8 +889,8 @@ public class BujoControllerImp implements BujoController {
           return null;
         }
     );
-    dialog.showAndWait();
-    dialog.close();
+    dialogEventClicked.showAndWait();
+    dialogEventClicked.close();
   }
 
   /**
@@ -778,6 +907,12 @@ public class BujoControllerImp implements BujoController {
   }
 
 
+  Dialog<EventItem> taskClickedDialog;
+
+  public Dialog<EventItem> getTaskClickedDialog() {
+    return taskClickedDialog;
+  }
+
   /**
    * Displays given TaskItem in Mini Viewer format
    *
@@ -785,15 +920,15 @@ public class BujoControllerImp implements BujoController {
    * @param currentDay is Day in which given Task belongs
    */
   private void handleTaskClicked(TaskItem task, Day currentDay) {
-    Dialog<EventItem> dialog = new Dialog<>();
+    taskClickedDialog = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
+    taskClickedDialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
     List<Label> allLabels = Arrays.asList(new Label("Task: " + task.getName()),
         new Label("Description: " + task.getDescription()),
         new Label("Completion Status: " + task.getIsComplete()),
         new Label("Links in Description: "));
 
-    dialog.setTitle(task.getName());
+    taskClickedDialog.setTitle(task.getName());
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);
     for (Label l : allLabels) {
@@ -808,8 +943,8 @@ public class BujoControllerImp implements BujoController {
       infoHolder.getChildren().add(newLink);
     }
 
-    dialog.getDialogPane().setContent(infoHolder);
-    dialog.setResultConverter(dialogButton -> {
+    taskClickedDialog.getDialogPane().setContent(infoHolder);
+    taskClickedDialog.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
             currentDay.removeItem(task);
             updatePage();
@@ -818,8 +953,14 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
-    dialog.close();
+    Platform.runLater(new Runnable(){
+      @Override
+      public void run() {
+        taskClickedDialog.showAndWait();
+        taskClickedDialog.close();
+      }
+    });
+
   }
 
 
@@ -856,5 +997,10 @@ public class BujoControllerImp implements BujoController {
       default -> null;
     };
   }
+
+  public void handleHide(){
+    Platform.exit();
+  }
+
 
 }
