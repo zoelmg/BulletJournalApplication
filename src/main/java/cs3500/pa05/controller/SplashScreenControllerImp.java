@@ -1,10 +1,14 @@
 package cs3500.pa05.controller;
 
+import static javafx.application.Application.launch;
+
+import cs3500.pa05.MainStage;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.controlsfx.tools.Platform;
-import org.w3c.dom.Text;
+import javafx.scene.text.Text;
+
 
 public class SplashScreenControllerImp implements SplashScreenController{
 
@@ -12,7 +16,7 @@ public class SplashScreenControllerImp implements SplashScreenController{
   Button continueButton;
 
   @FXML
-  TextField passwordTest;
+  TextField passwordText;
 
   @FXML
   Text wrongText;
@@ -21,15 +25,29 @@ public class SplashScreenControllerImp implements SplashScreenController{
 
 
   public SplashScreenControllerImp(){
-    this.wrongText.setTextContent("");
+    this.wrongText = new Text();
+    this.passwordText = new TextField();
+
+    this.wrongText.setText("a");
 
   }
+
+
   public void run(){
-    this.continueButton.setOnAction(e -> {
-      if(passwordTest.getText().equals("a")){
+    this.continueButton.setOnAction(e -> handelClick());
+    this.wrongText.setText("");
+  }
+
+  private void handelClick(){
+    System.out.println("aa");
+    if (!passwordText.getText().isEmpty()) {
+      System.out.println(passwordText.getText());
+    }
+
+    if(passwordText.getText().equals("a")){
+        System.out.println("a");
         shouldContinue = true;
       }
-    });
   }
 
   public static boolean isShouldContinue() {

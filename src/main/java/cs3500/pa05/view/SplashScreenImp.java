@@ -1,8 +1,12 @@
 package cs3500.pa05.view;
 
+import static cs3500.pa05.controller.SplashScreenControllerImp.isShouldContinue;
+
 import cs3500.pa05.controller.BujoController;
 import cs3500.pa05.controller.BujoControllerImp;
 import cs3500.pa05.controller.SplashScreenController;
+import cs3500.pa05.model.BujoPage;
+import cs3500.pa05.model.BujoPageImp;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +14,10 @@ import javafx.scene.Scene;
 public class SplashScreenImp implements SplashScreenView {
 
   private FXMLLoader loader;
+  private BujoGuiView bujoGuiView;
+  private BujoController controller;
+  private BujoPage bujopage;
+  private FXMLLoader loader2;
 
   /**
    * @param controller is BujoController object that will be used to coordinate this
@@ -20,6 +28,12 @@ public class SplashScreenImp implements SplashScreenView {
     this.loader = new FXMLLoader();
     this.loader.setController(controller);
     this.loader.setLocation(getClass().getClassLoader().getResource("SplashScreen.fxml"));
+    this.bujopage = new BujoPageImp();
+    this.controller = new BujoControllerImp(this.bujopage);
+    this.bujoGuiView = new BujoGuiImp(this.controller);
+    this.loader2  = new FXMLLoader();
+    this.loader2.setController(this.controller);
+    this.loader2.setLocation(getClass().getClassLoader().getResource("BujoMockup.fxml"));
   }
 
   /**
@@ -29,7 +43,15 @@ public class SplashScreenImp implements SplashScreenView {
   @Override
   public Scene load() throws IllegalStateException {
     try {
-      return this.loader.load();
+      if(isShouldContinue()){
+        System.out.println("yes");
+        return this.loader2.load();
+      }
+      else{
+        System.out.println("no");
+        return this.loader.load();
+      }
+
     } catch (IOException exc) {
       throw new IllegalStateException("Unable to load layout.");
     }

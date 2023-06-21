@@ -1,5 +1,7 @@
 package cs3500.pa05;
 
+import static cs3500.pa05.controller.SplashScreenControllerImp.isShouldContinue;
+
 import cs3500.pa05.controller.BujoController;
 import cs3500.pa05.controller.BujoControllerImp;
 import cs3500.pa05.controller.SplashScreenController;
@@ -10,7 +12,9 @@ import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
 import cs3500.pa05.view.SplashScreenImp;
 import cs3500.pa05.view.SplashScreenView;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -21,9 +25,9 @@ public class MainStage extends Application {
   private BujoController controller;
   private BujoPage bujopage;
   private BujoGuiView view;
-
   private SplashScreenController splashScreenController;
   private SplashScreenView splashScreenView;
+
 
   /**
    * Initializing a Main Stage with a view, controller, and model
@@ -47,15 +51,50 @@ public class MainStage extends Application {
     try {
       stage.setTitle("Bujo App");
       // load and place the view's scene onto the stage
-      stage.setScene(view.load());
-      controller.run();
+      stage.setScene(splashScreenView.load());
+      splashScreenController.run();
 
       // render the stage
       stage.show();
+      new Thread(() -> {
+        while(!isShouldContinue()) {
+          // Sleep to avoid busy-waiting
+          try {
+            Thread.sleep(100);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+
+        // Run on JavaFX Application Thread
+        Platform.runLater(() -> {
+          // Close the splash screen
+          stage.close();
+
+          // Create the main stage
+          Stage mainStage = new Stage();
+          mainStage.setTitle("Bujo App");
+
+          // load and place the view's scene onto the main stage
+          try {
+            mainStage.setScene(view.load());
+            splashScreenController.run();
+          } catch (IllegalStateException e) {
+            System.err.println("Unable to load main GUI.");
+          }
+
+          // Run the main controller
+          controller.run();
+
+          // render the main stage
+          mainStage.show();
+        });
+      }).start();
 
     } catch (IllegalStateException exc) {
       System.err.println("Unable to load GUI.");
     }
+
   }
 
 }
