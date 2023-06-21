@@ -54,7 +54,7 @@ public class MainStage extends Application {
       // render the stage
       stage.show();
       new Thread(() -> {
-        while(!isShouldContinue()) {
+        while (!isShouldContinue()) {
           // Sleep to avoid busy-waiting
           try {
             Thread.sleep(100);

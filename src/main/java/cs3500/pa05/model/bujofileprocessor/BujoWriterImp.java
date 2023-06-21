@@ -44,7 +44,7 @@ public class BujoWriterImp implements BujoWriter {
     String result = nodesToWrite.toString();
 
     try {
-      appendable.append(result);// this may fail, hence the try-catch
+      appendable.append(result); // this may fail, hence the try-catch
     } catch (IOException e) {
       System.err.println("An error occurred when writing the bujo file");
       throw new IllegalArgumentException(e.getMessage());
