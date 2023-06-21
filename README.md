@@ -17,6 +17,15 @@
   Dr.Fontenot that it is okay.
 
   [BUJO PITCH]
+Welcome to your very own, easy to use, digital Bujo Journal! 
+With many detailed features to edit week names, create new events and tasks, as well as write in your own notes and 
+quotes, this product will serve as a handy organizational tool for any student. Beyond basic weekly planner 
+functionalities, our Bullet Journal also comes with additional features including keyboard shortcuts to access all of 
+your favorite menu bar buttons as well as a detailed view for each task and event that will appear when that task/event 
+is clicked on. Not to mention, all of your weekly journal information will remain password protected at all times 
+for added privacy! 
+Thank you for using our product, enjoy!
+
   [[SOLID Principles]]
 - Single Responsibility:
     - Our code follows Single Responsibility because we made sure that each class only represent/hold

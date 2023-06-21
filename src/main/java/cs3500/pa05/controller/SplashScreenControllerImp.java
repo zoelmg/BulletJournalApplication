@@ -2,15 +2,16 @@ package cs3500.pa05.controller;
 
 import static javafx.application.Application.launch;
 
-import cs3500.pa05.MainStage;
 import cs3500.pa05.model.BujoPage;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 
+/**
+ * Represents a Controller for the Splash Screen shown before the Main Bujo
+ */
 public class SplashScreenControllerImp implements BujoController{
 
   @FXML
@@ -45,11 +46,14 @@ public class SplashScreenControllerImp implements BujoController{
    *
    */
   public void run(){
-    this.continueButton.setOnAction(e -> handelClick());
+    this.continueButton.setOnAction(e -> handleClick());
     this.wrongText.setText("");
   }
 
-  private void handelClick(){
+  /**
+   * Checks that user entered password is correct onc
+   */
+  private void handleClick(){
     if (passwordText.getText().equals(this.bujoPage.getPassword())){
         shouldContinue = true;
       }

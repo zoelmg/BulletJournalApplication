@@ -82,6 +82,32 @@ public class BujoControllerImp implements BujoController {
   @FXML
   private Scene mainScene;
 
+  protected Dialog<TaskItem> dialogCreateTask;
+  protected Dialog<String> dialogCreateQuote;
+
+  protected Dialog<String> dialogCreateNote;
+  protected Dialog<BujoPage> dialogNewWeek;
+  protected Dialog<EventItem> dialogEventClicked;
+  protected Dialog<TaskItem> dialogTaskClicked;
+  protected Dialog<BujoPage> dialogConfigWeek;
+  protected Dialog<EventItem> dialogCreateEvent;
+
+  private int eventsCreated = 0;
+
+  public int getEventsCreated() {
+    return eventsCreated;
+  }
+
+  private void addEventsCreated(){
+    eventsCreated += 1;
+  }
+
+  private int eventCreationCount = 0;
+
+  public int getEventCreationCount() {
+    return eventCreationCount;
+  }
+
   /**
    * Initialize a BujoController that has all the functionality available on a BujoPage
    *
@@ -397,7 +423,7 @@ public class BujoControllerImp implements BujoController {
     GridPane grid = makeCreateTaskGridPane();
     this.dialogCreateTask.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogCreateTask.setResultConverter(dialogButton -> {
           if (dialogButton == createTaskButtonType) {
             taskDialogHelper((TextField) grid.getChildren().get(1),
                 (TextField) grid.getChildren().get(3),
@@ -620,10 +646,11 @@ public class BujoControllerImp implements BujoController {
    * Creates a Dialog and process responses given
    */
   private void handleCreateNote() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("New Note");
+    this.dialogCreateNote = new Dialog<>();
+    this.dialogCreateNote.setTitle("New Note");
     ButtonType createNoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createNoteButtonType, ButtonType.CANCEL);
+    this.dialogCreateNote.getDialogPane().getButtonTypes().addAll(createNoteButtonType,
+        ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -638,7 +665,7 @@ public class BujoControllerImp implements BujoController {
 
     this.dialogCreateNote.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogCreateNote.setResultConverter(dialogButton -> {
           if (dialogButton == createNoteButtonType) {
             dialogNoteHelper(noteText);
             updatePage();
@@ -646,7 +673,7 @@ public class BujoControllerImp implements BujoController {
           return null;
         }
     );
-    dialog.showAndWait();
+    this.dialogCreateNote.showAndWait();
   }
 
 
@@ -666,10 +693,10 @@ public class BujoControllerImp implements BujoController {
    * Creates a Dialog and process responses given
    */
   private void handleNewWeek() {
-    Dialog<BujoPage> dialog = new Dialog<>();
-    dialog.setTitle("New Week");
+    this.dialogNewWeek = new Dialog<>();
+    this.dialogNewWeek.setTitle("New Week");
     ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    this.dialogNewWeek.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
     
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -690,7 +717,7 @@ public class BujoControllerImp implements BujoController {
           return null;
         }
     );
-    dialog.showAndWait();
+    this.dialogNewWeek.showAndWait();
   }
 
   /**
@@ -801,9 +828,9 @@ public class BujoControllerImp implements BujoController {
    * @param currentDay the day of the week that the event belongs to
    */
   private void handleEventClicked(EventItem event, Day currentDay) {
-    Dialog<EventItem> dialog = new Dialog<>();
+    this.dialogEventClicked = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
+    this.dialogEventClicked.getDialogPane().getButtonTypes().addAll(deleteButtonType);
     List<Label> allLabels = Arrays.asList(new Label("Event: " + event.getName()),
         new Label("Description : " + event.getDescription()),
         new Label("Start Time: " + event.getStartTime()),
@@ -825,8 +852,8 @@ public class BujoControllerImp implements BujoController {
       infoHolder.getChildren().add(newLink);
     }
 
-    dialog.getDialogPane().setContent(infoHolder);
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogEventClicked.getDialogPane().setContent(infoHolder);
+    this.dialogEventClicked.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
             currentDay.removeItem(event);
             updatePage();
@@ -835,8 +862,8 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
-    dialog.close();
+    this.dialogEventClicked.showAndWait();
+    this.dialogEventClicked.close();
   }
 
   /**
@@ -860,15 +887,15 @@ public class BujoControllerImp implements BujoController {
    * @param currentDay is Day in which given Task belongs
    */
   private void handleTaskClicked(TaskItem task, Day currentDay) {
-    Dialog<EventItem> dialog = new Dialog<>();
+    this.dialogTaskClicked = new Dialog<>();
     ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(deleteButtonType);
+    this.dialogTaskClicked.getDialogPane().getButtonTypes().addAll(deleteButtonType);
     List<Label> allLabels = Arrays.asList(new Label("Task: " + task.getName()),
         new Label("Description: " + task.getDescription()),
         new Label("Completion Status: " + task.getIsComplete()),
         new Label("Links in Description: "));
 
-    dialog.setTitle(task.getName());
+    this.dialogTaskClicked.setTitle(task.getName());
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);
     for (Label l : allLabels) {
@@ -883,8 +910,8 @@ public class BujoControllerImp implements BujoController {
       infoHolder.getChildren().add(newLink);
     }
 
-    dialog.getDialogPane().setContent(infoHolder);
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogTaskClicked.getDialogPane().setContent(infoHolder);
+    this.dialogTaskClicked.setResultConverter(dialogButton -> {
           if (dialogButton == deleteButtonType) {
             currentDay.removeItem(task);
             updatePage();
@@ -893,8 +920,8 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
-    dialog.close();
+    this.dialogTaskClicked.showAndWait();
+    this.dialogTaskClicked.close();
   }
 
 
