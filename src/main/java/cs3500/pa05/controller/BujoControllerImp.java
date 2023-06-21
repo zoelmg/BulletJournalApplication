@@ -60,7 +60,7 @@ public class BujoControllerImp implements BujoController {
   private BujoPage bujoPage;
 
   @FXML
-  private HBox weekHbox;
+  protected HBox weekHbox;
 
   @FXML
   private ToolBar menubar;
@@ -272,19 +272,20 @@ public class BujoControllerImp implements BujoController {
    * and which day the week should start on
    */
   private void handleConfigWeek() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Config This Week");
-    dialog.setHeaderText("Give this week a custom name, max amount of tasks and max "
+    this.dialogConfigWeek = new Dialog<>();
+    this.dialogConfigWeek.setTitle("Config This Week");
+    this.dialogConfigWeek.setHeaderText("Give this week a custom name, max amount of tasks and max "
         + "amount of events for every day, or change what day of the week starts with ");
 
     ButtonType configWeekButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(configWeekButtonType, ButtonType.CANCEL);
+    this.dialogConfigWeek.getDialogPane().getButtonTypes().addAll(configWeekButtonType,
+        ButtonType.CANCEL);
 
     GridPane grid = makeConfigWeekGridPane();
 
-    dialog.getDialogPane().setContent(grid);
+    this.dialogConfigWeek.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogConfigWeek.setResultConverter(dialogButton -> {
           if (dialogButton == configWeekButtonType) {
             dialogConfigWeekHelper((TextField) grid.getChildren().get(1),
                 (ChoiceBox<Integer>) grid.getChildren().get(5),
@@ -296,7 +297,7 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
+    this.dialogConfigWeek.showAndWait();
   }
 
   /**
@@ -365,25 +366,27 @@ public class BujoControllerImp implements BujoController {
    * Then creates a new event based on user input and displays it on GUI.
    */
   private void handleCreateTask() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Task");
-    dialog.setHeaderText("Enter Task Info");
+    this.dialogCreateTask = new Dialog<>();
+    this.dialogCreateTask.setTitle("Create New Task");
+    this.dialogCreateTask.setHeaderText("Enter Task Info");
     ButtonType createTaskButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createTaskButtonType, ButtonType.CANCEL);
+    this.dialogCreateTask.getDialogPane().getButtonTypes().addAll(createTaskButtonType,
+        ButtonType.CANCEL);
 
     GridPane grid = makeCreateTaskGridPane();
-    dialog.getDialogPane().setContent(grid);
+    this.dialogCreateTask.getDialogPane().setContent(grid);
 
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == createTaskButtonType) {
             taskDialogHelper((TextField) grid.getChildren().get(1),
-                (TextField) grid.getChildren().get(3), (ChoiceBox<String>) grid.getChildren().get(5));
+                (TextField) grid.getChildren().get(3),
+                (ChoiceBox<String>) grid.getChildren().get(5));
           }
           return null;
         }
     );
 
-    dialog.showAndWait();
+    this.dialogCreateTask.showAndWait();
   }
 
   private GridPane makeCreateTaskGridPane() {
@@ -451,16 +454,16 @@ public class BujoControllerImp implements BujoController {
    * Then creates a new event based on user input and displays it on GUI.
    */
   private void handleCreateEvent() {
-    Dialog<EventItem> dialog = new Dialog<>();
-    dialog.setTitle("Create New Event");
-    dialog.setHeaderText("Enter Event Info");
+    this.dialogCreateEvent = new Dialog<>();
+    this.dialogCreateEvent.setTitle("Create New Event");
+    this.dialogCreateEvent.setHeaderText("Enter Event Info");
     ButtonType createEventButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createEventButtonType, ButtonType.CANCEL);
+    this.dialogCreateEvent.getDialogPane().getButtonTypes().addAll(createEventButtonType, ButtonType.CANCEL);
 
     GridPane grid = makeCreateEventGridPane();
-    dialog.getDialogPane().setContent(grid);
+    this.dialogCreateEvent.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogCreateEvent.setResultConverter(dialogButton -> {
           if (dialogButton == createEventButtonType) {
             eventDialogHelper((TextField) grid.getChildren().get(1), (TextField) grid.getChildren().get(3),
                 (TextField) grid.getChildren().get(5), (TextField) grid.getChildren().get(7),
@@ -470,7 +473,7 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
+    this.dialogCreateEvent.showAndWait();
   }
 
   private GridPane makeCreateEventGridPane() {
@@ -532,6 +535,7 @@ public class BujoControllerImp implements BujoController {
         day.addItem(new EventItem(eventName.getText(),
             !eventDes.getText().isEmpty() ? eventDes.getText() : "Not Entered",
             eventSt.getText(), eventDur.getText()));
+        addEventsCreated();
         updatePage();
       } else {
         Alert atCapacity = new Alert(Alert.AlertType.ERROR);
@@ -547,10 +551,10 @@ public class BujoControllerImp implements BujoController {
    * Creates a Dialog and process responses given
    */
   private void handleCreateQuote() {
-    Dialog<TaskItem> dialog = new Dialog<>();
-    dialog.setTitle("New Quote");
+    this.dialogCreateQuote = new Dialog<>();
+    this.dialogCreateQuote.setTitle("New Quote");
     ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    this.dialogCreateQuote.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -564,9 +568,9 @@ public class BujoControllerImp implements BujoController {
     grid.add(new Label("Quote: "), 0, 0);
     grid.add(quoteText, 1, 0);
 
-    dialog.getDialogPane().setContent(grid);
+    this.dialogCreateQuote.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogCreateQuote.setResultConverter(dialogButton -> {
           if (dialogButton == createQuoteButtonType) {
             dialogQuoteHelper(quoteText);
             updatePage();
@@ -575,7 +579,7 @@ public class BujoControllerImp implements BujoController {
         }
     );
 
-    dialog.showAndWait();
+    this.dialogCreateQuote.showAndWait();
   }
 
   /**
@@ -611,7 +615,7 @@ public class BujoControllerImp implements BujoController {
     grid.add(new Label("Note: "), 0, 0);
     grid.add(noteText, 1, 0);
 
-    dialog.getDialogPane().setContent(grid);
+    this.dialogCreateNote.getDialogPane().setContent(grid);
 
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == createNoteButtonType) {
@@ -656,9 +660,9 @@ public class BujoControllerImp implements BujoController {
 
     grid.add(new Label("Week Name: "), 0, 0);
     grid.add(weekName, 1, 0);
-    dialog.getDialogPane().setContent(grid);
+    this.dialogNewWeek.getDialogPane().setContent(grid);
 
-    dialog.setResultConverter(dialogButton -> {
+    this.dialogNewWeek.setResultConverter(dialogButton -> {
           if (dialogButton == createQuoteButtonType) {
             newWeekHelper(weekName);
           }

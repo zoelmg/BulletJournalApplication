@@ -4,7 +4,6 @@ import static cs3500.pa05.controller.SplashScreenControllerImp.isShouldContinue;
 
 import cs3500.pa05.controller.BujoController;
 import cs3500.pa05.controller.BujoControllerImp;
-import cs3500.pa05.controller.SplashScreenController;
 import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
 import java.io.IOException;

@@ -4,14 +4,12 @@ import static cs3500.pa05.controller.SplashScreenControllerImp.isShouldContinue;
 
 import cs3500.pa05.controller.BujoController;
 import cs3500.pa05.controller.BujoControllerImp;
-import cs3500.pa05.controller.SplashScreenController;
 import cs3500.pa05.controller.SplashScreenControllerImp;
 import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
 import cs3500.pa05.view.SplashScreenImp;
-import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;

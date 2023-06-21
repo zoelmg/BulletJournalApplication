@@ -92,8 +92,16 @@ public interface BujoPage {
    */
   void setMaxTasks(int n);
 
+  /**
+   * @return the password for this bujoPage
+   */
   String getPassword();
 
+  /**
+   * update the password for this bujoPage
+   * 
+   * @param password the password for this bujoPage
+   */
   void setPassword(String password);
 
 

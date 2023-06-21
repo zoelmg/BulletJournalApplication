@@ -1,10 +1,9 @@
 package cs3500.pa05.model.bujofileprocessor;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa05.model.BujoPage;
-import cs3500.pa05.model.BujoPageImp;
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +23,11 @@ class BujoReaderImpTest {
    */
   @BeforeEach
   void setup() {
-    String string1 = "{\"Week\":[{\"week-day\":\"MONDAY\",\"events\"" +
-        ":[],\"tasks\":[]},{\"week-day\":\"TUESDAY\",\"events\":[{\"name\":\"ex Event\",\"description\":"
-        + "\"ex description\",\"start-time\":\"3pm\",\"duration\":\"2hour\"}],\"tasks\":[{\"name\":\"ex Item"
+    String string1 = "{\"Week\":[{\"week-day\":\"MONDAY\",\"events\""
+        + ":[],\"tasks\":[]},{\"week-day\":\"TUESDAY\",\"events\":[{\"name\":\"ex Even"
+        + "t\",\"description\":"
+        + "\"ex description\",\"start-time\":\"3pm\",\"duration\":\"2hour\"}],\"task"
+        + "s\":[{\"name\":\"ex Item"
         + "\",\"description\":"
         + "\"ex description\",\"completed\":false}]},{\"week-day\":\"WEDNESDAY\","
         + "\"events\":[],\"tasks\":[]},{\"week-day\":\"THURSDAY\",\"events\":[],\"tasks\":["

@@ -131,37 +131,6 @@ public class BujoPageImp implements BujoPage {
     this.notes = notes;
   }
 
-  /**
-   * Does the day have more task capacity?
-   *
-   * @param day the day of the week
-   * @return if the day have more task capacity
-   */
-  public boolean hasTaskCapacity(DayOfWeek day) {
-    Day wantedDay = this.week.get(0);
-    for (Day d : this.week) {
-      if (d.getDayOfWeek() == day) {
-        wantedDay = d;
-      }
-    }
-    return this.maxTasks > wantedDay.getTasks().size();
-  }
-
-  /**
-   * Does the day have more event capacity?
-   *
-   * @param day the day of the week
-   * @return if the day have more event capacity
-   */
-  public boolean hasEventCapacity(DayOfWeek day) {
-    Day wantedDay = this.week.get(0);
-    for (Day d : this.week) {
-      if (d.getDayOfWeek() == day) {
-        wantedDay = d;
-      }
-    }
-    return this.maxEvents > wantedDay.getEvents().size();
-  }
 
   /**
    * get the maximum events allowed in the bujo page

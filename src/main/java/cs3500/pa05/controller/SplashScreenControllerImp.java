@@ -27,6 +27,11 @@ public class SplashScreenControllerImp implements BujoController{
   private static boolean shouldContinue = false;
 
 
+  /**
+   * Initializing a SplashScreenController
+   *
+   * @param bujoPage the bujoPage that is being loaded
+   */
   public SplashScreenControllerImp(BujoPage bujoPage){
     this.wrongText = new Text();
     this.passwordText = new TextField();
@@ -36,6 +41,9 @@ public class SplashScreenControllerImp implements BujoController{
   }
 
 
+  /**
+   *
+   */
   public void run(){
     this.continueButton.setOnAction(e -> handelClick());
     this.wrongText.setText("");
@@ -47,6 +55,10 @@ public class SplashScreenControllerImp implements BujoController{
       }
   }
 
+  /**
+   * 
+   * @return true based on the state of this
+   */
   public static boolean isShouldContinue() {
     return shouldContinue;
   }
