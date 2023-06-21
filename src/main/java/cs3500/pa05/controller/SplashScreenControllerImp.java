@@ -3,6 +3,7 @@ package cs3500.pa05.controller;
 import static javafx.application.Application.launch;
 
 import cs3500.pa05.MainStage;
+import cs3500.pa05.model.BujoPage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,13 +22,15 @@ public class SplashScreenControllerImp implements BujoController{
   @FXML
   Text wrongText;
 
+  BujoPage bujoPage;
+
   private static boolean shouldContinue = false;
 
 
-  public SplashScreenControllerImp(){
+  public SplashScreenControllerImp(BujoPage bujoPage){
     this.wrongText = new Text();
     this.passwordText = new TextField();
-
+    this.bujoPage = bujoPage;
     this.wrongText.setText("a");
 
   }

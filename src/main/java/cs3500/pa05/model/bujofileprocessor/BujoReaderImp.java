@@ -69,6 +69,7 @@ public class BujoReaderImp implements BujoReader {
       result.setNotes(bujoPageJson.notebox().notes());
       result.setMaxEvents(bujoPageJson.maxEvents());
       result.setMaxTasks(bujoPageJson.maxTasks());
+      result.setPassword(bujoPageJson.password());
 
     } catch (IOException e) {
       throw new RuntimeException(e);

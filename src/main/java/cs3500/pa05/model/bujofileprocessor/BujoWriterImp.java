@@ -83,8 +83,10 @@ public class BujoWriterImp implements BujoWriter {
     NoteBoxJson noteBoxJson = new NoteBoxJson(bujoPage.getNotes());
 
     BujoPageJson bujoPageJson = new BujoPageJson(dayJsonList, bujoPage.getWeekName(),
-        quoteBoxJson, noteBoxJson, bujoPage.getMaxEvents(), bujoPage.getMaxTasks());
+        quoteBoxJson, noteBoxJson, bujoPage.getMaxEvents(), bujoPage.getMaxTasks(),
+        bujoPage.getPassword());
 
-    return JsonUtil.serializeRecord(bujoPageJson);
+    JsonNode node = JsonUtil.serializeRecord(bujoPageJson);
+    return node;
   }
 }

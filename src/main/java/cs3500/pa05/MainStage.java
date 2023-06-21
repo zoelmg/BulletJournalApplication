@@ -35,7 +35,7 @@ public class MainStage extends Application {
     this.bujopage = new BujoPageImp();
     this.controller = new BujoControllerImp(this.bujopage);
     this.view = new BujoGuiImp(this.controller);
-    this.splashScreenController = new SplashScreenControllerImp();
+    this.splashScreenController = new SplashScreenControllerImp(bujopage);
     this.splashScreenView = new SplashScreenImp(splashScreenController);
   }
 
