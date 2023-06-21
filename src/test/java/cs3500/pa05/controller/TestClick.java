@@ -47,10 +47,10 @@ public class TestClick {
   @Test
   public void testTaskClicked(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT5);
-    VBox vBox = (VBox) this.controller.weekHbox.getChildren().get(0);
+    VBox vBox = (VBox) this.controller.getWeekHBox().getChildren().get(0);
     TaskView taskView = (TaskView) vBox.getChildren().get(1);
     robot.clickOn(taskView);
-    VBox vBox1 = (VBox) this.controller.dialogTaskClicked.getDialogPane().getChildren().get(3);
+    VBox vBox1 = (VBox) this.controller.getTaskClickedDialog().getDialogPane().getChildren().get(3);
     Label label = (Label) vBox1.getChildren().get(0);
     System.out.println(vBox1.getChildren());
 

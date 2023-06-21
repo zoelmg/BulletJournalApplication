@@ -21,6 +21,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -82,15 +83,43 @@ public class BujoControllerImp implements BujoController {
   @FXML
   private Scene mainScene;
 
+  public HBox getWeekHBox() {
+    return this.weekHbox;
+  }
   protected Dialog<TaskItem> dialogCreateTask;
-  protected Dialog<String> dialogCreateQuote;
 
-  protected Dialog<String> dialogCreateNote;
+  public Dialog<TaskItem> getDialogCreateTask() {
+    return dialogCreateTask;
+  }
+  protected Dialog<TaskItem> dialogCreateQuote;
+  public Dialog<TaskItem> getDialogCreateQuote() {
+    return dialogCreateQuote;
+  }
+  protected Dialog<TaskItem> dialogCreateNote;
+  public Dialog<TaskItem> getDialogCreateNote() {
+    return dialogCreateNote;
+  }
   protected Dialog<BujoPage> dialogNewWeek;
+  public Dialog<BujoPage> getDialogNewWeek() {
+    return dialogNewWeek;
+  }
   protected Dialog<EventItem> dialogEventClicked;
+  public Dialog<EventItem> getDialog() {
+    return dialogEventClicked;
+  }
   protected Dialog<TaskItem> dialogTaskClicked;
-  protected Dialog<BujoPage> dialogConfigWeek;
+  public Dialog<TaskItem> getTaskClickedDialog() {
+    return dialogTaskClicked;
+  }
+
+  protected Dialog<TaskItem> dialogConfigWeek;
+  public Dialog<TaskItem> getDialogConfigWeek() {
+    return dialogConfigWeek;
+  }
   protected Dialog<EventItem> dialogCreateEvent;
+  public Dialog<EventItem> getDialogCreateEvent() {
+    return dialogCreateEvent;
+  }
 
   private int eventsCreated = 0;
 
