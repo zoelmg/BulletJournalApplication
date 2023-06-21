@@ -35,7 +35,8 @@ class BujoReaderImpTest {
         + "]},{\"week-day\":\""
         + "SUNDAY\",\"events\":[],\"tasks\":[]}],\"Week-Name\":\"test2\",\"quotebox\":{\"quot"
         + "es\":[\"hi\"]},\"notebox"
-        + "\":{\"notes\":[\"hi\"]},\"maxEvents\":4,\"maxTasks\":2}";
+        + "\":{\"notes\":[\"hi\"]},\"maxEvents\":4,\"maxTasks\":2,\"password\":\"i love jav"
+        + "adocs\"}";
     readable1 = new StringReader(string1);
     reader1 = new BujoReaderImp(readable1);
   }
