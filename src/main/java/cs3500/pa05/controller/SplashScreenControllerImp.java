@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 
-public class SplashScreenControllerImp implements SplashScreenController{
+public class SplashScreenControllerImp implements BujoController{
 
   @FXML
   Button continueButton;
@@ -39,13 +39,7 @@ public class SplashScreenControllerImp implements SplashScreenController{
   }
 
   private void handelClick(){
-    System.out.println("aa");
-    if (!passwordText.getText().isEmpty()) {
-      System.out.println(passwordText.getText());
-    }
-
-    if(passwordText.getText().equals("a")){
-        System.out.println("a");
+    if (passwordText.getText().equals(this.bujoPage.getPassword())){
         shouldContinue = true;
       }
   }

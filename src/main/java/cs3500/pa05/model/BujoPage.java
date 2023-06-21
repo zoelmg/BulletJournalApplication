@@ -92,4 +92,9 @@ public interface BujoPage {
    */
   void setMaxTasks(int n);
 
+  String getPassword();
+
+  void setPassword(String password);
+
+
 }

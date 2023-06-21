@@ -19,6 +19,7 @@ public record BujoPageJson(@JsonProperty("Week") List<DayJson> week,
                            @JsonProperty("quotebox") QuoteBoxJson quotebox,
                            @JsonProperty("notebox") NoteBoxJson notebox,
                            @JsonProperty("maxEvents") int maxEvents,
-                           @JsonProperty("maxTasks") int maxTasks) {
+                           @JsonProperty("maxTasks") int maxTasks,
+                           @JsonProperty("password") String password) {
 
 }

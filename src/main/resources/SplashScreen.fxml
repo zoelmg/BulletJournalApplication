@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 <Scene fill="#2f651d" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="524.0" prefWidth="729.0" style="-fx-background-color: yellow;">
+    <AnchorPane prefHeight="524.0" prefWidth="729.0" style="-fx-background-color: lavender;">
       <children>
          <Text layoutX="269.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Java Journal" wrappingWidth="150.21630859375" />
          <Button fx:id="continueButton" layoutX="259.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Continue" />

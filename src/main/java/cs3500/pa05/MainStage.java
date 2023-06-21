@@ -11,7 +11,6 @@ import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
 import cs3500.pa05.view.SplashScreenImp;
-import cs3500.pa05.view.SplashScreenView;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,8 +24,8 @@ public class MainStage extends Application {
   private BujoController controller;
   private BujoPage bujopage;
   private BujoGuiView view;
-  private SplashScreenController splashScreenController;
-  private SplashScreenView splashScreenView;
+  private BujoController splashScreenController;
+  private BujoGuiView splashScreenView;
 
 
   /**

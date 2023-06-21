@@ -15,6 +15,8 @@ public class BujoPageImp implements BujoPage {
   private int maxEvents;
   private int maxTasks;
 
+  private String password;
+
   /**
    * Instantiate a default BujoPageImp with default week and week name
    */
@@ -32,6 +34,7 @@ public class BujoPageImp implements BujoPage {
     this.weekName = "Week Name";
     this.maxEvents = 2;
     this.maxTasks = 2;
+    this.password = "i love javadocs";
   }
 
   /**
@@ -199,6 +202,26 @@ public class BujoPageImp implements BujoPage {
   @Override
   public void setMaxTasks(int n) {
     this.maxTasks = n;
+  }
+
+  /**
+   * Returns the passsword of the bujoPage
+   *
+   * @return the password of the bujoPage
+   */
+  @Override
+  public String getPassword() {
+    return this.password;
+  }
+
+  /**
+   * set the password for this bujopage
+   *
+   * @param password the password for this bujoPage
+   */
+  @Override
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 }

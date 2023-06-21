@@ -11,7 +11,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
-public class SplashScreenImp implements SplashScreenView {
+public class SplashScreenImp implements BujoGuiView {
 
   private FXMLLoader loader;
   private BujoGuiView bujoGuiView;
@@ -23,7 +23,7 @@ public class SplashScreenImp implements SplashScreenView {
    * @param controller is BujoController object that will be used to coordinate this
    *                   program using this view
    */
-  public SplashScreenImp(SplashScreenController controller) {
+  public SplashScreenImp(BujoController controller) {
     // look up and store the layout
     this.loader = new FXMLLoader();
     this.loader.setController(controller);
@@ -44,11 +44,9 @@ public class SplashScreenImp implements SplashScreenView {
   public Scene load() throws IllegalStateException {
     try {
       if(isShouldContinue()){
-        System.out.println("yes");
         return this.loader2.load();
       }
       else{
-        System.out.println("no");
         return this.loader.load();
       }
 

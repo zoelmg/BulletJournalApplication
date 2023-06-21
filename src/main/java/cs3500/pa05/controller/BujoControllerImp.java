@@ -143,7 +143,6 @@ public class BujoControllerImp implements BujoController {
    * Updating the Bujo Page and its data whenever it is called
    */
   private void updatePage() {
-    System.out.println("update page started");
     weeknameLabel.setText(bujoPage.getWeekName());
     List<Day> days = bujoPage.getBujoWeek();
     List<Node> allboxes = this.weekHbox.getChildren();
@@ -232,8 +231,10 @@ public class BujoControllerImp implements BujoController {
    */
   private void handleSave() {
     try {
-      BujoWriterImp writer = new BujoWriterImp(new FileWriter(bujoPath.toFile()));
+      FileWriter fileWriter = new FileWriter(bujoPath.toFile());
+      BujoWriterImp writer = new BujoWriterImp(fileWriter);
       writer.writeBujoFile(this.bujoPage);
+      fileWriter.close();
     } catch (IOException err) {
       throw new IllegalStateException("Cannot Write to File using FileWriter");
     }
@@ -247,8 +248,7 @@ public class BujoControllerImp implements BujoController {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open A Bujo File");
 
-    fileChooser.setInitialDirectory(new File("/Users/primaryuser/Code/CS3500/Lecture "
-        + "Notes/pa05-blessedbujobeasts/src/main/resources"));
+    fileChooser.setInitialDirectory(new File("src/main/resources"));
 
     Stage stage = new Stage();
     File selectedFile = fileChooser.showOpenDialog(stage);
@@ -287,7 +287,8 @@ public class BujoControllerImp implements BujoController {
     dialog.setResultConverter(dialogButton -> {
           if (dialogButton == configWeekButtonType) {
             dialogConfigWeekHelper((TextField) grid.getChildren().get(1),
-                (ChoiceBox<Integer>) grid.getChildren().get(5), (ChoiceBox<Integer>) grid.getChildren().get(3),
+                (ChoiceBox<Integer>) grid.getChildren().get(5),
+                (ChoiceBox<Integer>) grid.getChildren().get(3),
                 (ChoiceBox<String>) grid.getChildren().get(7));
             updatePage();
           }
