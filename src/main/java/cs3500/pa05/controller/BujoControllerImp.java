@@ -92,6 +92,10 @@ public class BujoControllerImp implements BujoController {
     this.bujoPath = Path.of("src/main/resources/" + bujoPage.getWeekName() + ".bujo");
   }
 
+  public BujoControllerImp(BujoPage bujoPage, String file) {
+    this(bujoPage);
+    openFile(file);
+  }
 
   /**
    * Run the functionality of the BujoPage
@@ -135,8 +139,25 @@ public class BujoControllerImp implements BujoController {
     newWeek.setOnAction(event -> handleNewWeek());
 
     mainScene.setOnKeyPressed(ke -> handleKeyCombs(
-        Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2),
+        Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2,
+            KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7),
         ke));
+  }
+
+  /**
+   * opens the given file for the bujo page
+   * @param file a file containing json
+   */
+  private void openFile(String file) {
+
+    this.bujoPath = Path.of(file);
+    //reset this.bujoPath to equal the path of file user has given in.
+    try {
+      BujoReader reader = new BujoReaderImp(new FileReader(bujoPath.toFile()));
+      this.bujoPage = reader.readBujoFile();
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Unable to read given file");
+    }
   }
 
   /**
@@ -717,9 +738,29 @@ public class BujoControllerImp implements BujoController {
         case O -> handleOpen();
         case DIGIT1 -> handleCreateNote();
         case DIGIT2 -> handleCreateQuote();
+        case DIGIT3 -> handleConfigWeek();
+        case DIGIT4 -> handleNewWeek();
+        case DIGIT5 -> handleChangeWeekStart("Tuesday");
+        case DIGIT6 -> createDefaultEvent();
+        case DIGIT7 -> createDefaultTask();
         default -> { }
       }
     }
+  }
+  private void createDefaultTask(){
+    TextField textField = new TextField();
+    textField.setText("_");
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+    choiceBox.setValue("Monday");
+    taskDialogHelper(textField,textField,choiceBox);
+  }
+
+  private void createDefaultEvent(){
+    TextField textField = new TextField();
+    textField.setText("_");
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+    choiceBox.setValue("Monday");
+    eventDialogHelper(textField,textField,textField,textField,choiceBox);
   }
 
 
@@ -890,5 +931,6 @@ public class BujoControllerImp implements BujoController {
       default -> null;
     };
   }
+
 
 }
