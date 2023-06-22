@@ -6,8 +6,11 @@ import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
+import cs3500.pa05.view.TaskView;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,11 +19,10 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 /**
- * Tests for the Create Node feature's GUI functionality
+ * Tests for the Click GUI functionality
  */
 @ExtendWith(ApplicationExtension.class)
-public class TestCreateNode {
-
+public class TestTaskClicked {
   private BujoControllerImp controller;
   private BujoPage bujopage;
   private BujoGuiView view;
@@ -32,7 +34,7 @@ public class TestCreateNode {
    * @param stage - Will be injected by the test runner.
    */
   @Start
-  public  void start(Stage stage) {
+  private void start(Stage stage) {
     this.stage = stage;
     this.bujopage = new BujoPageImp();
     this.controller = new BujoControllerImp(this.bujopage, "src/main/resources/test.bujo");
@@ -46,9 +48,17 @@ public class TestCreateNode {
 
 
   @Test
-  public void testConfigWeek(FxRobot robot) {
-    robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT1);
-    assertEquals(this.controller.dialogCreateNote.getTitle(), "New Note");
+  public void testTaskClicked(FxRobot robot) {
+    robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT5);
+    VBox Vbox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
+    System.out.println(Vbox.getChildren());
+    TaskView taskView = (TaskView) Vbox.getChildren().get(1);
+    robot.clickOn(taskView);
+    VBox Vbox1 = (VBox) this.controller.getTaskClickedDialog().getDialogPane().getChildren().get(3);
+    Label label = (Label) Vbox1.getChildren().get(0);
+    System.out.println(Vbox1.getChildren());
+
+    assertEquals(label.getText(), "Task: hello");
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {
@@ -57,5 +67,8 @@ public class TestCreateNode {
         stage1.close();
       }
     });
+
+
   }
+
 }

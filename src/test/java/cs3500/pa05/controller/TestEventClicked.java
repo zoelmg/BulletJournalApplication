@@ -22,7 +22,7 @@ import org.testfx.framework.junit5.Start;
  * Tests part 2 for the Click GUI functionality
  */
 @ExtendWith(ApplicationExtension.class)
-public class TestClick2 {
+public class TestEventClicked {
 
 
   private BujoControllerImp controller;

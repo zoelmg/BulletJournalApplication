@@ -2,11 +2,9 @@ package cs3500.pa05.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sun.javafx.event.EventHandlerManager;
 import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.model.EventItem;
-import cs3500.pa05.model.TaskItem;
 import cs3500.pa05.view.BujoGuiImp;
 import cs3500.pa05.view.BujoGuiView;
 import javafx.application.Platform;
@@ -21,7 +19,6 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
-import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
@@ -29,7 +26,7 @@ import org.testfx.framework.junit5.Start;
  * Tests for the GUI Labels' functionality
  */
 @ExtendWith(ApplicationExtension.class)
-class TestLabel {
+class TestNewEvent {
 
   private BujoControllerImp controller;
   private BujoPage bujopage;
