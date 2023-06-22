@@ -417,6 +417,11 @@ public class BujoControllerImp implements BujoController {
     this.dialogCreateTask.showAndWait();
   }
 
+  /**
+   * creates a gridpane for the create task dialog
+   *
+   * @return a create task gridPane
+   */
   private GridPane makeCreateTaskGridPane() {
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -486,14 +491,16 @@ public class BujoControllerImp implements BujoController {
     this.dialogCreateEvent.setTitle("Create New Event");
     this.dialogCreateEvent.setHeaderText("Enter Event Info");
     ButtonType createEventButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    this.dialogCreateEvent.getDialogPane().getButtonTypes().addAll(createEventButtonType, ButtonType.CANCEL);
+    this.dialogCreateEvent.getDialogPane().getButtonTypes().addAll(createEventButtonType,
+        ButtonType.CANCEL);
 
     GridPane grid = makeCreateEventGridPane();
     this.dialogCreateEvent.getDialogPane().setContent(grid);
 
     this.dialogCreateEvent.setResultConverter(dialogButton -> {
           if (dialogButton == createEventButtonType) {
-            eventDialogHelper((TextField) grid.getChildren().get(1), (TextField) grid.getChildren().get(3),
+            eventDialogHelper((TextField) grid.getChildren().get(1),
+                (TextField) grid.getChildren().get(3),
                 (TextField) grid.getChildren().get(5), (TextField) grid.getChildren().get(7),
                 (ChoiceBox<String>) grid.getChildren().get(9));
           }
@@ -504,6 +511,11 @@ public class BujoControllerImp implements BujoController {
     this.dialogCreateEvent.showAndWait();
   }
 
+  /**
+   * creates a gridpane for the event task dialog
+   *
+   * @return a create event gridPane
+   */
   private GridPane makeCreateEventGridPane() {
     TextField eventName = new TextField();
     eventName.setPromptText("Event Name");
@@ -584,7 +596,8 @@ public class BujoControllerImp implements BujoController {
     this.dialogCreateQuote = new Dialog<>();
     this.dialogCreateQuote.setTitle("New Quote");
     ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    this.dialogCreateQuote.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    this.dialogCreateQuote.getDialogPane().getButtonTypes().addAll(createQuoteButtonType,
+        ButtonType.CANCEL);
 
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -678,8 +691,10 @@ public class BujoControllerImp implements BujoController {
   private void handleNewWeek() {
     this.dialogNewWeek = new Dialog<>();
     this.dialogNewWeek.setTitle("New Week");
-    ButtonType createQuoteButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-    this.dialogNewWeek.getDialogPane().getButtonTypes().addAll(createQuoteButtonType, ButtonType.CANCEL);
+    ButtonType createQuoteButtonType = new ButtonType("Confirm",
+        ButtonBar.ButtonData.OK_DONE);
+    this.dialogNewWeek.getDialogPane().getButtonTypes().addAll(createQuoteButtonType,
+        ButtonType.CANCEL);
     
     GridPane grid = new GridPane();
     grid.setHgap(10);
@@ -757,20 +772,27 @@ public class BujoControllerImp implements BujoController {
       }
     }
   }
-  private void createDefaultTask(){
+
+  /**
+   * Create a Default Task
+   */
+  private void createDefaultTask() {
     TextField textField = new TextField();
     textField.setText("_");
     ChoiceBox<String> choiceBox = new ChoiceBox<>();
     choiceBox.setValue("Monday");
-    taskDialogHelper(textField,textField,choiceBox);
+    taskDialogHelper(textField, textField, choiceBox);
   }
 
-  private void createDefaultEvent(){
+  /**
+   * Create a Default Event
+   */
+  private void createDefaultEvent() {
     TextField textField = new TextField();
     textField.setText("_");
     ChoiceBox<String> choiceBox = new ChoiceBox<>();
     choiceBox.setValue("Monday");
-    eventDialogHelper(textField,textField,textField,textField,choiceBox);
+    eventDialogHelper(textField, textField, textField, textField, choiceBox);
   }
 
 
@@ -976,7 +998,7 @@ public class BujoControllerImp implements BujoController {
   /**
    * increases this Controller's eventsCreated field by one.
    */
-  private void addEventsCreated(){
+  private void addEventsCreated() {
     eventsCreated += 1;
   }
 
@@ -987,6 +1009,5 @@ public class BujoControllerImp implements BujoController {
   public int getEventCreationCount() {
     return eventCreationCount;
   }
-
 
 }

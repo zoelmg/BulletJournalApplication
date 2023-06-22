@@ -54,13 +54,11 @@ public class TestTaskClicked {
   @Test
   public void testTaskClicked(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT5);
-    VBox Vbox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
-    System.out.println(Vbox.getChildren());
-    TaskView taskView = (TaskView) Vbox.getChildren().get(1);
+    VBox vbox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
+    TaskView taskView = (TaskView) vbox.getChildren().get(1);
     robot.clickOn(taskView);
-    VBox Vbox1 = (VBox) this.controller.dialogTaskClicked.getDialogPane().getChildren().get(3);
-    Label label = (Label) Vbox1.getChildren().get(0);
-    System.out.println(Vbox1.getChildren());
+    VBox vbox1 = (VBox) this.controller.dialogTaskClicked.getDialogPane().getChildren().get(3);
+    Label label = (Label) vbox1.getChildren().get(0);
 
     assertEquals(label.getText(), "Task: hello");
 

@@ -58,14 +58,13 @@ public class TestEventDialogHelper {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT6);
 
 
-    VBox Vbox = (VBox) this.controller.weekHbox.getChildren().get(0);
-    EventView eventView = (EventView) Vbox.getChildren().get(1);
+    VBox vbox = (VBox) this.controller.weekHbox.getChildren().get(0);
+    EventView eventView = (EventView) vbox.getChildren().get(1);
     robot.clickOn(eventView);
-    VBox Vbox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
-    Label label = (Label) Vbox1.getChildren().get(0);
+    VBox vbox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
+    Label label = (Label) vbox1.getChildren().get(0);
     GridPane gridPane = (GridPane) this.controller.dialogEventClicked.getDialogPane()
         .getChildren().get(0);
-    System.out.println(gridPane);
 
     assertEquals(label.getText(), "Event: _");
 
