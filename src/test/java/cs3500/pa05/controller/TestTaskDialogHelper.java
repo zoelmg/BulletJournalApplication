@@ -50,6 +50,11 @@ public class TestTaskDialogHelper {
 
 
 
+  /**
+   * Test when a Task on the week view is clicked
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
   public void testTaskClicked(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT7);

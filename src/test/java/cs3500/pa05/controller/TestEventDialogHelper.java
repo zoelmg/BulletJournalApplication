@@ -48,6 +48,11 @@ public class TestEventDialogHelper {
   }
 
 
+  /**
+   * Test a eventdialog helper
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
   public void testConfigWeek(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT6);

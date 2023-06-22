@@ -45,8 +45,13 @@ public class TestCreateNote {
 
 
 
+  /**
+   * Test when a new Note is created
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
-  public void testConfigWeek(FxRobot robot) {
+  public void testCreateNote(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT1);
     assertEquals(this.controller.dialogCreateNote.getTitle(), "New Note");
 

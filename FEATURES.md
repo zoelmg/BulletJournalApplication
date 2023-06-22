@@ -19,3 +19,7 @@
 - Links
 
 ## Section 5: Extra Credit
+- Tested GUI
+- Visual Flourish
+- Splash Screen
+- Privacy Lock

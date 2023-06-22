@@ -7,8 +7,8 @@ password: i love javadocs
 (all lowercase)
 
 [PA Write Up](https://markefontenot.notion.site/PA-05-8263d28a81a7473d8372c6579abd6481)
-[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
 
+[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
 - The git build is not building because of the JavaFX GUI Testing, however, we have spoken to
   Dr. Fontenot about this, and he said it was okay. We also have getters in our controller for
   our dialogs and asked if it was okay for the sake of JavaFX GUI testing and for future extension
@@ -16,8 +16,8 @@ password: i love javadocs
   that the GUI testing worked on his end as well. Screenshot could be found in root directory named as
   "Message_With_Professor.png"
 
-- Jackson Binding was mot working with Module-Info.java, which is why we deleted it and the terminal
-  may produce a message "loading from unnamed module" when running the program but we also confirmed with
+- Jackson Binding was not working with Module-Info.java, which is why we deleted it. The terminal
+  may produce a message "loading from unnamed module" when running the program, but we also confirmed with
   Dr.Fontenot that it is okay.
 
   [BUJO PITCH]

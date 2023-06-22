@@ -53,6 +53,11 @@ class TestNewEvent {
 
 
 
+  /**
+   * Test creating a new Event
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
   public void testHandelCreateEvent(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.E);

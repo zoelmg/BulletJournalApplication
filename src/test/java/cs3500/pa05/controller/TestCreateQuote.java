@@ -42,8 +42,13 @@ public class TestCreateQuote {
     stage.show();
   }
 
+  /**
+   * Test when a new Quote is created
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
-  public void testConfigWeek(FxRobot robot) {
+  public void testNewQuote(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT2);
     assertEquals(this.controller.dialogCreateQuote.getTitle(), "New Quote");
     Stage stage1 = this.stage;

@@ -53,9 +53,13 @@ class TestCreateTask {
 
 
 
-
-@Test
-public void testHandelCreateTask(FxRobot robot) {
+  /**
+   * Test when a new Task is created
+   *
+   * @param robot the fxrobot that will simulate action
+   */
+  @Test
+  public void testHandelCreateTask(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.T);
     assertEquals(this.controller.dialogCreateTask.getTitle(), "Create New Task");
     Dialog<TaskItem> dialog = this.controller.dialogCreateTask;

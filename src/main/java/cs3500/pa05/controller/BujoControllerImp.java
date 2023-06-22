@@ -82,73 +82,6 @@ public class BujoControllerImp implements BujoController {
   @FXML
   private Scene mainScene;
 
-  public HBox getWeekHbox() {
-    return this.weekHbox;
-  }
-
-  protected Dialog<TaskItem> dialogCreateTask;
-
-  public Dialog<TaskItem> getDialogCreateTask() {
-    return dialogCreateTask;
-  }
-
-  protected Dialog<TaskItem> dialogCreateQuote;
-
-  public Dialog<TaskItem> getDialogCreateQuote() {
-    return dialogCreateQuote;
-  }
-
-  protected Dialog<TaskItem> dialogCreateNote;
-
-  public Dialog<TaskItem> getDialogCreateNote() {
-    return dialogCreateNote;
-  }
-
-  protected Dialog<BujoPage> dialogNewWeek;
-
-  public Dialog<BujoPage> getDialogNewWeek() {
-    return dialogNewWeek;
-  }
-
-  protected Dialog<EventItem> dialogEventClicked;
-
-  public Dialog<EventItem> getDialog() {
-    return dialogEventClicked;
-  }
-
-  protected Dialog<TaskItem> dialogTaskClicked;
-
-  public Dialog<TaskItem> getTaskClickedDialog() {
-    return dialogTaskClicked;
-  }
-
-  protected Dialog<TaskItem> dialogConfigWeek;
-
-  public Dialog<TaskItem> getDialogConfigWeek() {
-    return dialogConfigWeek;
-  }
-
-  protected Dialog<EventItem> dialogCreateEvent;
-
-  public Dialog<EventItem> getDialogCreateEvent() {
-    return dialogCreateEvent;
-  }
-
-  private int eventsCreated = 0;
-
-  public int getEventsCreated() {
-    return eventsCreated;
-  }
-
-  private void addEventsCreated(){
-    eventsCreated += 1;
-  }
-
-  private int eventCreationCount = 0;
-
-  public int getEventCreationCount() {
-    return eventCreationCount;
-  }
 
   /**
    * Initialize a BujoController that has all the functionality available on a BujoPage
@@ -1003,6 +936,52 @@ public class BujoControllerImp implements BujoController {
       case "Sunday" -> DayOfWeek.SUNDAY;
       default -> null;
     };
+  }
+
+
+  /**
+   * @return the Week HBox of this Controller
+   */
+  ////JAVAFX GUI TESTING MATERIALS///////////
+  public HBox getWeekHbox() {
+    return this.weekHbox;
+  }
+
+  protected Dialog<TaskItem> dialogCreateTask;
+
+  protected Dialog<TaskItem> dialogCreateQuote;
+
+  protected Dialog<TaskItem> dialogCreateNote;
+  protected Dialog<BujoPage> dialogNewWeek;
+
+  protected Dialog<EventItem> dialogEventClicked;
+  protected Dialog<TaskItem> dialogTaskClicked;
+  protected Dialog<EventItem> dialogCreateEvent;
+  protected Dialog<TaskItem> dialogConfigWeek;
+  private int eventsCreated = 0;
+  private int eventCreationCount = 0;
+
+
+  /**
+   * @return this BujoController's eventsCreated
+   */
+  public int getEventsCreated() {
+    return eventsCreated;
+  }
+
+  /**
+   * increases this Controller's eventsCreated field by one.
+   */
+  private void addEventsCreated(){
+    eventsCreated += 1;
+  }
+
+
+  /**
+   * @return this BujoController's eventCreationCount field
+   */
+  public int getEventCreationCount() {
+    return eventCreationCount;
   }
 
 

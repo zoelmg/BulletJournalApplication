@@ -46,7 +46,11 @@ public class TestTaskClicked {
   }
 
 
-
+  /**
+   * Test when a Task is clicked
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
   public void testTaskClicked(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT5);
@@ -54,7 +58,7 @@ public class TestTaskClicked {
     System.out.println(Vbox.getChildren());
     TaskView taskView = (TaskView) Vbox.getChildren().get(1);
     robot.clickOn(taskView);
-    VBox Vbox1 = (VBox) this.controller.getTaskClickedDialog().getDialogPane().getChildren().get(3);
+    VBox Vbox1 = (VBox) this.controller.dialogTaskClicked.getDialogPane().getChildren().get(3);
     Label label = (Label) Vbox1.getChildren().get(0);
     System.out.println(Vbox1.getChildren());
 

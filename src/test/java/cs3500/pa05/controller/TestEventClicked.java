@@ -51,9 +51,11 @@ public class TestEventClicked {
   }
 
 
-
-
-
+  /**
+   * Test when an Event on the weekview is clicked
+   *
+   * @param robot the fxrobot that will simulate action
+   */
   @Test
   public void testEventClicked(FxRobot robot) throws Exception {
 
