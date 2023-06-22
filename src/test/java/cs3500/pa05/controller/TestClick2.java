@@ -54,8 +54,9 @@ public class TestClick2 {
   @Test
   public void testEventClicked(FxRobot robot) throws Exception{
 
-    VBox vBox = (VBox) this.controller.weekHbox.getChildren().get(0);
-    EventView eventView= (EventView) vBox.getChildren().get(1);
+    VBox vBox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
+    System.out.println(vBox.getChildren());
+    EventView eventView = (EventView) vBox.getChildren().get(1);
     robot.clickOn(eventView);
     VBox vBox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
     Label label = (Label) vBox1.getChildren().get(0);

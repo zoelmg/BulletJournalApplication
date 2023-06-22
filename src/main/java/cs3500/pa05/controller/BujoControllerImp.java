@@ -197,6 +197,7 @@ public class BujoControllerImp implements BujoController {
         Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2,
             KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7),
         ke));
+    updatePage();
   }
 
   /**

@@ -22,6 +22,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests for the Create Task feature's GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 class TestCreateTask {
 
@@ -52,7 +55,7 @@ class TestCreateTask {
 
 
 @Test
-public void testHandelCreateTask(FxRobot robot){
+public void testHandelCreateTask(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.T);
     assertEquals(this.controller.dialogCreateTask.getTitle(), "Create New Task");
     Dialog<TaskItem> dialog = this.controller.dialogCreateTask;
@@ -77,8 +80,8 @@ public void testHandelCreateTask(FxRobot robot){
     robot.press(MouseButton.PRIMARY);
 
     assertEquals(choiceBox.getValue(), "Monday");
-    assertEquals(this.controller.getEventCreationCount(),0);
-    robot.sleep(1000l);
+    assertEquals(this.controller.getEventCreationCount(), 0);
+    robot.sleep(1000L);
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

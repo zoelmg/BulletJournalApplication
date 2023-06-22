@@ -42,9 +42,9 @@ public class TestNewWeek {
 
 
   @Test
-  public void testConfigWeek(FxRobot robot){
+  public void testConfigWeek(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT4);
-    assertEquals(this.controller.dialogConfigWeek.getTitle(), "Create a New Week");
+    assertEquals(this.controller.getDialogNewWeek().getTitle(), "New Week");
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

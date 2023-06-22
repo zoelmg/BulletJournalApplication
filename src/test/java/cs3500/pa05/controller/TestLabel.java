@@ -25,6 +25,9 @@ import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests for the GUI Labels' functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 class TestLabel {
 
