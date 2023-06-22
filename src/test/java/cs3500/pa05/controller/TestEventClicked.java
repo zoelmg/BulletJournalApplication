@@ -41,7 +41,7 @@ public class TestEventClicked {
     this.stage = stage;
     this.bujopage = new BujoPageImp();
 
-    this.controller = new BujoControllerImp(this.bujopage, "src/main/resources/test2.bujo");
+    this.controller = new BujoControllerImp(this.bujopage, "src/main/resources/test.bujo");
     this.view = new BujoGuiImp(this.controller);
 
     stage.setScene(view.load());

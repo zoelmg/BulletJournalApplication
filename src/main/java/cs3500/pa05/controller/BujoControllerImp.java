@@ -584,7 +584,6 @@ public class BujoControllerImp implements BujoController {
                                  TextField eventDur, ChoiceBox<String> dayOfWeek) {
     if (eventName.getText().isEmpty() || eventSt.getText().isEmpty()
         || eventDur.getText().isEmpty() || dayOfWeek.getValue() == null) {
-      System.out.println("hey2");
       this.eventDialogAlert = new Alert(Alert.AlertType.ERROR);
       eventDialogAlert.setContentText("Enter All Fields");
       eventDialogAlert.show();
@@ -791,8 +790,6 @@ public class BujoControllerImp implements BujoController {
     KeyCombination keycomb2 = new KeyCodeCombination(eventKey, KeyCombination.SHORTCUT_DOWN);
 
     if (keycomb.match(keyEvent) || keycomb2.match(keyEvent)) {
-      System.out.println(keyEvent);
-      System.out.println(this.keyMap.containsKey(keyEvent.getCode()));
       if (this.keyMap.containsKey(keyEvent.getCode())) {
         this.keyMap.get(keyEvent.getCode()).run();
       }
@@ -866,7 +863,7 @@ public class BujoControllerImp implements BujoController {
         new Label("Description : " + event.getDescription()),
         new Label("Start Time: " + event.getStartTime()),
         new Label("Duration: " + event.getDuration()),
-        new Label("Links in Description: " + event.getDuration()));
+        new Label("Links in Description: " + event.getValidLinks()));
 
     VBox infoHolder = new VBox();
     infoHolder.setPrefSize(600, 400);
@@ -1033,7 +1030,6 @@ public class BujoControllerImp implements BujoController {
     TextField textField = new TextField();
     textField.setText("1");
     ChoiceBox<String> choiceBox1 = new ChoiceBox<>();
-    System.out.println("hey");
     this.eventDialogHelper(textField, textField, textField, textField, choiceBox1);
   }
 
