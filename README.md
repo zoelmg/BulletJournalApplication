@@ -2,6 +2,19 @@
 
 # 3500 PA05 Project Repo
 
+#[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
+- The git build is not building because of the JavaFX GUI Testing, however, we have spoken to
+  Dr. Fontenot about this, and he said it was okay. We also have getters in our controller for
+  our dialogs and asked if it was okay for the sake of JavaFX GUI testing and for future extension
+  purposes, and he also said it was okay in-person. Dr. Fontenot pulled from our repository and made sure
+  that the GUI testing worked on his end as well. Screenshot could be found in root directory named as
+  "Message_With_Professor.png"
+- PS - we confirmed with Dr Fontenot that complete 80% test coverage in branched is not 
+required to receive extra credit points since gui testing is still fully functional. 
+
+- Jackson Binding was not working with Module-Info.java, which is why we deleted it. The terminal
+  may produce a message "loading from unnamed module" when running the program, but we also confirmed with
+  Dr.Fontenot that it is okay.
 
 #[PASSWORD FOR BUJO]
 password: i love javadocs
@@ -25,17 +38,7 @@ in root directory named GUI_showcase.png
 
 [PA Write Up](https://markefontenot.notion.site/PA-05-8263d28a81a7473d8372c6579abd6481)
 
-#[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
-- The git build is not building because of the JavaFX GUI Testing, however, we have spoken to
-  Dr. Fontenot about this, and he said it was okay. We also have getters in our controller for
-  our dialogs and asked if it was okay for the sake of JavaFX GUI testing and for future extension
-  purposes, and he also said it was okay in-person. Dr. Fontenot pulled from our repository and made sure
-  that the GUI testing worked on his end as well. Screenshot could be found in root directory named as
-  "Message_With_Professor.png"
 
-- Jackson Binding was not working with Module-Info.java, which is why we deleted it. The terminal
-  may produce a message "loading from unnamed module" when running the program, but we also confirmed with
-  Dr.Fontenot that it is okay.
 
 #[BUJO PITCH]
 Welcome to your very own, easy to use, digital Bujo Journal! 
