@@ -93,6 +93,10 @@ public class BujoControllerImp implements BujoController {
     this.bujoPath = Path.of("src/main/resources/" + bujoPage.getWeekName() + ".bujo");
   }
 
+  /**
+   * @param bujoPage is BuJoPage being interacted with for this controller
+   * @param file is file path to be opened
+   */
   public BujoControllerImp(BujoPage bujoPage, String file) {
     this(bujoPage);
     openFile(file);

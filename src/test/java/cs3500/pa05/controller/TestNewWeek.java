@@ -44,6 +44,9 @@ public class TestNewWeek {
   }
 
 
+  /**
+   * @param robot is the FxRobot that will simulate config week action
+   */
   @Test
   public void testConfigWeek(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT4);
