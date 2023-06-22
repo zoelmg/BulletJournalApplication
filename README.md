@@ -2,13 +2,14 @@
 
 # 3500 PA05 Project Repo
 
-[PASSWORD FOR BUJO]
+
+#[PASSWORD FOR BUJO]
 password: i love javadocs
 (all lowercase)
 
 [PA Write Up](https://markefontenot.notion.site/PA-05-8263d28a81a7473d8372c6579abd6481)
 
-[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
+#[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
 - The git build is not building because of the JavaFX GUI Testing, however, we have spoken to
   Dr. Fontenot about this, and he said it was okay. We also have getters in our controller for
   our dialogs and asked if it was okay for the sake of JavaFX GUI testing and for future extension
@@ -20,7 +21,7 @@ password: i love javadocs
   may produce a message "loading from unnamed module" when running the program, but we also confirmed with
   Dr.Fontenot that it is okay.
 
-  [BUJO PITCH]
+#[BUJO PITCH]
 Welcome to your very own, easy to use, digital Bujo Journal! 
 With many detailed features to edit week names, create new events and tasks, as well as write in your own notes and 
 quotes, this product will serve as a handy organizational tool for any student. Beyond basic weekly planner 
@@ -28,9 +29,84 @@ functionalities, our Bullet Journal also comes with additional features includin
 your favorite menu bar buttons as well as a detailed view for each task and event that will appear when that task/event 
 is clicked on. Not to mention, all of your weekly journal information will remain password protected at all times 
 for added privacy! 
-Thank you for using our product, enjoy!
+Thank you for using our product. Please refer to our description below for details on each of our features, enjoy!
 
-  [[SOLID Principles]]
+#[List of Features:]
+## Section 1: Requirements
+- Week View: You can see all of your tasks, events, and week details across one calendar week.
+- Event/Task Creation: Please click the Add... button and select either event or task
+from the drop down menu to start creating your own new event or task. For either item,
+including a description is optional but all other information is required for an event or
+task to be created. 
+- Commitment Warnings - if you do not enter all required information when creating an 
+event, task or another bujo element, then a commitment warning will pop up on the screen.
+In this case, please close the warning popup and try again.
+- Persistence - when this bujo journal is first run, a default blank week configuration
+will be created for you. In order to open a previously made week file, please click on the
+Open button on the menu bar and then select your file from the popup. Similarly, to save
+any changes you make to your current bujo, click the Save button and your changes will
+- be updated in your bujo file when you close the bujo application. 
+
+## Section 2: Headlining Features
+- Task Queue: To the right of your screen, you'll see the column titled
+task queue. This column will contain an exhaustive list of all tasks in 
+the week that you can scroll through. 
+- Menu Bar and Shortcuts: For your convenience, we've added all out buttons to edit your 
+week in a Menu Bar at the top of the screen. Additionally, these features can be accessed
+using keyboard shortcuts in place of these buttons. (FILL IN SHORTCUTS HERE)
+
+## Section 3: Power-ups
+- Quotes and Notes: Our journal features additional sections at the bottom of the screen
+to add any quotes or general notes you'd like to store on your bujo. Please click the Add
+button on menu bar to reveal a drop down menu. On this menu, click the Notes option to
+trigger a dialog to create a new Note. Click the Quote option in the drop down menu to add 
+a Quote.
+- Mini Viewer: To view the complete name, description, and details of a given Event or Task
+in your Bujo, simply click on that Event or Task in the Week View. A large popup will
+appear, displaying your Event or Task in greater detail.
+- Takesie Backsies: This bujo also includes functionality to delete any tasks or events
+you've added to your journal. To access this delete feature, simply click on a given task
+or event in week view to open that event/task's mini viewer. Now press the delete button
+for that task/event that is visible in the bottom right corner of the mini viewer display.
+Deleting a task from your week view will also remove the item from your task queue.
+
+## Section 4: 
+- Week Start: If the user would like to change the day that their week starts with, they can simply 
+click the configure week button in the menu bar, and select the desired day from the dropdown choice box.
+After clicking confirm, the weekly view will be updated to reflect what the user has chosen. Note that the
+user doesn't have to change any other configuration for the week to change Week Start Day
+- Links: If the user entered any valid, openable links in the description for task/event, when they open
+the mini viewer for the respective task/event, they will see a list of links at the bottom of the mini viewer,
+for which they can click on and the journal will open the clicked link. 
+
+## Section 5:
+- Splash Screen: When the bujo application is first launched, a splash screen will appear
+before the actual bujo and week view is displayed. You'll need to enter the correct 
+password to disable the splash screen and reveal your week view(password: i love javadocs).
+- Privacy Locks: This bujo is password protected. You'll be prompted for your password
+in the splash screen when the application is launched. The password is stored in, and 
+can be edited by the user in their .bujo file. 
+- Tested GUI: Our GUI and JavaFx compoments have been tested. 
+- Visual Flourish: Our journal follows a calming theme color of lavender throughout its
+elements. We keep to a consistent, visually appealing, text formatting and text styles.
+- Our buttons including white shading that complements the lavender backdrop, 
+highlighting the buttons functionality without drawing too much attention away from the 
+rest of the journal elements and week view. 
+
+
+#[Extending our Program]
+If we were to extend our program to implement another feature, we can easily achieve that due to the flexibility 
+of our program. For example, if we were to implement Sort by Name or Duration, we could either add a button to 
+the menu bar or add it to our Config Week dialog section since we are configuring the set up of the weekly view. 
+By adding the sort by name or duration option to our config week dialog, we will make it so such that like every 
+other feature on the config week dialog, the user are able to change the only sort without changing other fields 
+such as Week Name. We would then use an Enum class that implements the Comparator interface to hold two Enum methods, 
+compareTo by name or compareTo by Duration, and call either two of these methods in a Compare class that overrides 
+the sort() method. Whenever the user wants the tasks/events to be sorted, we will sort the list of EventItem/TaskItems 
+based on what the user has chosen, then we will call updatePage() to display the updated EventsView and TasksView 
+since updatePage() is the method that is constantly updating the view of the Bujo Page to the user.
+
+#[[SOLID Principles]]
 - Single Responsibility:
     - Our code follows Single Responsibility because we made sure that each class only represent/hold
       one idea and the methods within each class are related and serve purpose to that one idea. In addition,
