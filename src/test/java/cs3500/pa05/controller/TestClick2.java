@@ -18,6 +18,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests part 2 for the Click GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 public class TestClick2 {
 
@@ -33,7 +36,7 @@ public class TestClick2 {
    * @param stage - Will be injected by the test runner.
    */
   @Start
-   public void start(Stage stage) throws Exception{
+   public void start(Stage stage) throws Exception {
 
     this.stage = stage;
     this.bujopage = new BujoPageImp();
@@ -52,14 +55,14 @@ public class TestClick2 {
 
 
   @Test
-  public void testEventClicked(FxRobot robot) throws Exception{
+  public void testEventClicked(FxRobot robot) throws Exception {
 
     VBox vBox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
     System.out.println(vBox.getChildren());
     EventView eventView = (EventView) vBox.getChildren().get(1);
     robot.clickOn(eventView);
-    VBox vBox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
-    Label label = (Label) vBox1.getChildren().get(0);
+    VBox Vbox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
+    Label label = (Label) Vbox1.getChildren().get(0);
     GridPane gridPane = (GridPane) this.controller.dialogEventClicked.getDialogPane()
         .getChildren().get(0);
     System.out.println(gridPane);
@@ -67,7 +70,7 @@ public class TestClick2 {
     assertEquals(label.getText(), "Event: Hello");
     System.out.println(gridPane.getChildren());
 
-    robot.sleep(1000l);
+    robot.sleep(1000L);
 
     Stage stage1 = this.stage;
     BujoControllerImp controller1 = this.controller;

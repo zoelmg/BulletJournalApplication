@@ -18,6 +18,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests for the Click GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 public class TestClick {
   private BujoControllerImp controller;
@@ -47,15 +50,15 @@ public class TestClick {
   @Test
   public void testTaskClicked(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT5);
-    VBox vBox = (VBox) this.controller.getWeekHBox().getChildren().get(0);
-    TaskView taskView = (TaskView) vBox.getChildren().get(1);
+    VBox Vbox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
+    System.out.println(Vbox.getChildren());
+    TaskView taskView = (TaskView) Vbox.getChildren().get(1);
     robot.clickOn(taskView);
-    VBox vBox1 = (VBox) this.controller.getTaskClickedDialog().getDialogPane().getChildren().get(3);
-    Label label = (Label) vBox1.getChildren().get(0);
-    System.out.println(vBox1.getChildren());
+    VBox Vbox1 = (VBox) this.controller.getTaskClickedDialog().getDialogPane().getChildren().get(3);
+    Label label = (Label) Vbox1.getChildren().get(0);
+    System.out.println(Vbox1.getChildren());
 
     assertEquals(label.getText(), "Task: hello");
-    robot.sleep(1000l);
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

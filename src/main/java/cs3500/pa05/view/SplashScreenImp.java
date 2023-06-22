@@ -10,6 +10,9 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
+/**
+ * Represents a Controller that controls solely the Splash Screen element of the Program
+ */
 public class SplashScreenImp implements BujoGuiView {
 
   private FXMLLoader loader;
@@ -42,10 +45,9 @@ public class SplashScreenImp implements BujoGuiView {
   @Override
   public Scene load() throws IllegalStateException {
     try {
-      if(isShouldContinue()){
+      if (isShouldContinue()) {
         return this.loader2.load();
-      }
-      else{
+      } else {
         return this.loader.load();
       }
 

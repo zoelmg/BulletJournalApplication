@@ -19,6 +19,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests for the Event Creation Dialog feature's GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 public class TestEventDialogHelper {
 
@@ -46,15 +49,15 @@ public class TestEventDialogHelper {
 
 
   @Test
-  public void testConfigWeek(FxRobot robot){
+  public void testConfigWeek(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT6);
 
 
-    VBox vBox = (VBox) this.controller.weekHbox.getChildren().get(0);
-    EventView eventView= (EventView) vBox.getChildren().get(1);
+    VBox Vbox = (VBox) this.controller.weekHbox.getChildren().get(0);
+    EventView eventView = (EventView) Vbox.getChildren().get(1);
     robot.clickOn(eventView);
-    VBox vBox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
-    Label label = (Label) vBox1.getChildren().get(0);
+    VBox Vbox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
+    Label label = (Label) Vbox1.getChildren().get(0);
     GridPane gridPane = (GridPane) this.controller.dialogEventClicked.getDialogPane()
         .getChildren().get(0);
     System.out.println(gridPane);

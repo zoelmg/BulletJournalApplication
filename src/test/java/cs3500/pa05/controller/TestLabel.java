@@ -57,7 +57,7 @@ class TestLabel {
 
 
   @Test
-  public void testHandelCreateEvent(FxRobot robot){
+  public void testHandelCreateEvent(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.E);
     assertEquals(this.controller.dialogCreateEvent.getTitle(), "Create New Event");
     Dialog<EventItem> dialog = this.controller.dialogCreateEvent;
@@ -88,8 +88,8 @@ class TestLabel {
     robot.press(MouseButton.PRIMARY);
 
     assertEquals(choiceBox.getValue(), "Monday");
-    assertEquals(this.controller.getEventCreationCount(),0);
-    robot.sleep(1000l);
+    assertEquals(this.controller.getEventCreationCount(), 0);
+    robot.sleep(1000L);
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

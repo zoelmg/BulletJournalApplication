@@ -15,6 +15,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Test class for New Week GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 public class TestNewWeek {
 

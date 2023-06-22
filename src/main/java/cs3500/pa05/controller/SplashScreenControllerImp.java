@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 /**
  * Represents a Controller for the Splash Screen shown before the Main Bujo
  */
-public class SplashScreenControllerImp implements BujoController{
+public class SplashScreenControllerImp implements BujoController {
 
   @FXML
   Button continueButton;
@@ -33,7 +33,7 @@ public class SplashScreenControllerImp implements BujoController{
    *
    * @param bujoPage the bujoPage that is being loaded
    */
-  public SplashScreenControllerImp(BujoPage bujoPage){
+  public SplashScreenControllerImp(BujoPage bujoPage) {
     this.wrongText = new Text();
     this.passwordText = new TextField();
     this.bujoPage = bujoPage;
@@ -45,7 +45,7 @@ public class SplashScreenControllerImp implements BujoController{
   /**
    *
    */
-  public void run(){
+  public void run() {
     this.continueButton.setOnAction(e -> handleClick());
     this.wrongText.setText("");
   }
@@ -53,14 +53,13 @@ public class SplashScreenControllerImp implements BujoController{
   /**
    * Checks that user entered password is correct onc
    */
-  private void handleClick(){
-    if (passwordText.getText().equals(this.bujoPage.getPassword())){
-        shouldContinue = true;
-      }
+  private void handleClick() {
+    if (passwordText.getText().equals(this.bujoPage.getPassword())) {
+      shouldContinue = true;
+    }
   }
 
   /**
-   * 
    * @return true based on the state of this
    */
   public static boolean isShouldContinue() {

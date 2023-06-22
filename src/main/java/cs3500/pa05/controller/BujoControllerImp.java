@@ -21,7 +21,6 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -83,40 +82,54 @@ public class BujoControllerImp implements BujoController {
   @FXML
   private Scene mainScene;
 
-  public HBox getWeekHBox() {
+  public HBox getWeekHbox() {
     return this.weekHbox;
   }
+
   protected Dialog<TaskItem> dialogCreateTask;
 
   public Dialog<TaskItem> getDialogCreateTask() {
     return dialogCreateTask;
   }
+
   protected Dialog<TaskItem> dialogCreateQuote;
+
   public Dialog<TaskItem> getDialogCreateQuote() {
     return dialogCreateQuote;
   }
+
   protected Dialog<TaskItem> dialogCreateNote;
+
   public Dialog<TaskItem> getDialogCreateNote() {
     return dialogCreateNote;
   }
+
   protected Dialog<BujoPage> dialogNewWeek;
+
   public Dialog<BujoPage> getDialogNewWeek() {
     return dialogNewWeek;
   }
+
   protected Dialog<EventItem> dialogEventClicked;
+
   public Dialog<EventItem> getDialog() {
     return dialogEventClicked;
   }
+
   protected Dialog<TaskItem> dialogTaskClicked;
+
   public Dialog<TaskItem> getTaskClickedDialog() {
     return dialogTaskClicked;
   }
 
   protected Dialog<TaskItem> dialogConfigWeek;
+
   public Dialog<TaskItem> getDialogConfigWeek() {
     return dialogConfigWeek;
   }
+
   protected Dialog<EventItem> dialogCreateEvent;
+
   public Dialog<EventItem> getDialogCreateEvent() {
     return dialogCreateEvent;
   }
@@ -181,16 +194,16 @@ public class BujoControllerImp implements BujoController {
     //set addEventMenuItem on action
     MenuButton addMenuButton = (MenuButton) buttons.get(3);
     List<MenuItem> allitems = addMenuButton.getItems();
-    MenuItem eventItem = allitems.get(0);
-    MenuItem taskItem = allitems.get(1);
-    MenuItem quoteItem = allitems.get(2);
-    MenuItem noteItem = allitems.get(3);
-    MenuItem newWeek = allitems.get(4);
 
-    taskItem.setOnAction(event -> handleCreateTask());
+    MenuItem eventItem = allitems.get(0);
     eventItem.setOnAction(event -> handleCreateEvent());
+    MenuItem taskItem = allitems.get(1);
+    taskItem.setOnAction(event -> handleCreateTask());
+    MenuItem quoteItem = allitems.get(2);
     quoteItem.setOnAction(event -> handleCreateQuote());
+    MenuItem noteItem = allitems.get(3);
     noteItem.setOnAction(event -> handleCreateNote());
+    MenuItem newWeek = allitems.get(4);
     newWeek.setOnAction(event -> handleNewWeek());
 
     mainScene.setOnKeyPressed(ke -> handleKeyCombs(
@@ -202,6 +215,7 @@ public class BujoControllerImp implements BujoController {
 
   /**
    * opens the given file for the bujo page
+   *
    * @param file a file containing json
    */
   private void openFile(String file) {
@@ -286,8 +300,6 @@ public class BujoControllerImp implements BujoController {
    * stored in this Controller's bujopage.
    */
   private void updateQuotesAndNotes() {
-    List<String> quotes = this.bujoPage.getQuotes();
-    List<String> notes = this.bujoPage.getNotes();
     List<Node> quotesAndNotes = this.quotesAndNotes.getChildren();
     VBox quoteVbox = (VBox) quotesAndNotes.get(0);
     Label quoteLabel = (Label) quoteVbox.getChildren().get(0);
@@ -299,6 +311,8 @@ public class BujoControllerImp implements BujoController {
     noteVbox.getChildren().removeAll(noteVbox.getChildren());
     noteVbox.getChildren().add(noteLabel);
 
+    List<String> quotes = this.bujoPage.getQuotes();
+    List<String> notes = this.bujoPage.getNotes();
     addString(quotes, quoteVbox);
     addString(notes, noteVbox);
   }
@@ -554,11 +568,13 @@ public class BujoControllerImp implements BujoController {
   }
 
   private GridPane makeCreateEventGridPane() {
-    TextField eventName = new TextField(), eventDes = new TextField(),
-        eventSt = new TextField(), eventDur = new TextField();
+    TextField eventName = new TextField();
     eventName.setPromptText("Event Name");
+    TextField eventDes = new TextField();
     eventDes.setPromptText("Event Description");
+    TextField eventSt = new TextField();
     eventSt.setPromptText("Event Start Time");
+    TextField eventDur = new TextField();
     eventDur.setPromptText("Event Duration");
 
     GridPane grid = new GridPane();

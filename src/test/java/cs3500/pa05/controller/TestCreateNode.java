@@ -15,6 +15,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests for the Create Node feature's GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 public class TestCreateNode {
 
@@ -43,7 +46,7 @@ public class TestCreateNode {
 
 
   @Test
-  public void testConfigWeek(FxRobot robot){
+  public void testConfigWeek(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT1);
     assertEquals(this.controller.dialogCreateNote.getTitle(), "New Note");
 

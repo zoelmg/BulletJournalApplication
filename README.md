@@ -2,6 +2,10 @@
 
 # 3500 PA05 Project Repo
 
+[PASSWORD FOR BUJO]
+password: i love javadocs
+(all lowercase)
+
 [PA Write Up](https://markefontenot.notion.site/PA-05-8263d28a81a7473d8372c6579abd6481)
 [NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
 

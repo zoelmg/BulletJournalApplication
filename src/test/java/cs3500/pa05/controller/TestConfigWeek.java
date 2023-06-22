@@ -15,6 +15,9 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+/**
+ * Tests for the ConfigWeek feature's GUI functionality
+ */
 @ExtendWith(ApplicationExtension.class)
 public class TestConfigWeek {
 
@@ -44,7 +47,7 @@ public class TestConfigWeek {
 
 
   @Test
-  public void testConfigWeek(FxRobot robot){
+  public void testConfigWeek(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT3);
     assertEquals(this.controller.dialogConfigWeek.getTitle(), "Config This Week");
 
