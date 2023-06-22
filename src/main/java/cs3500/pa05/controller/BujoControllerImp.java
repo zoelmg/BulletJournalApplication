@@ -1,8 +1,27 @@
 package cs3500.pa05.controller;
 
+import static javafx.scene.input.KeyCode.B;
+import static javafx.scene.input.KeyCode.DIGIT0;
+import static javafx.scene.input.KeyCode.DIGIT1;
+import static javafx.scene.input.KeyCode.DIGIT2;
+import static javafx.scene.input.KeyCode.DIGIT3;
+import static javafx.scene.input.KeyCode.DIGIT4;
+import static javafx.scene.input.KeyCode.DIGIT5;
+import static javafx.scene.input.KeyCode.DIGIT6;
+import static javafx.scene.input.KeyCode.DIGIT7;
+import static javafx.scene.input.KeyCode.DIGIT8;
+import static javafx.scene.input.KeyCode.DIGIT9;
+import static javafx.scene.input.KeyCode.E;
+import static javafx.scene.input.KeyCode.M;
+import static javafx.scene.input.KeyCode.O;
+import static javafx.scene.input.KeyCode.S;
+import static javafx.scene.input.KeyCode.T;
+import static javafx.scene.input.KeyCode.V;
+
 import cs3500.pa05.model.BujoPage;
 import cs3500.pa05.model.BujoPageImp;
 import cs3500.pa05.model.Day;
+import cs3500.pa05.model.DayUtil;
 import cs3500.pa05.model.EventItem;
 import cs3500.pa05.model.TaskItem;
 import cs3500.pa05.model.bujofileprocessor.BujoReader;
@@ -20,6 +39,7 @@ import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -144,8 +164,8 @@ public class BujoControllerImp implements BujoController {
     newWeek.setOnAction(event -> handleNewWeek());
 
     mainScene.setOnKeyPressed(ke -> handleKeyCombs(
-        Arrays.asList(KeyCode.E, KeyCode.T, KeyCode.S, KeyCode.O, KeyCode.DIGIT1, KeyCode.DIGIT2,
-            KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7),
+        Arrays.asList(E, T, S, O, DIGIT1, DIGIT2,
+            DIGIT3, DIGIT4, DIGIT5, DIGIT6, DIGIT7),
         ke));
     updatePage();
   }
@@ -458,12 +478,12 @@ public class BujoControllerImp implements BujoController {
   private void taskDialogHelper(TextField taskName, TextField taskDescription,
                                 ChoiceBox<String> dayOfWeek) {
     if (taskName.getText().isEmpty() || dayOfWeek.getValue() == null) {
-      Alert notCompleted = new Alert(Alert.AlertType.ERROR);
-      notCompleted.setContentText("Enter All Fields");
-      notCompleted.show();
+      this.taskDialogAlert= new Alert(Alert.AlertType.ERROR);
+      taskDialogAlert.setContentText("Enter All Fields");
+      taskDialogAlert.show();
 
     } else {
-      DayOfWeek desiredDay = getDay(dayOfWeek.getValue());
+      DayOfWeek desiredDay = DayUtil.getDay(dayOfWeek.getValue());
 
       Day day = bujoPage.getBujoWeek().stream().filter(d -> d.getDayOfWeek().equals(desiredDay))
           .toList().get(0);
@@ -563,12 +583,13 @@ public class BujoControllerImp implements BujoController {
                                  TextField eventDur, ChoiceBox<String> dayOfWeek) {
     if (eventName.getText().isEmpty() || eventSt.getText().isEmpty()
         || eventDur.getText().isEmpty() || dayOfWeek.getValue() == null) {
-      Alert notCompleted = new Alert(Alert.AlertType.ERROR);
-      notCompleted.setContentText("Enter All Fields");
-      notCompleted.show();
+      System.out.println("hey2");
+      this.eventDialogAlert = new Alert(Alert.AlertType.ERROR);
+      eventDialogAlert.setContentText("Enter All Fields");
+      eventDialogAlert.show();
 
     } else {
-      DayOfWeek desiredDay = getDay(dayOfWeek.getValue());
+      DayOfWeek desiredDay = DayUtil.getDay(dayOfWeek.getValue());
       Day day = bujoPage.getBujoWeek().stream().filter(d -> d.getDayOfWeek().equals(desiredDay))
           .toList().get(0);
 
@@ -755,20 +776,27 @@ public class BujoControllerImp implements BujoController {
   private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent) {
     KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
     KeyCombination keycomb2 = new KeyCodeCombination(eventKey, KeyCombination.SHORTCUT_DOWN);
+    this.keyMap.put(E, () -> handleCreateEvent());
+    this.keyMap.put(T, () -> handleCreateTask());
+    this.keyMap.put(S, () -> handleSave());
+    this.keyMap.put(O, () -> handleOpen());
+    this.keyMap.put(DIGIT1, () -> handleCreateNote());
+    this.keyMap.put(DIGIT2, () -> handleCreateQuote());
+    this.keyMap.put(DIGIT3, () -> handleConfigWeek());
+    this.keyMap.put(DIGIT4, () -> handleNewWeek());
+    this.keyMap.put(DIGIT5, () -> handleChangeWeekStart("Tuesday"));
+    this.keyMap.put(DIGIT6, () -> createDefaultEvent());
+    this.keyMap.put(DIGIT7, () -> createDefaultTask());
+//    this.keyMap.put(V, () -> setSampleDialog());
+//    this.keyMap.put(B, () -> System.out.println("hey3"));
+//    this.keyMap.put(M, () -> createSampleTaskDialog());
+
+
     if (keycomb.match(keyEvent) || keycomb2.match(keyEvent)) {
-      switch (eventKey) {
-        case E -> handleCreateEvent();
-        case T -> handleCreateTask();
-        case S -> handleSave();
-        case O -> handleOpen();
-        case DIGIT1 -> handleCreateNote();
-        case DIGIT2 -> handleCreateQuote();
-        case DIGIT3 -> handleConfigWeek();
-        case DIGIT4 -> handleNewWeek();
-        case DIGIT5 -> handleChangeWeekStart("Tuesday");
-        case DIGIT6 -> createDefaultEvent();
-        case DIGIT7 -> createDefaultTask();
-        default -> { }
+      System.out.println(keyEvent);
+      System.out.println(this.keyMap.containsKey(keyEvent.getCode()));
+      if(this.keyMap.containsKey(keyEvent.getCode())){
+        this.keyMap.get(keyEvent.getCode()).run();
       }
     }
   }
@@ -947,23 +975,6 @@ public class BujoControllerImp implements BujoController {
   }
 
 
-  /**
-   * @param dayString is a string containing a name of a week day
-   * @return the DayOfWeek enum equivalent of given String day
-   */
-  private DayOfWeek getDay(String dayString) {
-    return switch (dayString) {
-      case "Monday" -> DayOfWeek.MONDAY;
-      case "Tuesday" -> DayOfWeek.TUESDAY;
-      case "Wednesday" -> DayOfWeek.WEDNESDAY;
-      case "Thursday" -> DayOfWeek.THURSDAY;
-      case "Friday" -> DayOfWeek.FRIDAY;
-      case "Saturday" -> DayOfWeek.SATURDAY;
-      case "Sunday" -> DayOfWeek.SUNDAY;
-      default -> null;
-    };
-  }
-
 
   /**
    * @return the Week HBox of this Controller
@@ -1009,5 +1020,44 @@ public class BujoControllerImp implements BujoController {
   public int getEventCreationCount() {
     return eventCreationCount;
   }
+
+  public void setSampleDialog(){
+    TextField textField = new TextField();
+    textField.setText("3");
+    ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
+    choiceBox.setValue(1);
+    ChoiceBox<String> choiceBox1 = new ChoiceBox<>();
+    this.dialogConfigWeekHelper(textField, choiceBox, choiceBox, choiceBox1);
+  }
+
+  public void createSampleEventDialog(){
+    TextField textField = new TextField();
+    textField.setText("1");
+    ChoiceBox<String> choiceBox1 = new ChoiceBox<>();
+    System.out.println("hey");
+    this.eventDialogHelper(textField, textField, textField, textField, choiceBox1);
+  }
+
+  public void createSampleTaskDialog() {
+    TextField textField = new TextField();
+    textField.setText("1");
+
+    ChoiceBox<String> choiceBox1 = new ChoiceBox<>();
+    this.taskDialogHelper(textField, textField, choiceBox1);
+  }
+
+  private Alert eventDialogAlert;
+  private Alert taskDialogAlert;
+
+  public Alert getEventDialogAlert() {
+    return eventDialogAlert;
+  }
+
+  public Alert getTaskDialogAlert() {
+    return taskDialogAlert;
+  }
+
+  private HashMap<KeyCode, Runnable> keyMap = new HashMap<>();
+
 
 }

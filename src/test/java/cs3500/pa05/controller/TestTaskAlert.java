@@ -19,8 +19,7 @@ import org.testfx.framework.junit5.Start;
  * Tests for the ConfigWeek feature's GUI functionality
  */
 @ExtendWith(ApplicationExtension.class)
-public class TestConfigWeek {
-
+public class TestTaskAlert {
 
   private BujoControllerImp controller;
   private BujoPage bujopage;
@@ -37,7 +36,7 @@ public class TestConfigWeek {
     this.stage = stage;
     this.bujopage = new BujoPageImp();
     this.controller = new BujoControllerImp(this.bujopage, "src/main/resources/test.bujo");
-    this.controller.setSampleDialog();
+    this.controller.createSampleTaskDialog();
     this.view = new BujoGuiImp(this.controller);
     stage.setScene(view.load());
     controller.run();
@@ -51,12 +50,10 @@ public class TestConfigWeek {
    *
    * @param robot the fxrobot that will simulate action
    */
+
   @Test
   public void testConfigWeek(FxRobot robot) {
-//    robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT8);
-    robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT3);
-
-    assertEquals(this.controller.dialogConfigWeek.getTitle(), "Config This Week");
+    assertEquals(this.controller.getTaskDialogAlert().getContentText(), "Enter All Fields");
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

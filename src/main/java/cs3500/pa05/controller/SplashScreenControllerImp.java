@@ -43,7 +43,7 @@ public class SplashScreenControllerImp implements BujoController {
 
 
   /**
-   *
+   * run the splash screen controller
    */
   public void run() {
     this.continueButton.setOnAction(e -> handleClick());
