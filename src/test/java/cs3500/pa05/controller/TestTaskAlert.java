@@ -53,7 +53,7 @@ public class TestTaskAlert {
 
   @Test
   public void testConfigWeek(FxRobot robot) {
-    assertEquals(this.controller.getTaskDialogAlert().getContentText(), "Enter All Fields");
+    assertEquals(this.controller.taskDialogAlert.getContentText(), "Enter All Fields");
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

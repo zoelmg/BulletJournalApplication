@@ -54,7 +54,7 @@ public class TestTaskClicked {
   @Test
   public void testTaskClicked(FxRobot robot) {
     robot.press(KeyCode.SHORTCUT, KeyCode.DIGIT5);
-    VBox vbox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
+    VBox vbox = (VBox) this.controller.weekHbox.getChildren().get(0);
     TaskView taskView = (TaskView) vbox.getChildren().get(1);
     robot.clickOn(taskView);
     VBox vbox1 = (VBox) this.controller.dialogTaskClicked.getDialogPane().getChildren().get(3);

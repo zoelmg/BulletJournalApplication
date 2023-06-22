@@ -53,7 +53,7 @@ public class TestEventAlert {
 
   @Test
   public void testConfigWeek(FxRobot robot) {
-    assertEquals(this.controller.getEventDialogAlert().getContentText(), "Enter All Fields");
+    assertEquals(this.controller.eventDialogAlert.getContentText(), "Enter All Fields");
 
     Stage stage1 = this.stage;
     Platform.runLater(new Runnable() {

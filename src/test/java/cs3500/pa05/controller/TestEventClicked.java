@@ -59,7 +59,7 @@ public class TestEventClicked {
   @Test
   public void testEventClicked(FxRobot robot) throws Exception {
 
-    VBox vbox = (VBox) this.controller.getWeekHbox().getChildren().get(0);
+    VBox vbox = (VBox) this.controller.weekHbox.getChildren().get(0);
     EventView eventView = (EventView) vbox.getChildren().get(1);
     robot.clickOn(eventView);
     VBox vbox1 = (VBox) this.controller.dialogEventClicked.getDialogPane().getChildren().get(3);
@@ -82,7 +82,5 @@ public class TestEventClicked {
     });
 
   }
-
-
 
 }

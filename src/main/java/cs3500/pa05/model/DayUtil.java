@@ -2,6 +2,9 @@ package cs3500.pa05.model;
 
 import java.time.DayOfWeek;
 
+/**
+ * A Day Utility Class that determines the day of the week
+ */
 public class DayUtil {
 
   /**

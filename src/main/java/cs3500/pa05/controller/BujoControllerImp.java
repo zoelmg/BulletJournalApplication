@@ -102,6 +102,7 @@ public class BujoControllerImp implements BujoController {
   @FXML
   private Scene mainScene;
 
+  private HashMap<KeyCode, Runnable> keyMap = new HashMap<>();
 
   /**
    * Initialize a BujoController that has all the functionality available on a BujoPage
@@ -478,7 +479,7 @@ public class BujoControllerImp implements BujoController {
   private void taskDialogHelper(TextField taskName, TextField taskDescription,
                                 ChoiceBox<String> dayOfWeek) {
     if (taskName.getText().isEmpty() || dayOfWeek.getValue() == null) {
-      this.taskDialogAlert= new Alert(Alert.AlertType.ERROR);
+      this.taskDialogAlert = new Alert(Alert.AlertType.ERROR);
       taskDialogAlert.setContentText("Enter All Fields");
       taskDialogAlert.show();
 
@@ -774,8 +775,6 @@ public class BujoControllerImp implements BujoController {
    * @param keyEvent the actual key event that happened
    */
   private void handleKeyComb(KeyCode eventKey, KeyEvent keyEvent) {
-    KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
-    KeyCombination keycomb2 = new KeyCodeCombination(eventKey, KeyCombination.SHORTCUT_DOWN);
     this.keyMap.put(E, () -> handleCreateEvent());
     this.keyMap.put(T, () -> handleCreateTask());
     this.keyMap.put(S, () -> handleSave());
@@ -787,15 +786,14 @@ public class BujoControllerImp implements BujoController {
     this.keyMap.put(DIGIT5, () -> handleChangeWeekStart("Tuesday"));
     this.keyMap.put(DIGIT6, () -> createDefaultEvent());
     this.keyMap.put(DIGIT7, () -> createDefaultTask());
-//    this.keyMap.put(V, () -> setSampleDialog());
-//    this.keyMap.put(B, () -> System.out.println("hey3"));
-//    this.keyMap.put(M, () -> createSampleTaskDialog());
 
+    KeyCombination keycomb = new KeyCodeCombination(eventKey, KeyCombination.CONTROL_DOWN);
+    KeyCombination keycomb2 = new KeyCodeCombination(eventKey, KeyCombination.SHORTCUT_DOWN);
 
     if (keycomb.match(keyEvent) || keycomb2.match(keyEvent)) {
       System.out.println(keyEvent);
       System.out.println(this.keyMap.containsKey(keyEvent.getCode()));
-      if(this.keyMap.containsKey(keyEvent.getCode())){
+      if (this.keyMap.containsKey(keyEvent.getCode())) {
         this.keyMap.get(keyEvent.getCode()).run();
       }
     }
@@ -975,15 +973,7 @@ public class BujoControllerImp implements BujoController {
   }
 
 
-
-  /**
-   * @return the Week HBox of this Controller
-   */
-  ////JAVAFX GUI TESTING MATERIALS///////////
-  public HBox getWeekHbox() {
-    return this.weekHbox;
-  }
-
+  ////////JAVAFX GUI TESTING MATERIALS///////////
   protected Dialog<TaskItem> dialogCreateTask;
 
   protected Dialog<TaskItem> dialogCreateQuote;
@@ -995,6 +985,8 @@ public class BujoControllerImp implements BujoController {
   protected Dialog<TaskItem> dialogTaskClicked;
   protected Dialog<EventItem> dialogCreateEvent;
   protected Dialog<TaskItem> dialogConfigWeek;
+  protected Alert eventDialogAlert;
+  protected Alert taskDialogAlert;
   private int eventsCreated = 0;
   private int eventCreationCount = 0;
 
@@ -1021,7 +1013,11 @@ public class BujoControllerImp implements BujoController {
     return eventCreationCount;
   }
 
-  public void setSampleDialog(){
+  /**
+   * Create sample dialog
+   */
+  public void setSampleDialog()
+  {
     TextField textField = new TextField();
     textField.setText("3");
     ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
@@ -1030,7 +1026,10 @@ public class BujoControllerImp implements BujoController {
     this.dialogConfigWeekHelper(textField, choiceBox, choiceBox, choiceBox1);
   }
 
-  public void createSampleEventDialog(){
+  /**
+   * Create sample event dialog
+   */
+  public void createSampleEventDialog() {
     TextField textField = new TextField();
     textField.setText("1");
     ChoiceBox<String> choiceBox1 = new ChoiceBox<>();
@@ -1038,6 +1037,9 @@ public class BujoControllerImp implements BujoController {
     this.eventDialogHelper(textField, textField, textField, textField, choiceBox1);
   }
 
+  /**
+   * Create sample Task Dialog
+   */
   public void createSampleTaskDialog() {
     TextField textField = new TextField();
     textField.setText("1");
@@ -1046,18 +1048,5 @@ public class BujoControllerImp implements BujoController {
     this.taskDialogHelper(textField, textField, choiceBox1);
   }
 
-  private Alert eventDialogAlert;
-  private Alert taskDialogAlert;
-
-  public Alert getEventDialogAlert() {
-    return eventDialogAlert;
-  }
-
-  public Alert getTaskDialogAlert() {
-    return taskDialogAlert;
-  }
-
-  private HashMap<KeyCode, Runnable> keyMap = new HashMap<>();
-
-
+  ////////JAVAFX GUI TESTING MATERIALS END///////////
 }
