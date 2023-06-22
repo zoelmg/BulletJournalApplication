@@ -7,6 +7,22 @@
 password: i love javadocs
 (all lowercase)
 
+#[SCREENSHOT SHOWCASING]
+in root directory named GUI_showcase.png
+
+#[LIST OF COMMANDS]
+- Command/Control + E: opens dialog for creating a new Event
+- Command/Control + T: opens dialog for creating a new Task
+- Command/Control + S: saves the file
+- Command/Control + O: opens the finder on your computer for you to choose a .bujo file to open
+- Command/Control + 1: opens dialog for creating a new Note
+- Command/Control + 2: opens dialog for creating a new Quote
+- Command/Control + 3: opens dialog for configuring the week
+- Command/Control + 4: opens dialog for creating a new week
+- Command/Control + 5: change the starting day of the week to Tuesday
+- Command/Control + 6: creating a default event
+- Command/Control + 7: creating a default task 
+
 [PA Write Up](https://markefontenot.notion.site/PA-05-8263d28a81a7473d8372c6579abd6481)
 
 #[NOTES ABOUT GIT BUILD & MISSING MODULE-INFO.JAVA FILE]
